@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/trianglify_01"
+    tools:context=".activities.ActivitySessieList">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_btn_sessies">
+
+            <ImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/logo"
+                android:scaleType="fitCenter"
+                android:scaleX="2"
+                android:scaleY="2"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                app:srcCompat="@mipmap/sessies" />
+
+            <!-- Custom TextView gebruikt om custom font te kunnen gebruiken -->
+
+            <TextView
+                android:id="@+id/tv_sessies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:layout_weight="3"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:text="@string/sessies"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="40sp" />
+
+        </TableRow>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_sessies_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp" />
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

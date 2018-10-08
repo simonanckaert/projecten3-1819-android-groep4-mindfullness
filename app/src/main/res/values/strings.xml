@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Mindfulness</string>
+    <string name="logo">Logo</string>
+    <string name="sessies">Sessies</string>
+    <string name="kalender">Kalender</string>
+    <string name="reminders">Reminders</string>
+    <string name="contact">Contact</string>
+</resources>

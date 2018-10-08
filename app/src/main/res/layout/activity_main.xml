@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/trianglify_01"
+    tools:context=".activities.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="50dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:contentDescription="@string/logo"
+                android:scaleType="fitCenter"
+                app:srcCompat="@mipmap/logo" />
+
+            <!-- Custom TextView gebruikt om custom font te kunnen gebruiken -->
+            <com.groep4.mindfulness.views.LogoTextView
+                android:id="@+id/tv_mindfulness"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:text="@string/app_name"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="45sp" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </TableRow>
+
+        <TextView
+            android:id="@+id/tv_welkom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:text="Welkom!"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="30sp" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <!-- (android:background) Custom Selector gebruikt om verschillende states van de imagebuttons waar te kunnen nemen (kleurschakelingen)-->
+                <ImageButton
+                    android:id="@+id/ib_sessies"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/selector_btn_sessies"
+                    android:contentDescription="@string/sessies"
+                    android:onClick="openSessies"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@mipmap/sessies" />
+
+                <ImageButton
+                    android:id="@+id/ib_kalender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/selector_btn_kalender"
+                    android:contentDescription="@string/kalender"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@mipmap/kalender" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <ImageButton
+                    android:id="@+id/ib_reminders"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/selector_btn_reminders"
+                    android:contentDescription="@string/reminders"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@mipmap/reminders" />
+
+                <ImageButton
+                    android:id="@+id/ib_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/selector_btn_contact"
+                    android:contentDescription="@string/contact"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@mipmap/contact" />
+
+            </TableRow>
+
+
+        </TableLayout>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
