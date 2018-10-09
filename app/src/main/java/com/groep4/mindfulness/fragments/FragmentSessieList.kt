@@ -21,7 +21,7 @@ class FragmentSessieList : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        // (Statische) sessies toevoegen
+        // (Statische) sessies toevoegen, in afwachting van DB
         addSessies()
 
         // Sessie adapter aanmaken en sessies linken
@@ -41,16 +41,19 @@ class FragmentSessieList : Fragment() {
     }
 
     // Sessies toevoegen (static placeholder)
-    fun addSessies() {
+    private fun addSessies() {
         val oefeningen: ArrayList<Oefening> = ArrayList()
 
         for(i in 1..3) {
-            val oef = Oefening("Oefening " + "0" + i, "Beschrijving " + "0" + i)
+            val oef = Oefening("Oefening 0$i", "Beschrijving 0$i")
             oefeningen.add(oef)
         }
 
-        for(i in 1..8) {
-            val sessie = Sessie("Sessie " + "0" + i, "Beschrijving Sessie " + "0" + i, oefeningen, false)
+        for(i in 1..12) {
+            val sessie: Sessie = if (i < 10)
+                Sessie("Sessie 0$i", "Beschrijving Sessie 0$i", oefeningen, false)
+            else
+                Sessie("Sessie $i", "Beschrijving Sessie $i", oefeningen, false)
             sessies.add(sessie)
         }
     }

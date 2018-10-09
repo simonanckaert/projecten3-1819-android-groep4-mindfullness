@@ -20,7 +20,7 @@ class SessiesAdapter (val items: ArrayList<Sessie>, val listener: (Sessie) -> Un
 
     // Custom ViewHolder
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-        val tvSessie = view.tv_single_sessie
+        val tvSessie = view.btn_single_sessie
 
         fun bind(item: Sessie, position: Int, listener: (Sessie) -> Unit) = with(tvSessie) {
             tvSessie.text = item.naam

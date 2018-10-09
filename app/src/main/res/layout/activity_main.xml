@@ -36,8 +36,8 @@
                 android:id="@+id/tv_mindfulness"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:shadowColor="@color/text_shadow"
@@ -66,7 +66,7 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
-            android:text="Welkom!"
+            android:text="@string/welkom"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="30sp" />
@@ -74,8 +74,9 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center_horizontal">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -83,27 +84,74 @@
                 android:gravity="center_horizontal">
 
                 <!-- (android:background) Custom Selector gebruikt om verschillende states van de imagebuttons waar te kunnen nemen (kleurschakelingen)-->
-                <ImageButton
-                    android:id="@+id/ib_sessies"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                <!-- Button Sessies -->
+                <LinearLayout
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:layout_margin="10dp"
                     android:background="@drawable/selector_btn_sessies"
-                    android:contentDescription="@string/sessies"
+                    android:clickable="true"
+                    android:gravity="center"
                     android:onClick="openSessies"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@mipmap/sessies" />
+                    android:orientation="vertical"
+                    android:focusable="true">
 
-                <ImageButton
-                    android:id="@+id/ib_kalender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    <ImageButton
+                        android:id="@+id/ib_sessies"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@android:color/transparent"
+                        android:clickable="false"
+                        android:contentDescription="@string/sessies"
+                        android:longClickable="false"
+                        android:padding="10dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/sessies"
+                        android:tint="@android:color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/sessies"
+                        android:textColor="@android:color/white"
+                        android:textSize="25sp" />
+                </LinearLayout>
+
+                <!-- Button Kalender -->
+                <LinearLayout
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:layout_margin="10dp"
                     android:background="@drawable/selector_btn_kalender"
-                    android:contentDescription="@string/kalender"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@mipmap/kalender" />
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:focusable="true">
 
+                    <ImageButton
+                        android:id="@+id/ib_kalender"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@android:color/transparent"
+                        android:clickable="false"
+                        android:contentDescription="@string/kalender"
+                        android:longClickable="false"
+                        android:padding="10dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/kalender"
+                        android:tint="@android:color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/kalender"
+                        android:textColor="@android:color/white"
+                        android:textSize="25sp" />
+                </LinearLayout>
             </TableRow>
 
             <TableRow
@@ -111,27 +159,73 @@
                 android:layout_height="match_parent"
                 android:gravity="center_horizontal">
 
-                <ImageButton
-                    android:id="@+id/ib_reminders"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
+                <!-- Button Reminders -->
+                <LinearLayout
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:layout_margin="10dp"
                     android:background="@drawable/selector_btn_reminders"
-                    android:contentDescription="@string/reminders"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@mipmap/reminders" />
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:focusable="true">
 
-                <ImageButton
-                    android:id="@+id/ib_contact"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:adjustViewBounds="true"
+                    <ImageButton
+                        android:id="@+id/ib_reminders"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@android:color/transparent"
+                        android:clickable="false"
+                        android:contentDescription="@string/reminders"
+                        android:longClickable="false"
+                        android:padding="10dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/reminders"
+                        android:tint="@android:color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/reminders"
+                        android:textColor="@android:color/white"
+                        android:textSize="25sp" />
+                </LinearLayout>
+
+                <!-- Button Contact -->
+                <LinearLayout
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:layout_margin="10dp"
                     android:background="@drawable/selector_btn_contact"
-                    android:contentDescription="@string/contact"
-                    android:scaleType="centerInside"
-                    app:srcCompat="@mipmap/contact" />
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:focusable="true">
 
+                    <ImageButton
+                        android:id="@+id/ib_contact"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@android:color/transparent"
+                        android:clickable="false"
+                        android:contentDescription="@string/contact"
+                        android:longClickable="false"
+                        android:padding="10dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/contact"
+                        android:tint="@android:color/white" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/contact"
+                        android:textColor="@android:color/white"
+                        android:textSize="25sp" />
+                </LinearLayout>
             </TableRow>
 
 
