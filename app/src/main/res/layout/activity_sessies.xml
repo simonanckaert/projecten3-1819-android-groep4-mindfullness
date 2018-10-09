@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ActivitySessie">
+    android:background="@color/colorPrimary"
+    tools:context=".activities.ActivitySessies"
+    android:id="@+id/root_sessies">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,28 +16,11 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/selector_btn_sessies">
-
-            <ImageView
-                android:id="@+id/iv_logo"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="2dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/logo"
-                android:scaleType="fitCenter"
-                android:scaleX="2"
-                android:scaleY="2"
-                android:shadowColor="@color/text_shadow"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="2"
-                app:srcCompat="@mipmap/sessies" />
+            android:background="@color/colorPrimaryDark">
 
             <!-- Custom TextView gebruikt om custom font te kunnen gebruiken -->
-
             <TextView
-                android:id="@+id/tv_sessie"
+                android:id="@+id/tv_sessies"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="0dp"
@@ -44,12 +29,16 @@
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="2"
-                android:text="sessie *"
+                android:text="@string/sessies"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="40sp" />
-
         </TableRow>
 
+        <fragment
+            android:id="@+id/fragment2"
+            android:name="com.groep4.mindfulness.fragments.FragmentSessieList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

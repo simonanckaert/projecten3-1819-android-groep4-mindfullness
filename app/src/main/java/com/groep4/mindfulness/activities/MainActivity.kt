@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     /** Button handler voor Sessies Activity */
     fun openSessies(view: View) {
-        val intent = Intent(this, ActivitySessieList::class.java)
+        val intent = Intent(this, ActivitySessies::class.java)
         startActivity(intent)
     }
 
