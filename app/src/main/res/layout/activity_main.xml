@@ -166,9 +166,10 @@
                     android:layout_margin="10dp"
                     android:background="@drawable/selector_btn_reminders"
                     android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:focusable="true">
+                    android:onClick="openReminder"
+                    android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/ib_reminders"
@@ -179,6 +180,7 @@
                         android:clickable="false"
                         android:contentDescription="@string/reminders"
                         android:longClickable="false"
+                        android:onClick="openReminder"
                         android:padding="10dp"
                         android:scaleType="fitCenter"
                         android:src="@mipmap/reminders"

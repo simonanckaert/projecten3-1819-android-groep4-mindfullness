@@ -19,4 +19,10 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    fun openReminder(view: View) {
+        val intent = Intent(this, ActivityReminder::class.java)
+        startActivity(intent)
+    }
+
+
 }
