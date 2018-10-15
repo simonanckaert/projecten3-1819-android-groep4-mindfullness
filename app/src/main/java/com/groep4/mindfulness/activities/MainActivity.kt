@@ -1,10 +1,11 @@
 package com.groep4.mindfulness.activities
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.groep4.mindfulness.R
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,4 +20,9 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    /** Button handler voor Reminders Activity */
+    fun openReminders(view: View) {
+        val intent = Intent(this, ActivityReminders::class.java)
+        startActivity(intent)
+    }
 }

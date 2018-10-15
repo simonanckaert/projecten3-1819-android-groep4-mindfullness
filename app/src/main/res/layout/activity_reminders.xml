@@ -9,6 +9,7 @@
     tools:context=".activities.ActivitySessies">
 
     <LinearLayout
+        android:id="@+id/ll_reminders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -16,23 +17,23 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark">
+            android:background="@color/colorPink">
 
             <!-- Custom TextView gebruikt om custom font te kunnen gebruiken -->
             <ImageView
-                android:id="@+id/iv_sessies"
+                android:id="@+id/iv_reminders"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
-                android:contentDescription="@string/sessies"
+                android:contentDescription="@string/reminders"
                 android:paddingTop="3dp"
                 android:scaleType="fitCenter"
                 android:tint="@android:color/white"
-                app:srcCompat="@mipmap/sessies" />
+                app:srcCompat="@mipmap/reminders" />
 
             <TextView
-                android:id="@+id/tv_sessies"
+                android:id="@+id/tv_reminders"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="0dp"
@@ -45,16 +46,10 @@
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="2"
-                android:text="@string/sessies"
+                android:text="@string/reminders"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="40sp" />
         </TableRow>
-
-        <fragment
-            android:id="@+id/fragment_sessies"
-            android:name="com.groep4.mindfulness.fragments.FragmentSessieList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -167,6 +167,7 @@
                     android:background="@drawable/selector_btn_reminders"
                     android:clickable="true"
                     android:gravity="center"
+                    android:onClick="openReminders"
                     android:orientation="vertical"
                     android:focusable="true">
 

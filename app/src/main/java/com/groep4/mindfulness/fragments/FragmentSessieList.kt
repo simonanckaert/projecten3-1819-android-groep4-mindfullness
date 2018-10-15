@@ -40,7 +40,7 @@ class FragmentSessieList : Fragment() {
         return view
     }
 
-    // Sessies toevoegen (static placeholder)
+    // Sessies toevoegen (static placeholders voor te testen)
     private fun addSessies() {
         val oefeningen: ArrayList<Oefening> = ArrayList()
 
