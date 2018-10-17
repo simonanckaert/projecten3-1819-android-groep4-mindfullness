@@ -17,7 +17,6 @@ class NotificationService : IntentService("NotificationService") {
     private lateinit var mNotification: Notification
     private val mNotificationId: Int = 1000
 
-    @SuppressLint("NewApi")
     private fun createChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create the NotificationChannel, but only on API 26+ because
@@ -31,11 +30,10 @@ class NotificationService : IntentService("NotificationService") {
             notificationChannel.setShowBadge(true)
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.parseColor("#e8334a")
-            notificationChannel.description = getString(R.string.notification)
+            notificationChannel.description = getString(R.string.notificatie)
             notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             notificationManager.createNotificationChannel(notificationChannel)
         }
-
     }
 
     companion object {
@@ -71,14 +69,11 @@ class NotificationService : IntentService("NotificationService") {
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = timestamp
 
-
             val pendingIntent = PendingIntent.getActivity(context, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             val res = this.resources
             val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-
                 mNotification = Notification.Builder(this, CHANNEL_ID)
                         // Set the intent that will fire when the user taps the notification
                         .setContentIntent(pendingIntent)
@@ -90,7 +85,6 @@ class NotificationService : IntentService("NotificationService") {
                                 .bigText(message))
                         .setContentText(message).build()
             } else {
-
                 mNotification = Notification.Builder(this)
                         // Set the intent that will fire when the user taps the notification
                         .setContentIntent(pendingIntent)

@@ -4,11 +4,9 @@
     <string name="welkom">Welkom!</string>
     <string name="sessies">Sessies</string>
     <string name="kalender">Kalender</string>
-    <string name="reminders">Reminders</string>
+    <string name="reminder">Reminder</string>
     <string name="contact">Contact</string>
-    <string name="title_activity_reminder">ActivityReminder</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="show_picker">show picker</string>
     <string name="kies_tijdstip">Kies Tijdstip</string>
+    <string name="notificatie">Notificatie</string>
+    <string name="reminderInhoud">Wanneer wens je de dagelijkse herinnering voor meditatie in te stellen?</string>
 </resources>

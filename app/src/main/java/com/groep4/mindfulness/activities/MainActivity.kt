@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     /** Button handler voor Reminders Activity */
     fun openReminders(view: View) {
-        val intent = Intent(this, ActivityReminders::class.java)
+        val intent = Intent(this, ActivityReminder::class.java)
         startActivity(intent)
     }
 }
