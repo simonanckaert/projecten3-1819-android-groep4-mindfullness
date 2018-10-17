@@ -14,6 +14,9 @@ import java.util.*
 
 
 class NotificationService : IntentService("NotificationService") {
+
+
+
     private lateinit var mNotification: Notification
     private val mNotificationId: Int = 1000
 

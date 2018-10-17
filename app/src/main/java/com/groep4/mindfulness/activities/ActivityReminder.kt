@@ -9,9 +9,7 @@ import android.widget.Toast
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.utils.NotificationUtils
 import java.text.DateFormat
-import java.text.DecimalFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class ActivityReminder : AppCompatActivity() {
     private var mNotified = false
@@ -21,7 +19,6 @@ class ActivityReminder : AppCompatActivity() {
 
     val PREFS_REMINDER = "com.groep4.mindfulness.prefs"
     val REMINDER_TIME = "reminder_time"
-    var prefs: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,9 +65,18 @@ class ActivityReminder : AppCompatActivity() {
     }
 
     private fun setReminderNotification(time: Long) {
+
+        // Indien tijd in het verleden ligt, voeg er 1 dag aan toe.
+        // (nodig anders wordt notificatie direct na het setten al uitgevoerd)
+        var fixedTime = time
+        var diff = Calendar.getInstance().timeInMillis - time
+        if (diff > 0) {
+            fixedTime += 86400000
+        }
+
         // Aanmaken van notificatie
         if (!mNotified) {
-            NotificationUtils().setNotification(time, this@ActivityReminder)
+            NotificationUtils().setNotification(fixedTime, this@ActivityReminder)
         } else {
             Toast.makeText(this, "Already notified", Toast.LENGTH_SHORT).show()
         }
