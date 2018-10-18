@@ -11,8 +11,16 @@
     <string name="reminderInhoud">Wanneer wens je de dagelijkse herinnering voor meditatie in te stellen?</string>
     <string name="title_activity_contact">ActivityContact</string>
 
-    <string name="praktijk_psychologen">Naam Praktijk Psychologen</string>
-    <string name="uren_dag">Maandag   08:00-18:00</string>
-    <string name="adress">Valentin Vaerwyckweg 1 9000 Gent</string>
-    <string name="telefoon">09 123 45 67</string>
+    <string name="praktijk_psychologen">Pieter-Jan De Schryver en medewerkers</string>
+    <string name="uren_dag">09:00-21:00</string>
+    <string name="dag">Maandag - zaterdag:</string>
+    <string name="adress">Stropstraat 15 9000 Gent</string>
+    <string name="telefoon">0477 95 74 85</string>
+    <string name="gesloten_op_zondag">Gesloten op zondag</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="send">Send</string>
+    <string name="email">Email</string>
+    <string name="onderwerp">Onderwerp</string>
+    <string name="text">Text</string>
 </resources>
