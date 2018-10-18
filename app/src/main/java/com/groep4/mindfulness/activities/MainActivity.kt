@@ -25,4 +25,9 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, ActivityReminder::class.java)
         startActivity(intent)
     }
+    /** Button Handler voor Contact Activity*/
+    fun openContact(view: View) {
+        val intent = Intent(this, ActivityContact::class.java)
+        startActivity(intent)
+    }
 }
