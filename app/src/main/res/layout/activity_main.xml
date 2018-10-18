@@ -201,9 +201,10 @@
                     android:layout_margin="10dp"
                     android:background="@drawable/selector_btn_contact"
                     android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:focusable="true">
+                    android:onClick="openContact"
+                    android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/ib_contact"

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.groep4.mindfulness.activities.ActivityContact">
+
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_btn_contact"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Custom TextView gebruikt om custom font te kunnen gebruiken -->
+        <ImageView
+            android:id="@+id/iv_reminders"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="@drawable/selector_btn_contact"
+            android:contentDescription="@string/reminder"
+            android:paddingTop="3dp"
+            android:scaleType="fitCenter"
+            android:tint="@android:color/white"
+            app:srcCompat="@mipmap/contact" />
+
+        <TextView
+            android:id="@+id/tv_reminders"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="3"
+            android:background="@drawable/selector_btn_contact"
+            android:paddingStart="5dp"
+            android:paddingLeft="5dp"
+            android:paddingEnd="0dp"
+            android:paddingRight="0dp"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:text="@string/contact"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="40sp" />
+    </TableRow>
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.groep4.mindfulness.fragments.ContactInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableRow2"
+        tools:layout="@layout/fragment_contact_info" />
+
+
+</android.support.constraint.ConstraintLayout>
