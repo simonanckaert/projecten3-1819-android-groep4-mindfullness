@@ -37,8 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ActivitySessies" />
-        <activity android:name=".activities.ActivityReminder" />
+        <activity android:name=".activities.ActivityPage" />
         <activity
             android:name=".activities.ActivityContact"
             android:label="@string/title_activity_contact"

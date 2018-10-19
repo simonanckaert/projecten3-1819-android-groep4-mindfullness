@@ -86,15 +86,15 @@
                 <!-- (android:background) Custom Selector gebruikt om verschillende states van de imagebuttons waar te kunnen nemen (kleurschakelingen)-->
                 <!-- Button Sessies -->
                 <LinearLayout
+                    android:id="@+id/ll_sessies"
                     android:layout_width="135dp"
                     android:layout_height="135dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/selector_btn_sessies"
                     android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
-                    android:onClick="openSessies"
-                    android:orientation="vertical"
-                    android:focusable="true">
+                    android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/ib_sessies"
@@ -121,14 +121,15 @@
 
                 <!-- Button Kalender -->
                 <LinearLayout
+                    android:id="@+id/ll_kalender"
                     android:layout_width="135dp"
                     android:layout_height="135dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/selector_btn_kalender"
                     android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:focusable="true">
+                    android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/ib_kalender"
@@ -161,15 +162,15 @@
 
                 <!-- Button Reminders -->
                 <LinearLayout
+                    android:id="@+id/ll_reminder"
                     android:layout_width="135dp"
                     android:layout_height="135dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/selector_btn_reminders"
                     android:clickable="true"
+                    android:focusable="true"
                     android:gravity="center"
-                    android:onClick="openReminders"
-                    android:orientation="vertical"
-                    android:focusable="true">
+                    android:orientation="vertical">
 
                     <ImageButton
                         android:id="@+id/ib_reminders"
@@ -196,6 +197,7 @@
 
                 <!-- Button Contact -->
                 <LinearLayout
+                    android:id="@+id/ll_contact"
                     android:layout_width="135dp"
                     android:layout_height="135dp"
                     android:layout_margin="10dp"
