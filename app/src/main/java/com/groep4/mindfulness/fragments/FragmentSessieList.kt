@@ -10,10 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.groep4.mindfulness.R
+import com.groep4.mindfulness.activities.ActivityPage
 import com.groep4.mindfulness.adapters.SessiesAdapter
 import com.groep4.mindfulness.model.Oefening
 import com.groep4.mindfulness.model.Sessie
 import kotlinx.android.synthetic.main.activity_page.*
+import android.R.attr.key
+
+
 
 class FragmentSessieList : Fragment() {
 
@@ -34,6 +38,11 @@ class FragmentSessieList : Fragment() {
         // Sessie adapter aanmaken en sessies linken
         val sessiesAdapter = SessiesAdapter(sessies) {
             Toast.makeText(context, it.beschrijving, Toast.LENGTH_LONG).show()
+            val sessieFragment = FragmentSessie()
+            val bundle = Bundle()
+            bundle.putString("key_sessie", it.naam)
+            sessieFragment.arguments = bundle
+            (activity as ActivityPage).setFragment(sessieFragment, true)
         }
 
         // Adapter voor recyclerview (listview) instellen
