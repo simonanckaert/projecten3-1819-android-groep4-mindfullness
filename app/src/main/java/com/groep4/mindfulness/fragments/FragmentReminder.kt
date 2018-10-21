@@ -1,7 +1,9 @@
 package com.groep4.mindfulness.fragments
 
 import android.app.TimePickerDialog
+import android.os.Build
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
@@ -14,6 +16,10 @@ import com.groep4.mindfulness.utils.NotificationUtils
 import kotlinx.android.synthetic.main.activity_page.*
 import java.text.DateFormat
 import java.util.*
+import android.text.style.UnderlineSpan
+import android.text.SpannableString
+
+
 
 class FragmentReminder : Fragment() {
     private var mNotified = false
@@ -30,11 +36,12 @@ class FragmentReminder : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_reminder, container, false)
 
         activity!!.tr_page.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorPink))
-        activity!!.iv_page.setImageResource(R.mipmap.reminders)
+        //activity!!.iv_page.setImageResource(R.mipmap.reminders)
         activity!!.tv_page.setText(R.string.reminder)
 
         //
@@ -42,7 +49,9 @@ class FragmentReminder : Fragment() {
         val prefs = context?.getSharedPreferences(PREFS_REMINDER, 0)
         val storedTime = prefs!!.getLong(REMINDER_TIME, System.currentTimeMillis())
         mDisplayTime = view.findViewById(R.id.tv_reminder_timepicker)
-        mDisplayTime!!.text = DateFormat.getTimeInstance(DateFormat.SHORT).format(storedTime)
+        val content = SpannableString(DateFormat.getTimeInstance(DateFormat.SHORT).format(storedTime))
+        content.setSpan(UnderlineSpan(), 0, content.length, 0)
+        mDisplayTime!!.text = content
 
         mDisplayTime!!.setOnClickListener {
             val cal = Calendar.getInstance()
@@ -83,7 +92,7 @@ class FragmentReminder : Fragment() {
         // Indien tijd in het verleden ligt, voeg er 1 dag aan toe.
         // (nodig anders wordt notificatie direct na het setten al uitgevoerd)
         var fixedTime = time
-        var diff = Calendar.getInstance().timeInMillis - time
+        val diff = Calendar.getInstance().timeInMillis - time
         if (diff > 0) {
             fixedTime += 86400000
         }
