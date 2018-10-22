@@ -25,13 +25,12 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
 buildScan {
     termsOfServiceUrl = 'https://gradle.com/terms-of-service'
     termsOfServiceAgree = 'yes'
 }
 
-android {
-    lintOptions {
-        abortOnError false
-    }
+lintOptions {
+    abortOnError false
 }
