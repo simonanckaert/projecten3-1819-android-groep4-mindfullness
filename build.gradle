@@ -30,7 +30,8 @@ buildScan {
     termsOfServiceUrl = 'https://gradle.com/terms-of-service'
     termsOfServiceAgree = 'yes'
 }
-
-lintOptions {
-    abortOnError false
+android {
+    lintOptions {
+        abortOnError false
+    }
 }
