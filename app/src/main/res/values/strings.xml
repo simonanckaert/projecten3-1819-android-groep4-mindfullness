@@ -24,4 +24,5 @@
     <string name="onderwerp">Onderwerp</string>
     <string name="text">Text</string>
     <string name="instellingen">Instellingen</string>
+    <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
 </resources>

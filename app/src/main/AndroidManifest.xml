@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
 
     <application
         android:allowBackup="true"
@@ -47,8 +49,6 @@
             android:name=".activities.ActivityContact"
             android:label="@string/title_activity_contact"
             android:theme="@style/AppTheme" />
-
-
     </application>
 
 </manifest>
