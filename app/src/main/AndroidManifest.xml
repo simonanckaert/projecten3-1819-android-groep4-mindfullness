@@ -5,7 +5,7 @@
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -29,6 +29,11 @@
             android:name=".services.NotificationService"
             android:enabled="true"
             android:exported="true" />
+        <service android:name=".services.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <activity android:name=".activities.MainActivity">
             <intent-filter>
@@ -41,7 +46,9 @@
         <activity
             android:name=".activities.ActivityContact"
             android:label="@string/title_activity_contact"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+
+
     </application>
 
 </manifest>

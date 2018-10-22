@@ -10,9 +10,6 @@ import com.groep4.mindfulness.fragments.FragmentReminder
 import com.groep4.mindfulness.fragments.FragmentSessieList
 import android.view.MenuInflater
 
-
-
-
 class ActivityPage : AppCompatActivity() {
 
     private val BACK_STACK_ROOT_TAG = "root_fragment"
