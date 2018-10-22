@@ -20,6 +20,12 @@ class NotificationService : IntentService("NotificationService") {
     private lateinit var mNotification: Notification
     private val mNotificationId: Int = 1000
 
+
+    override fun onCreate() {
+        super.onCreate()
+        startForeground(1, Notification())
+    }
+
     private fun createChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create the NotificationChannel, but only on API 26+ because
