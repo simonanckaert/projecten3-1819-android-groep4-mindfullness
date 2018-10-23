@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.groep4.mindfulness.R
+
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -26,11 +27,18 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("key_page", "reminder")
             startActivity(intent)
         }
+
     }
 
     /** Button Handler voor Contact Activity*/
     fun openContact(view: View) {
         val intent = Intent(this, ActivityContact::class.java)
+        startActivity(intent)
+    }
+
+    /** Button Handler voor Kalender Activity*/
+    fun openKalender(view: View) {
+        val intent = Intent(this, ActivityKalender::class.java)
         startActivity(intent)
     }
 }

@@ -42,8 +42,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ActivitySessies" />
-        <activity android:name=".activities.ActivityReminder" />
+        <activity android:name=".activities.ActivityAddTask" />
+        <activity android:name=".activities.ActivityKalender" />
         <activity android:name=".activities.ActivityLogin"/>
         <activity android:name=".activities.ActivityPage" />
         <activity
