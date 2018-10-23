@@ -6,21 +6,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".activities.ActivitySessies">
+    tools:context=".activities.ActivityPage">
 
     <LinearLayout
+        android:id="@+id/ll_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TableRow
+            android:id="@+id/tr_page"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark">
 
             <!-- Custom TextView gebruikt om custom font te kunnen gebruiken -->
             <ImageView
-                android:id="@+id/iv_sessies"
+                android:id="@+id/iv_page"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -32,7 +34,7 @@
                 app:srcCompat="@mipmap/sessies" />
 
             <TextView
-                android:id="@+id/tv_sessies"
+                android:id="@+id/tv_page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="0dp"
@@ -51,10 +53,10 @@
                 android:textSize="40sp" />
         </TableRow>
 
-        <fragment
-            android:id="@+id/fragment_sessies"
-            android:name="com.groep4.mindfulness.fragments.FragmentSessieList"
+        <FrameLayout
+            android:id="@+id/frag_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
