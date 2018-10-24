@@ -1,8 +1,12 @@
 package com.groep4.mindfulness.services;
 
+import com.groep4.mindfulness.model.User;
+
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -15,10 +19,17 @@ import retrofit2.http.Path;
 public interface DbService {
 
 
-    @GET("users/list")
-    Call<List<String>> groupList(@Path("token") int token);
+    @GET("users")
+    Call<List<User>> getUsers();
 
-//    @POST("register")
-   // Call<User> createUser(@Body User user);
+    @POST("users/register")
+    @FormUrlEncoded
+    Call<User> createUser(@Body User user);
+
+
+    @POST("users/register")
+    @FormUrlEncoded
+    Call<User> saveUser(@Field("email") String email,
+                        @Field("token") String token);
 
 }

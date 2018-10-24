@@ -10,10 +10,13 @@ import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.groep4.mindfulness.R
+import com.groep4.mindfulness.services.DbService
+import com.groep4.mindfulness.utils.RetrofitUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,23 +42,20 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, ActivityContact::class.java)
         startActivity(intent)
 
-        /**
-         * Haalt instanceID op en geeft deze weer in een toast, om te tonen dat dit werkt.
-         * Dient eigenlijk enkel  FirebaseInstanceId.getInstance().instanceId  te doen, maar verbinden met de backend nog niet honderd procent werkt doen we het zo.
-         */
+        //dbService!!.saveUser("test", "test2")
 
+        /*
         FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w(ContentValues.TAG, "getInstanceId failed", task.exception)
                 return@OnCompleteListener
             }
-
             val token = task.result!!.token
 
-            // Log and toast
+
             val msg = getString(R.string.msg_token_fmt, token)
             Log.d(ContentValues.TAG, msg)
             Toast.makeText(this@MainActivity, msg, Toast.LENGTH_SHORT).show()
-        })
+        })*/
     }
 }
