@@ -3,14 +3,9 @@ package com.groep4.mindfulness.receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.groep4.mindfulness.services.NotificationService
-import android.os.PowerManager
-import android.support.v4.content.ContextCompat.startForegroundService
 import android.os.Build
-
-
-
-
+import android.os.PowerManager
+import com.groep4.mindfulness.services.NotificationService
 
 class AlarmReceiver : BroadcastReceiver() {
 

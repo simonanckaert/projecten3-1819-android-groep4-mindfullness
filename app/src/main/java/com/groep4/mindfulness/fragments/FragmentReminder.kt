@@ -59,7 +59,7 @@ class FragmentReminder : Fragment() {
             val minute = cal.get(Calendar.MINUTE)
             val dialog = TimePickerDialog(
                     activity,
-                    android.R.style.ThemeOverlay_Material,
+                    R.style.MyTimePickerDialogStyle,
                     mTimeSetListener,
                     hour,
                     minute,

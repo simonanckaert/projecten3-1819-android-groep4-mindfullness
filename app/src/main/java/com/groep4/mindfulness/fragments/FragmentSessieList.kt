@@ -69,6 +69,8 @@ class FragmentSessieList : Fragment() {
         }
 
         sessies.get(0).beschrijving = "Schets ACT - mindfulness - Ademfocus"
-        sessies.get(0).info = "Mindfulness is de toestand die we willen bereiken, meditaties zijn de oefeningen die we doen om tot die toestand te komen (zoals een voetballer die moet trainen: lopen, krachttraining en behendigheidsoefeningen). Meditatie oefeningen versterken onze mentale kracht. We gebruiken onze zintuigen om onze aandacht te richten op om het eender wel object. Focussen op waar onze aandacht spontaan naartoe wordt getrokken (actiefilm, angst-woede…) vraagt geen mentale kracht. Wanneer we mentale kracht missen gaat onze aandacht automatisch naar die gedachten of zaken die ons het meest meeslepen of boeien, zelfs als we dat niet willen. Je betrapt jezelf erop dat je aan je lunch zit te denken terwijl je moet werken? Of dat je aan je werk denkt terwijl je aan het lunchen bent?"
+        sessies.get(0).info =
+                "Mindfulness is de toestand die we willen bereiken, meditaties zijn de oefeningen die we doen om tot die toestand te komen (zoals een voetballer die moet trainen: lopen, krachttraining en behendigheidsoefeningen). Meditatie oefeningen versterken onze mentale kracht. We gebruiken onze zintuigen om onze aandacht te richten op om het eender wel object. Focussen op waar onze aandacht spontaan naartoe wordt getrokken (actiefilm, angst-woede…) vraagt geen mentale kracht. Wanneer we mentale kracht missen gaat onze aandacht automatisch naar die gedachten of zaken die ons het meest meeslepen of boeien, zelfs als we dat niet willen. Je betrapt jezelf erop dat je aan je lunch zit te denken terwijl je moet werken? Of dat je aan je werk denkt terwijl je aan het lunchen bent?"
+
     }
 }

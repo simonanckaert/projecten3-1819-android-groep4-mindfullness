@@ -48,7 +48,8 @@
                 android:text="@string/sessies"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
-                android:textSize="25sp" />
+                android:textSize="30sp"
+                android:textStyle="bold" />
         </TableRow>
 
         <FrameLayout
