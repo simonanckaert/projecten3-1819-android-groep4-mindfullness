@@ -1,11 +1,14 @@
 package com.groep4.mindfulness.fragments
 
 import android.app.TimePickerDialog
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +17,16 @@ import android.widget.Toast
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.utils.NotificationUtils
 import kotlinx.android.synthetic.main.activity_page.*
+import kotlinx.android.synthetic.main.fragment_reminder.view.*
 import java.text.DateFormat
 import java.util.*
-import android.text.style.UnderlineSpan
-import android.text.SpannableString
-
+import java.util.prefs.Preferences
+import android.content.Context.ALARM_SERVICE
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import com.groep4.mindfulness.receivers.AlarmReceiver
 
 
 class FragmentReminder : Fragment() {
@@ -27,8 +35,11 @@ class FragmentReminder : Fragment() {
     private var mTimeSetListener: TimePickerDialog.OnTimeSetListener? = null
     private var mDisplayTime: TextView? = null
 
+    private var prefs: SharedPreferences? = null
+
     val PREFS_REMINDER = "com.groep4.mindfulness.prefs"
     val REMINDER_TIME = "reminder_time"
+    val REMINDER_SET = "reminder_set"
 
     companion object {
         fun newInstance(): FragmentReminder {
@@ -44,9 +55,14 @@ class FragmentReminder : Fragment() {
         //activity!!.iv_page.setImageResource(R.mipmap.reminders)
         activity!!.tv_page.setText(R.string.reminder)
 
-        //
+
+        prefs = context?.getSharedPreferences(PREFS_REMINDER, 0)
+
+        // Reminder enabled/disabled uit sharedpreferences halen
+        val storedSet = prefs!!.getBoolean(REMINDER_SET, false)
+        view.sw_reminder.isChecked = storedSet
+
         // Time uit sharedpreferences halen en invoegen in timepicker textview
-        val prefs = context?.getSharedPreferences(PREFS_REMINDER, 0)
         val storedTime = prefs!!.getLong(REMINDER_TIME, System.currentTimeMillis())
         mDisplayTime = view.findViewById(R.id.tv_reminder_timepicker)
         val content = SpannableString(DateFormat.getTimeInstance(DateFormat.SHORT).format(storedTime))
@@ -59,7 +75,7 @@ class FragmentReminder : Fragment() {
             val minute = cal.get(Calendar.MINUTE)
             val dialog = TimePickerDialog(
                     activity,
-                    android.R.style.ThemeOverlay_Material,
+                    R.style.MyTimePickerDialogStyle,
                     mTimeSetListener,
                     hour,
                     minute,
@@ -78,17 +94,41 @@ class FragmentReminder : Fragment() {
             val millis = calendar.timeInMillis
             setReminderNotification(millis)
 
-            val editor = prefs.edit()
+            val editor = prefs!!.edit()
             editor.putLong(REMINDER_TIME, millis)
             editor.apply()
-        }
-        //
 
+            setSwitchChecked(true)
+            view.sw_reminder.isChecked = true
+        }
+
+        // Checked listener switch button
+        view.sw_reminder.setOnCheckedChangeListener { _, isChecked ->
+            setSwitchChecked(isChecked)
+        }
         return view
     }
 
-    private fun setReminderNotification(time: Long) {
+    private fun setSwitchChecked(isChecked: Boolean) {
+        if (isChecked) {
+            Toast.makeText(context, "CHECKED", Toast.LENGTH_SHORT).show()
+            val editor = prefs!!.edit()
+            editor.putBoolean(REMINDER_SET, true)
+            editor.apply()
+            setReminderNotification(prefs!!.getLong(REMINDER_TIME, System.currentTimeMillis()))
+        } else {
+            Toast.makeText(context, "UNCHECKED", Toast.LENGTH_SHORT).show()
+            val editor = prefs!!.edit()
+            editor.putBoolean(REMINDER_SET, false)
+            editor.apply()
+            val alarmManager = context!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val alarmIntent = Intent(context, AlarmReceiver::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(activity, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            alarmManager.cancel(pendingIntent)
+        }
+    }
 
+    private fun setReminderNotification(time: Long) {
         // Indien tijd in het verleden ligt, voeg er 1 dag aan toe.
         // (nodig anders wordt notificatie direct na het setten al uitgevoerd)
         var fixedTime = time

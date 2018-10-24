@@ -8,7 +8,7 @@
     <string name="contact">Contact</string>
     <string name="kies_tijdstip">Kies Tijdstip</string>
     <string name="notificatie">Notificatie</string>
-    <string name="reminderInhoud">Wanneer wens je de dagelijkse herinnering voor meditatie in te stellen?</string>
+    <string name="reminderInhoud">Herinner me te mediteren om:</string>
     <string name="title_activity_contact">ActivityContact</string>
 
     <string name="praktijk_psychologen">Pieter-Jan De Schryver en medewerkers</string>

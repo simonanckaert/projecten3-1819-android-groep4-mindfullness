@@ -8,6 +8,9 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
+import android.support.annotation.RequiresApi
+import android.support.v4.app.NotificationCompat
+import android.support.v4.app.NotificationCompat.PRIORITY_MIN
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.activities.MainActivity
 import java.util.*
@@ -15,10 +18,40 @@ import java.util.*
 
 class NotificationService : IntentService("NotificationService") {
 
-
-
     private lateinit var mNotification: Notification
     private val mNotificationId: Int = 1000
+
+    override fun onCreate() {
+        super.onCreate()
+        //startForeground(1, Notification())
+
+        val channelId =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    createNotificationChannel("my_service", "My Background Service")
+                } else {
+                    // If earlier version channel ID is not used
+                    ""
+                }
+
+        val notificationBuilder = NotificationCompat.Builder(this, channelId )
+        val notification = notificationBuilder.setOngoing(true)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setPriority(PRIORITY_MIN)
+                .setCategory(Notification.CATEGORY_SERVICE)
+                .build()
+        startForeground(101, notification)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel(channelId: String, channelName: String): String{
+        val chan = NotificationChannel(channelId,
+                channelName, NotificationManager.IMPORTANCE_NONE)
+        chan.lightColor = Color.BLUE
+        chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+        val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        service.createNotificationChannel(chan)
+        return channelId
+    }
 
     private fun createChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -44,7 +77,6 @@ class NotificationService : IntentService("NotificationService") {
         const val CHANNEL_ID = "samples.notification.devdeeds.com.CHANNEL_ID"
         const val CHANNEL_NAME = "Sample Notification"
     }
-
 
     override fun onHandleIntent(intent: Intent?) {
         //Create Channel

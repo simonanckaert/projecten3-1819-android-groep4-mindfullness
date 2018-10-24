@@ -60,7 +60,7 @@ class FragmentSessieList : Fragment() {
             oefeningen.add(oef)
         }
 
-        for(i in 1..12) {
+        for(i in 1..8) {
             val sessie: Sessie = if (i < 10)
                 Sessie("Sessie 0$i", "Beschrijving Sessie 0$i", "Info", oefeningen, false)
             else
