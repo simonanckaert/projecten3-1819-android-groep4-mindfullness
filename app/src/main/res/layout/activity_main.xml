@@ -205,7 +205,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center"
-                    android:onClick="openContact"
                     android:orientation="vertical">
 
                     <ImageButton

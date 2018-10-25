@@ -23,7 +23,6 @@ public interface DbService {
     Call<List<User>> getUsers();
 
     @POST("users/register")
-    @FormUrlEncoded
     Call<User> createUser(@Body User user);
 
 

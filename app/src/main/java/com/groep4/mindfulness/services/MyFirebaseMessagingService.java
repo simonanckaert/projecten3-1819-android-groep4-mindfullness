@@ -6,6 +6,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.groep4.mindfulness.model.User;
+import com.groep4.mindfulness.utils.RetrofitUtils;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -34,14 +35,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      */
     private void sendRegistrationToServer(String token) {
 
+        DbService service = RetrofitUtils.getDbService();
+        User user = new User("TestMail", token);
+        service.createUser(user);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("localhost:3000")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-         DbService service = retrofit.create(DbService.class);
-         service.createUser(new User("testmail", token));
     }
 
     @Override

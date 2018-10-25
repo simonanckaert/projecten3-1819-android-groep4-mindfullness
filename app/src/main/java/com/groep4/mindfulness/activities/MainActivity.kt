@@ -9,10 +9,20 @@ import android.view.View
 import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.services.DbService
 import com.groep4.mindfulness.utils.RetrofitUtils
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Retrofit
+import android.os.StrictMode
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.groep4.mindfulness.model.User
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +45,11 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("key_page", "reminder")
             startActivity(intent)
         }
+
+        ll_contact.setOnClickListener{
+            stuurBackend();
+
+        }
     }
 
     /** Button Handler voor Contact Activity*/
@@ -42,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, ActivityContact::class.java)
         startActivity(intent)
 
+        Log.e("opencontact", "hier geraak ik alsindswee")
         //dbService!!.saveUser("test", "test2")
 
         /*
@@ -58,4 +74,41 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this@MainActivity, msg, Toast.LENGTH_SHORT).show()
         })*/
     }
+
+    fun stuurBackend(){
+
+        val dbservice = RetrofitUtils.getDbService()
+        val user = User("testmail", "testtoken")
+
+
+        dbservice.users.enqueue(object : Callback<List<User>>{
+
+            override fun onFailure(call: Call<List<User>>?, t: Throwable?) {
+                Log.e("stuurBackend", "Sturen gefaald")
+
+            }
+
+            override fun onResponse(call: Call<List<User>>?, response: Response<List<User>>?) {
+                response.let {
+                    var stuur : String = it!!.body()!![1].email
+                    Log.e("stuurBackend", stuur)
+
+                }
+
+            }
+        })
+        /*
+        dbservice.createUser(user).enqueue(object : Callback<User>{
+            override fun onFailure(call: Call<User>?, t: Throwable?) {
+                Log.e("stuurBackend", "Sturen gefaald")
+
+            }
+
+            override fun onResponse(call: Call<User>?, response: Response<User>?) {
+                Log.e("stuurBackend", "Sturen gelukt.")
+
+            }
+        })*/
+    }
+
 }
