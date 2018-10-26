@@ -111,13 +111,13 @@ class FragmentReminder : Fragment() {
 
     private fun setSwitchChecked(isChecked: Boolean) {
         if (isChecked) {
-            Toast.makeText(context, "CHECKED", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, "CHECKED", Toast.LENGTH_SHORT).show()
             val editor = prefs!!.edit()
             editor.putBoolean(REMINDER_SET, true)
             editor.apply()
             setReminderNotification(prefs!!.getLong(REMINDER_TIME, System.currentTimeMillis()))
         } else {
-            Toast.makeText(context, "UNCHECKED", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, "UNCHECKED", Toast.LENGTH_SHORT).show()
             val editor = prefs!!.edit()
             editor.putBoolean(REMINDER_SET, false)
             editor.apply()
@@ -141,7 +141,7 @@ class FragmentReminder : Fragment() {
         if (!mNotified) {
             NotificationUtils().setNotification(fixedTime, activity!!)
         } else {
-            Toast.makeText(activity, "Already notified", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(activity, "Already notified", Toast.LENGTH_SHORT).show()
         }
     }
 
