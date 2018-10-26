@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.View
 import com.groep4.mindfulness.R
+
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("key_page", "reminder")
             startActivity(intent)
         }
+
     }
 
     /** Button Handler voor Contact Activity*/
@@ -42,10 +44,16 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+
     // Menu icons are inflated just as they were with actionbar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
+    }
+    /** Button Handler voor Kalender Activity*/
+    fun openKalender(view: View) {
+        val intent = Intent(this, ActivityKalender::class.java)
+        startActivity(intent)
     }
 }

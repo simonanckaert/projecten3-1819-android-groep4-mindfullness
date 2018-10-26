@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
+
     <android.support.design.widget.TabLayout
         android:id="@+id/sessie_tabs"
         android:layout_width="match_parent"
@@ -19,5 +20,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/sessie_tabs"/>
+
 
 </android.support.constraint.ConstraintLayout>

@@ -11,6 +11,22 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="inputText">
+        <item name="backgroundTint">@color/colorShadow</item>
+    </style>
+    <style name="inputTextPrimary">
+        <item name="backgroundTint">@color/colorPrimary</item>
+    </style>
+    <style name="inputTextFacebook">
+        <item name="backgroundTint">@color/colorFacebook</item>
+    </style>
+
+    <style name="AppThemeToolBar" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
 
     <style name="MyTimePickerDialogStyle" parent="@style/ThemeOverlay.AppCompat.Dialog.Alert">
         <item name="showTitle">false</item>
@@ -18,5 +34,7 @@
         <item name="colorAccent">@color/colorPinkDark</item>
         <item name="android:textColorPrimary">@color/colorPrimaryDark</item>
         <item name="android:textColorSecondary">@color/colorPrimaryDark</item>
+
+
     </style>
 </resources>
