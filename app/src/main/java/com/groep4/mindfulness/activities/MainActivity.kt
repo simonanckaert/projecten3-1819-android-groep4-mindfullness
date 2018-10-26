@@ -57,8 +57,41 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, ActivityContact::class.java)
         startActivity(intent)
 
-        Log.e("opencontact", "hier geraak ik alsindswee")
-        //dbService!!.saveUser("test", "test2")
+
+
+    }
+
+    fun stuurBackend(){
+
+        val dbservice = RetrofitUtils.getDbService()
+
+            val user = User("", "")
+                user.email = "emailtest"
+                user.token = "tokentest"
+        /*
+        dbservice.users.enqueue(object : Callback<List<User>>{
+            override fun onFailure(call: Call<List<User>>?, t: Throwable?) {
+                Log.e("stuurBackend", "Sturen gefaald")
+
+            }
+
+            override fun onResponse(call: Call<List<User>>?, response: Response<List<User>>?) {
+                Log.e("stuurBackend", "Sturen gelukt.")
+
+            }
+        })*/
+
+        /*  dbservice.saveUser("emailtest","tokentest").enqueue(object : Callback<User>{
+            override fun onFailure(call: Call<User>?, t: Throwable?) {
+                Log.e("stuurBackend", "Sturen gefaald")
+
+            }
+
+            override fun onResponse(call: Call<User>?, response: Response<User>?) {
+                Log.e("stuurBackend", "Sturen gelukt.")
+
+            }
+        })*/
 
         /*
         FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener(OnCompleteListener { task ->
@@ -73,31 +106,7 @@ class MainActivity : AppCompatActivity() {
             Log.d(ContentValues.TAG, msg)
             Toast.makeText(this@MainActivity, msg, Toast.LENGTH_SHORT).show()
         })*/
-    }
 
-    fun stuurBackend(){
-
-        val dbservice = RetrofitUtils.getDbService()
-        val user = User("testmail", "testtoken")
-
-
-        dbservice.users.enqueue(object : Callback<List<User>>{
-
-            override fun onFailure(call: Call<List<User>>?, t: Throwable?) {
-                Log.e("stuurBackend", "Sturen gefaald")
-
-            }
-
-            override fun onResponse(call: Call<List<User>>?, response: Response<List<User>>?) {
-                response.let {
-                    var stuur : String = it!!.body()!![1].email
-                    Log.e("stuurBackend", stuur)
-
-                }
-
-            }
-        })
-        /*
         dbservice.createUser(user).enqueue(object : Callback<User>{
             override fun onFailure(call: Call<User>?, t: Throwable?) {
                 Log.e("stuurBackend", "Sturen gefaald")
@@ -108,7 +117,7 @@ class MainActivity : AppCompatActivity() {
                 Log.e("stuurBackend", "Sturen gelukt.")
 
             }
-        })*/
+        })
     }
 
 }

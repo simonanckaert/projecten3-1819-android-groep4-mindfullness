@@ -36,7 +36,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendRegistrationToServer(String token) {
 
         DbService service = RetrofitUtils.getDbService();
-        User user = new User("TestMail", token);
+        User user = new User("", "");
+        user.setEmail("email");
+        user.setToken(token);
         service.createUser(user);
 
     }

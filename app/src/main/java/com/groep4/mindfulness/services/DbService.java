@@ -10,7 +10,6 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 
 /**
  * Retrofit service of HTTP API om te zetten naar Java interface
@@ -22,12 +21,12 @@ public interface DbService {
     @GET("users")
     Call<List<User>> getUsers();
 
+
     @POST("users/register")
     Call<User> createUser(@Body User user);
 
-
-    @POST("users/register")
     @FormUrlEncoded
+    @POST("users/register")
     Call<User> saveUser(@Field("email") String email,
                         @Field("token") String token);
 
