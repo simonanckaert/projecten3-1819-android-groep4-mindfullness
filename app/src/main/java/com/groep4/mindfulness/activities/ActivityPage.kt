@@ -29,6 +29,7 @@ class ActivityPage : AppCompatActivity() {
             var fragment: Fragment = when(keyPage) {
                 "sessie" -> FragmentSessieList()
                 "reminder" -> FragmentReminder()
+
                 else -> FragmentSessieList()
             }
             setFragment(fragment, false)
