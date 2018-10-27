@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import android.widget.Toast
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.adapters.SessiePagerAdapter
@@ -35,6 +36,7 @@ class FragmentSessie : Fragment() {
         val fragmentAdapter = SessiePagerAdapter(activity!!.supportFragmentManager, sessie)
         view.sessie_viewpager.adapter = fragmentAdapter
         view.sessie_tabs.setupWithViewPager(view.sessie_viewpager)
+
 
         return view
     }

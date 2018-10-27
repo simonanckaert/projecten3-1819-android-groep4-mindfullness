@@ -15,6 +15,9 @@ import com.groep4.mindfulness.adapters.SessieListAdapter
 import com.groep4.mindfulness.model.Oefening
 import com.groep4.mindfulness.model.Sessie
 import kotlinx.android.synthetic.main.activity_page.*
+import android.R.attr.key
+
+
 
 class FragmentSessieList : Fragment() {
 
@@ -33,10 +36,12 @@ class FragmentSessieList : Fragment() {
         addSessies()
 
         // Sessie adapter aanmaken en sessies linken
+
         val sessiesAdapter = SessieListAdapter(sessies) {
             val sessieFragment = FragmentSessie()
             val bundle = Bundle()
             bundle.putParcelable("key_sessie", it)
+
             sessieFragment.arguments = bundle
             (activity as ActivityPage).setFragment(sessieFragment, true)
         }

@@ -2,6 +2,7 @@ package com.groep4.mindfulness.activities
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
@@ -9,6 +10,9 @@ import android.view.View
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.fragments.FragmentReminder
 import com.groep4.mindfulness.fragments.FragmentSessieList
+import android.view.MenuInflater
+
+
 
 
 class ActivityPage : AppCompatActivity() {
@@ -27,10 +31,11 @@ class ActivityPage : AppCompatActivity() {
             val fragment: Fragment = when(keyPage) {
                 "sessie" -> FragmentSessieList()
                 "reminder" -> FragmentReminder()
+
                 else -> FragmentSessieList()
             }
-
             setFragment(fragment, false)
+
         }
 
         // Find the toolbar view inside the activity layout
@@ -46,6 +51,7 @@ class ActivityPage : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
+
 
     fun setFragment(fragment: Fragment, addToBackstack: Boolean) {
 

@@ -5,14 +5,22 @@
     android:layout_height="match_parent"
     android:background="@color/colorLight">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_sessies_list"
+
+
+    <FrameLayout
+        android:id="@+id/frag_sessie"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_sessies_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

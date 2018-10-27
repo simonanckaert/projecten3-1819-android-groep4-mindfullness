@@ -10,5 +10,15 @@
     <color name="colorPinkDark">#ee69a6</color>
     <color name="colorGreen">#7ac7bf</color>
     <color name="colorGreenDark">#13c5b3</color>
+
     <color name="colorLight">#37d7d7d7</color>
+
+    <color name="colorShadow">#80FFFFFF</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorFacebook">#3b5998</color>
+    <color name="colordivider">#333232</color>
+    <color name="colorSpace">#D2D2D2</color>
+    <color name="colorGrey">#444444</color>
+
 </resources>
+
