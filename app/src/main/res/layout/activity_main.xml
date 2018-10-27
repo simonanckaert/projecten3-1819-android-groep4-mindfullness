@@ -140,7 +140,6 @@
                     android:layout_margin="10dp"
                     android:background="@drawable/selector_btn_kalender"
                     android:clickable="true"
-                    android:onClick="openKalender"
                     android:focusable="true"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -219,7 +218,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:gravity="center"
-                    android:onClick="openContact"
                     android:orientation="vertical">
 
                     <ImageButton

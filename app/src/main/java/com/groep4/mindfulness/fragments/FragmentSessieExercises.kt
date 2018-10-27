@@ -48,9 +48,9 @@ class FragmentSessieExercises : Fragment() {
 
         // Static 3 icons toevoegen voor elk van de 3 oefeningen
         var icons: ArrayList<Int> = ArrayList()
-        icons.add(R.drawable.lotusposition1)
-        icons.add(R.drawable.lotusposition2)
-        icons.add(R.drawable.lotusposition3)
+        icons.add(R.mipmap.lotusposition1)
+        icons.add(R.mipmap.lotusposition2)
+        icons.add(R.mipmap.lotusposition3)
 
         // Static 3 oefeningen toevoegen
         for (i in 1..3) {

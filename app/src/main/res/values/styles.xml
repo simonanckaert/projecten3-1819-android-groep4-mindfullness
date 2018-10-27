@@ -22,10 +22,9 @@
     </style>
 
     <style name="AppThemeToolBar" parent="Theme.AppCompat.Light.NoActionBar">
-
         <item name="colorPrimary">@color/colorPrimary</item>
-
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
 
 
     <style name="MyTimePickerDialogStyle" parent="@style/ThemeOverlay.AppCompat.Dialog.Alert">
@@ -34,7 +33,5 @@
         <item name="colorAccent">@color/colorPinkDark</item>
         <item name="android:textColorPrimary">@color/colorPrimaryDark</item>
         <item name="android:textColorSecondary">@color/colorPrimaryDark</item>
-
-
     </style>
 </resources>
