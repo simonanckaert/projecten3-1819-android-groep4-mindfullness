@@ -39,10 +39,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.ActivityPage" />
-        <activity
-            android:name=".activities.ActivityContact"
-            android:label="@string/title_activity_contact"
-            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

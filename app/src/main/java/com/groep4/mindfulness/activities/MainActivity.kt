@@ -36,12 +36,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /** Button Handler voor Contact Activity*/
-    fun openContact(view: View) {
-        val intent = Intent(this, ActivityContact::class.java)
-        startActivity(intent)
-    }
-
     // Menu icons are inflated just as they were with actionbar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

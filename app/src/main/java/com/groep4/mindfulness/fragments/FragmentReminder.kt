@@ -27,6 +27,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.groep4.mindfulness.receivers.AlarmReceiver
+import es.dmoral.toasty.Toasty
 
 
 class FragmentReminder : Fragment() {
@@ -111,13 +112,15 @@ class FragmentReminder : Fragment() {
 
     private fun setSwitchChecked(isChecked: Boolean) {
         if (isChecked) {
-            Toast.makeText(context, "CHECKED", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, "CHECKED", Toast.LENGTH_SHORT).show()
+            Toasty.success(context!!, "Dagelijkse notificatie aangezet!", Toast.LENGTH_SHORT, true).show()
             val editor = prefs!!.edit()
             editor.putBoolean(REMINDER_SET, true)
             editor.apply()
             setReminderNotification(prefs!!.getLong(REMINDER_TIME, System.currentTimeMillis()))
         } else {
-            Toast.makeText(context, "UNCHECKED", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, "UNCHECKED", Toast.LENGTH_SHORT).show()
+            Toasty.success(context!!, "Dagelijkse notificatie uitgezet.", Toast.LENGTH_SHORT, true).show()
             val editor = prefs!!.edit()
             editor.putBoolean(REMINDER_SET, false)
             editor.apply()
