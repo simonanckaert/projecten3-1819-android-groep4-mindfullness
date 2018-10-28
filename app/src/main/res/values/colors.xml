@@ -13,4 +13,8 @@
     <color name="colorShadow">#80FFFFFF</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorFacebook">#3b5998</color>
+    <color name="colordivider">#333232</color>
+    <color name="colorSpace">#D2D2D2</color>
+    <color name="colorGrey">#444444</color>
 </resources>
+

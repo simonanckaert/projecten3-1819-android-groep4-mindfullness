@@ -95,4 +95,9 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    /** Button Handler voor Kalender Activity*/
+    fun openKalender(view: View) {
+        val intent = Intent(this, ActivityKalender::class.java)
+        startActivity(intent)
+    }
 }
