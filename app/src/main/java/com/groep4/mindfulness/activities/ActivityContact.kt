@@ -1,5 +1,6 @@
 package com.groep4.mindfulness.activities
 
+import android.app.Service
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -7,8 +8,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.groep4.mindfulness.R
-
+import retrofit2.Retrofit
 
 
 class ActivityContact : AppCompatActivity() {
@@ -24,6 +27,7 @@ class ActivityContact : AppCompatActivity() {
         val sendButton = findViewById(R.id.sendMailButton) as Button
         val telnr = findViewById<View>(R.id.telNr) as TextView
 
+        FirebaseInstanceId.getInstance().instanceId
 
         telnr.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
