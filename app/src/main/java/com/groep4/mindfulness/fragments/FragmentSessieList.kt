@@ -31,6 +31,8 @@ class FragmentSessieList : Fragment() {
         addSessies()
 
         var pager = view.findViewById<ViewPager>(R.id.pager)!!
+        // offscreenpagelimit nodig zodat de pages niet telkens herladen worden bij het scrollen
+        pager.offscreenPageLimit = 8
         pager.adapter = SessieListPagerAdapter(childFragmentManager, sessies)
 
         val indicator = view.findViewById(R.id.stepper_indicator) as StepperIndicator
