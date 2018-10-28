@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         ll_contact.setOnClickListener{
-            stuurBackend();
+            openContact(it)
 
         }
     }
@@ -66,34 +66,9 @@ class MainActivity : AppCompatActivity() {
         val dbservice = RetrofitUtils.getDbService()
 
             val user = User("", "")
-                user.email = "emailtest"
-                user.token = "tokentest"
-        /*
-        dbservice.users.enqueue(object : Callback<List<User>>{
-            override fun onFailure(call: Call<List<User>>?, t: Throwable?) {
-                Log.e("stuurBackend", "Sturen gefaald")
 
-            }
 
-            override fun onResponse(call: Call<List<User>>?, response: Response<List<User>>?) {
-                Log.e("stuurBackend", "Sturen gelukt.")
 
-            }
-        })*/
-
-        /*  dbservice.saveUser("emailtest","tokentest").enqueue(object : Callback<User>{
-            override fun onFailure(call: Call<User>?, t: Throwable?) {
-                Log.e("stuurBackend", "Sturen gefaald")
-
-            }
-
-            override fun onResponse(call: Call<User>?, response: Response<User>?) {
-                Log.e("stuurBackend", "Sturen gelukt.")
-
-            }
-        })*/
-
-        /*
         FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w(ContentValues.TAG, "getInstanceId failed", task.exception)
@@ -105,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             val msg = getString(R.string.msg_token_fmt, token)
             Log.d(ContentValues.TAG, msg)
             Toast.makeText(this@MainActivity, msg, Toast.LENGTH_SHORT).show()
-        })*/
+        })
 
         dbservice.createUser(user).enqueue(object : Callback<User>{
             override fun onFailure(call: Call<User>?, t: Throwable?) {
