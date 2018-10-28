@@ -1,6 +1,5 @@
 package com.groep4.mindfulness.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.method.ScrollingMovementMethod
@@ -10,21 +9,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.model.Sessie
-import kotlinx.android.synthetic.main.fragment_sessie_info.*
-import kotlinx.android.synthetic.main.fragment_sessie_info.view.*
+import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.fragment_sessie_page_info.view.*
 
-class FragmentSessieInfo : Fragment() {
+class FragmentSessiePageInfo : Fragment() {
 
     lateinit var sessie: Sessie
 
     companion object {
-        fun newInstance(): FragmentSessieInfo {
-            return FragmentSessieInfo()
+        fun newInstance(): FragmentSessiePageInfo {
+            return FragmentSessiePageInfo()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view: View = inflater.inflate(R.layout.fragment_sessie_info, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_sessie_page_info, container, false)
 
         val bundle = this.arguments
 
@@ -33,6 +32,10 @@ class FragmentSessieInfo : Fragment() {
             view.tv_sessie_beschrijving.text = sessie.beschrijving
             view.tv_sessie_info.text = sessie.info
             view.tv_sessie_info.movementMethod = ScrollingMovementMethod()
+
+            var page = bundle.getInt("key_page")
+            view.iv_sessie_monster.setImageResource(context!!.resources.getIdentifier("mnstr$page","mipmap", context!!.packageName))
+
         }
         return view
     }

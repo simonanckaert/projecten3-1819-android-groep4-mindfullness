@@ -1,26 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
 
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/sessie_tabs"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:tabIndicatorColor="@android:color/white"
-        app:tabMode="fixed"
-        app:tabSelectedTextColor="@android:color/white"
-        app:tabTextColor="@android:color/white" />
+        android:layout_height="match_parent">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/sessie_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/trianglify_01"
-        app:layout_constraintTop_toBottomOf="@+id/sessie_tabs" />
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_sessie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="50dp">
+
+            <LinearLayout
+                android:layout_width="250dp"
+                android:layout_height="200dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteX="20dp"
+                tools:layout_editor_absoluteY="179dp">
+
+                <ImageView
+                    android:id="@+id/iv_sessie"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="0"
+                    android:padding="15dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@mipmap/m0" />
+
+                <TextView
+                    android:id="@+id/tv_sessie"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="Sessies"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_sessie_beschrijving"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="TEST"
+                    android:textColor="@android:color/black"
+                    android:textStyle="italic"
+                    tools:layout_editor_absoluteX="10dp"
+                    tools:layout_editor_absoluteY="35dp" />
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <ImageView
+            android:id="@+id/iv_sessie_road"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:scaleType="centerCrop"
+            app:srcCompat="@mipmap/road01" />
+
+        <ImageView
+            android:id="@+id/iv_bus"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="20dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            app:srcCompat="@mipmap/bus" />
+
+        <android.support.v7.widget.GridLayout
+            android:layout_width="205dp"
+            android:layout_height="101dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="65dp"
+            app:rowCount="2">
+
+            <ImageView
+                android:id="@+id/iv_bus_seat8"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="6dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="invisible"
+                app:layout_row="0"
+                app:layout_rowSpan="1"
+                app:srcCompat="@mipmap/mnstr2" />
+
+            <ImageView
+                android:id="@+id/iv_bus_seat7"
+                android:layout_width="31dp"
+                android:layout_height="30dp"
+                android:layout_margin="6dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="invisible"
+                app:layout_row="0"
+                app:layout_rowSpan="1"
+                app:srcCompat="@mipmap/mnstr2" />
+
+            <ImageView
+                android:id="@+id/iv_bus_seat6"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="6dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="invisible"
+                app:layout_row="0"
+                app:layout_rowSpan="1"
+                app:srcCompat="@mipmap/mnstr2" />
+
+            <ImageView
+                android:id="@+id/iv_bus_seat5"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="6dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="invisible"
+                app:layout_row="0"
+                app:layout_rowSpan="1"
+                app:srcCompat="@mipmap/mnstr2" />
+
+            <ImageView
+                android:id="@+id/iv_bus_seat4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="6dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="invisible"
+                app:layout_column="0"
+                app:layout_row="1"
+                app:srcCompat="@mipmap/mnstr2" />
+
+            <ImageView
+                android:id="@+id/iv_bus_seat3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="6dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="invisible"
+                app:layout_column="1"
+                app:layout_row="1"
+                app:srcCompat="@mipmap/mnstr2" />
+
+            <ImageView
+                android:id="@+id/iv_bus_seat2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="6dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="invisible"
+                app:layout_column="2"
+                app:layout_row="1"
+                app:srcCompat="@mipmap/mnstr2" />
+
+            <ImageView
+                android:id="@+id/iv_bus_seat1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="6dp"
+                android:layout_marginBottom="20dp"
+                android:visibility="invisible"
+                app:layout_column="3"
+                app:layout_row="1"
+                app:srcCompat="@mipmap/mnstr2" />
+        </android.support.v7.widget.GridLayout>
+
+        <ImageView
+            android:id="@+id/iv_bus_gloss"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_gravity="bottom|center"
+            android:layout_marginBottom="20dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            app:srcCompat="@mipmap/busgloss" />
+    </FrameLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

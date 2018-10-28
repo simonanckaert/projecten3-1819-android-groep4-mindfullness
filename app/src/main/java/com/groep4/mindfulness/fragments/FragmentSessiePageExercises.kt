@@ -16,20 +16,20 @@ import es.dmoral.toasty.Toasty
 import java.util.*
 
 
-class FragmentSessieExercises : Fragment() {
+class FragmentSessiePageExercises : Fragment() {
 
     private var oefeningen: ArrayList<Oefening> = ArrayList()
     lateinit var expandingList: ExpandingList
     lateinit var mp: MediaPlayer
 
     companion object {
-        fun newInstance(): FragmentSessieExercises {
-            return FragmentSessieExercises()
+        fun newInstance(): FragmentSessiePageExercises {
+            return FragmentSessiePageExercises()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view: View = inflater.inflate(R.layout.fragment_sessie_exercises, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_sessie_page_exercises, container, false)
         expandingList = view.findViewById(R.id.expanding_list_main)
 
         // Audioplayer
