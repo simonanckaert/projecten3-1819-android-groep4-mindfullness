@@ -1,6 +1,7 @@
 package com.groep4.mindfulness.fragments
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
@@ -18,6 +19,8 @@ import kotlinx.android.synthetic.main.activity_page.*
 class FragmentSessieList : Fragment() {
 
     var sessies: ArrayList<Sessie> = ArrayList()
+    var previousPage: Int = 0
+    private val handler = Handler()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -33,13 +36,44 @@ class FragmentSessieList : Fragment() {
         var pager = view.findViewById<ViewPager>(R.id.pager)!!
         // offscreenpagelimit nodig zodat de pages niet telkens herladen worden bij het scrollen
         pager.offscreenPageLimit = 8
-        pager.adapter = SessieListPagerAdapter(childFragmentManager, sessies)
+        var pagerAdapter = SessieListPagerAdapter(childFragmentManager, sessies)
+        pager.adapter = pagerAdapter
+
+        // Bij de start van sessielistview de bus laten rijden
+        // Bug: currentItem returns 0 on backpress sessiepage...
+        handler.postDelayed({
+            var sessieFragment: FragmentSessie = pagerAdapter.getRegisteredFragment(pager.currentItem) as FragmentSessie
+            sessieFragment.drive(true)
+        }, 15)
+
+        pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                // Bij switchen van viewpages de bus forward of backward laten rijden naargelang de previous page
+                val handler = Handler()
+                handler.postDelayed({
+                    var sessieFragmentCurrent: FragmentSessie = pagerAdapter.getRegisteredFragment(position) as FragmentSessie
+                    var sessieFragmentPrevious: FragmentSessie = pagerAdapter.getRegisteredFragment(previousPage) as FragmentSessie
+                    if (previousPage <= position)
+                        sessieFragmentCurrent.drive(true)
+                    else
+                        sessieFragmentCurrent.drive(false)
+                    sessieFragmentPrevious.setBusVisible(false)
+                    previousPage = position
+                }, 15)
+            }
+        })
 
         val indicator = view.findViewById(R.id.stepper_indicator) as StepperIndicator
         // We keep last page for a "finishing" page
         indicator.setViewPager(pager, false)
-        indicator.addOnStepClickListener {
-            step -> pager.setCurrentItem(step, true)
+        indicator.addOnStepClickListener { step ->
+            pager.setCurrentItem(step, true)
         }
 
         // Inflate
@@ -51,12 +85,12 @@ class FragmentSessieList : Fragment() {
         val oefeningen: ArrayList<Oefening> = ArrayList()
         sessies.clear()
 
-        for(i in 1..3) {
+        for (i in 1..3) {
             val oef = Oefening("Oefening 0$i", "Beschrijving 0$i")
             oefeningen.add(oef)
         }
 
-        for(i in 1..8) {
+        for (i in 1..8) {
             val sessie: Sessie = if (i < 10)
                 Sessie("Sessie 0$i", "Beschrijving Sessie 0$i", "Info", oefeningen, false)
             else

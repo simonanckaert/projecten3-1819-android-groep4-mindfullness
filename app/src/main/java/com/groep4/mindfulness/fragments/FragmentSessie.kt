@@ -1,5 +1,6 @@
 package com.groep4.mindfulness.fragments
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -8,11 +9,13 @@ import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.activities.ActivityPage
 import com.groep4.mindfulness.model.Sessie
 import kotlinx.android.synthetic.main.fragment_sessie.*
+import kotlinx.android.synthetic.main.fragment_sessie.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -38,6 +41,10 @@ class FragmentSessie : Fragment() {
         imgSessie = view.findViewById(R.id.iv_sessie)
         txtSessieTitel = view.findViewById(R.id.tv_sessie)
         txtSessieBeschrijving = view.findViewById(R.id.tv_sessie_beschrijving)
+
+        view.iv_bus.translationX = resources.displayMetrics.widthPixels.toFloat()
+        view.iv_bus_gloss.translationX = resources.displayMetrics.widthPixels.toFloat()
+        view.gl_bus_passengers.translationX = resources.displayMetrics.widthPixels.toFloat()
 
         // Bus-seats imageviews in array stoppen
         imgBusMonsters = ArrayList()
@@ -119,7 +126,53 @@ class FragmentSessie : Fragment() {
             sessiePageFragment.arguments = bundle
             (activity as ActivityPage).setFragment(sessiePageFragment, true)
         }
+    }
 
+    fun setBusVisible(isVisible: Boolean){
+        val root = view!!.findViewById(R.id.rl_sessie) as RelativeLayout
+        if(isVisible){
+            root.iv_bus.visibility = VISIBLE
+            root.iv_bus_gloss.visibility = VISIBLE
+            root.gl_bus_passengers.visibility = VISIBLE
+        }else{
+            root.iv_bus.visibility = INVISIBLE
+            root.iv_bus_gloss.visibility = INVISIBLE
+            root.gl_bus_passengers.visibility = INVISIBLE
+        }
+    }
+
+    fun drive(forward: Boolean){
+        val root = view!!.findViewById(R.id.rl_sessie) as RelativeLayout
+
+        if(forward){
+            handleDriveForward(root.iv_bus)
+            handleDriveForward(root.iv_bus_gloss)
+            handleDriveForward(root.gl_bus_passengers)
+        }else{
+            handleDriveBackward(root.iv_bus)
+            handleDriveBackward(root.iv_bus_gloss)
+            handleDriveBackward(root.gl_bus_passengers)
+        }
+
+        setBusVisible(true)
+    }
+
+    fun handleDriveForward(v: View){
+        val objectAnimator: ObjectAnimator
+        val screenWidth = resources.displayMetrics.widthPixels
+
+        objectAnimator = ObjectAnimator.ofFloat(v, "translationX", -screenWidth.toFloat(), 0f)
+        objectAnimator.duration = 1100
+        objectAnimator.start()
+    }
+
+    fun handleDriveBackward(v: View){
+        val objectAnimator: ObjectAnimator
+        val screenWidth = resources.displayMetrics.widthPixels
+
+        objectAnimator = ObjectAnimator.ofFloat(v, "translationX", screenWidth.toFloat(), 0f)
+        objectAnimator.duration = 1100
+        objectAnimator.start()
     }
 
     companion object {

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_sessie"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -276,14 +277,17 @@
             android:layout_marginBottom="20dp"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
+            android:visibility="invisible"
             app:srcCompat="@mipmap/bus" />
 
         <android.support.v7.widget.GridLayout
+            android:id="@+id/gl_bus_passengers"
             android:layout_width="205dp"
             android:layout_height="101dp"
             android:layout_gravity="bottom|center"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="65dp"
+            android:visibility="invisible"
             app:rowCount="2">
 
             <ImageView
@@ -383,6 +387,7 @@
             android:layout_marginBottom="20dp"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
+            android:visibility="invisible"
             app:srcCompat="@mipmap/busgloss" />
     </FrameLayout>
 
