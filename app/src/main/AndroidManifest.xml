@@ -6,8 +6,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -43,7 +42,7 @@
         </service>
 
         <activity android:name=".activities.MainActivity">
-             <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -51,12 +50,13 @@
         </activity>
         <activity android:name=".activities.ActivityAddTask" />
         <activity android:name=".activities.ActivityKalender" />
-        <activity android:name=".activities.ActivityLogin"/>
+        <activity android:name=".activities.ActivityLogin" />
         <activity android:name=".activities.ActivityPage" />
         <activity
             android:name=".activities.ActivityContact"
             android:label="@string/title_activity_contact"
             android:theme="@style/AppTheme" />
+        <activity android:name=".activities.ChatActivity"></activity>
     </application>
 
 </manifest>

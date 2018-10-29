@@ -47,7 +47,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         ll_contact.setOnClickListener{
-            openContact(it)
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
 
         }
     }
@@ -56,8 +57,6 @@ class MainActivity : AppCompatActivity() {
     fun openContact(view: View) {
         val intent = Intent(this, ActivityContact::class.java)
         startActivity(intent)
-
-
 
     }
 
