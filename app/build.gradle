@@ -9,7 +9,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.sdrz.mindfulness_00"
+        applicationId "com.groep4.mindfulness"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
