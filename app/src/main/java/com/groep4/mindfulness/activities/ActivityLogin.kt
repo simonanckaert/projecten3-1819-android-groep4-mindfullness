@@ -22,6 +22,9 @@ import android.Manifest.permission.READ_CONTACTS
 import android.app.Activity
 
 import android.content.Intent
+import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.R.id.password
 import com.groep4.mindfulness.utils.LoginValidation
@@ -33,8 +36,8 @@ class ActivityLogin : AppCompatActivity(), LoaderCallbacks<Cursor> {
     /**
      * Houd de inlogtaak bij om ervoor te zorgen dat we deze kunnen annuleren als hierom wordt gevraagd.
      */
-     var mAuthTask: UserLoginTask? = null
-
+   //  var mAuthTask: UserLoginTask? = null
+    lateinit var mAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -125,11 +128,22 @@ class ActivityLogin : AppCompatActivity(), LoaderCallbacks<Cursor> {
         } else {
 
             //Aanmelden
-            val intent = Intent(this, MainActivity::class.java)
-            mAuthTask = UserLoginTask(emailStr, passwordStr, intent, this)
-            mAuthTask!!.execute(null as Void?)
+            mAuth = FirebaseAuth.getInstance()
 
+            mAuth.signInWithEmailAndPassword(emailStr,passwordStr).addOnCompleteListener(this@ActivityLogin){
+                task ->
 
+                if (task.isSuccessful()) {
+                    //mainactivity tonen
+                    val intent = Intent(this, MainActivity::class.java)
+                    this.finish()
+                    this.startActivity(intent)
+
+                } else {
+                    this.password.error = this.getString(R.string.error_incorrect_password)
+                    this.password.requestFocus()
+                }
+            }
 
         }
     }
@@ -186,49 +200,6 @@ class ActivityLogin : AppCompatActivity(), LoaderCallbacks<Cursor> {
         val IS_PRIMARY = 1
     }
 
-    /**
-     *  asynchrone login / registratietaak die wordt gebruikt voor authenticatie
-     */
-     class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String, private val intent: Intent, context: ActivityLogin ) : AsyncTask<Void, Void, Boolean>() {
-
-        private val activityReference: WeakReference<ActivityLogin> = WeakReference(context)
-
-
-        override fun doInBackground(vararg params: Void): Boolean? {
-
-            // TODO: Netwerk connectie
-
-            try {
-                // Simulatie van netwerk connectie
-                Thread.sleep(2000)
-            } catch (e: InterruptedException) {
-                return false
-            }
-
-            //Validatie user credentials
-            return DUMMY_CREDENTIALS.get(0) == mEmail && DUMMY_CREDENTIALS.get(1) == mPassword
-
-        }
-
-        override fun onPostExecute(success: Boolean?) {
-            val activity = activityReference.get()
-            if (activity == null || activity.isFinishing) return
-            if (success!!) {
-                //mainactivity tonen
-                activity.finish()
-                activity.startActivity(intent)
-
-
-            } else {
-                activity.password.error = activity.getString(R.string.error_incorrect_password)
-                activity.password.requestFocus()
-            }
-        }
-
-        override fun onCancelled() {
-
-        }
-    }
 
     companion object {
 
