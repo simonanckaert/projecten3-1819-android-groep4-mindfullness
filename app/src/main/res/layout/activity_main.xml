@@ -7,35 +7,46 @@
     android:background="@mipmap/trianglify_01"
     tools:context=".activities.MainActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/AppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimaryDark"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    </android.support.design.widget.AppBarLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical">
 
-        <TableRow
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+            android:layout_gravity="center"
+            android:gravity="top|center"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/iv_logo"
-                android:layout_width="50dp"
-                android:layout_height="100dp"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:contentDescription="@string/logo"
                 android:scaleType="fitCenter"
                 app:srcCompat="@mipmap/logo" />
 
-            <!-- Custom TextView gebruikt om custom font te kunnen gebruiken -->
             <com.groep4.mindfulness.views.LogoTextView
                 android:id="@+id/tv_mindfulness"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
@@ -48,13 +59,7 @@
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="45sp" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-        </TableRow>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_welkom"
@@ -73,9 +78,9 @@
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0"
             android:gravity="center_horizontal">
 
             <TableRow
@@ -127,7 +132,6 @@
                     android:layout_margin="10dp"
                     android:background="@drawable/selector_btn_kalender"
                     android:clickable="true"
-                    android:onClick="openKalender"
                     android:focusable="true"
                     android:gravity="center"
                     android:orientation="vertical">

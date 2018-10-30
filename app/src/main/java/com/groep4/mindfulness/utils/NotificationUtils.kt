@@ -23,7 +23,6 @@ class NotificationUtils {
 
             val pendingIntent = PendingIntent.getBroadcast(activity, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent)
-            Toast.makeText(activity, "Alarm Set", Toast.LENGTH_SHORT).show()
         }
     }
 }
