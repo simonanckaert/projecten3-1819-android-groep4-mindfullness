@@ -11,7 +11,7 @@ import com.groep4.mindfulness.model.Sessie
 class SessiePagerAdapter(fm: FragmentManager, sessie: Sessie, page: Int) : FragmentStatePagerAdapter(fm) {
 
     var currentSessie: Sessie? = null
-    val bundle = Bundle()
+    private val bundle = Bundle()
     var currentPage: Int
 
     init {

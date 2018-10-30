@@ -9,11 +9,17 @@ import android.view.View
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.fragments.FragmentReminder
 import com.groep4.mindfulness.fragments.FragmentSessieList
+import com.google.gson.Gson
+import com.groep4.mindfulness.model.Sessie
+import es.dmoral.toasty.Toasty
+import okhttp3.*
+import java.io.IOException
 
 
 class ActivityPage : AppCompatActivity() {
 
     private val BACK_STACK_ROOT_TAG = "root_fragment"
+    var sessies: ArrayList<Sessie> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,17 +27,16 @@ class ActivityPage : AppCompatActivity() {
 
         val myIntent = intent // parent intent ophalen
         val keyPage = myIntent.getStringExtra("key_page") // key_page value ophalen
+        sessies = myIntent.getParcelableArrayListExtra("sessielist")
 
         // naargelang 'key_page value' (meegegeven via de MainActivity) kiezen welke Fragment er geladen moet worden
         if (savedInstanceState == null) {
             val fragment: Fragment = when(keyPage) {
                 "sessie" -> FragmentSessieList()
                 "reminder" -> FragmentReminder()
-
                 else -> FragmentSessieList()
             }
             setFragment(fragment, false)
-
         }
 
         // Find the toolbar view inside the activity layout
@@ -50,7 +55,6 @@ class ActivityPage : AppCompatActivity() {
 
 
     fun setFragment(fragment: Fragment, addToBackstack: Boolean) {
-
         if (addToBackstack)
             supportFragmentManager
                     .beginTransaction()
@@ -62,6 +66,5 @@ class ActivityPage : AppCompatActivity() {
                     .beginTransaction()
                     .replace(R.id.frag_content, fragment, "pageContent")
                     .commit()
-
     }
 }

@@ -3,6 +3,8 @@ package com.groep4.mindfulness.fragments
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +14,16 @@ import com.diegodobelo.expandingview.ExpandingItem
 import com.diegodobelo.expandingview.ExpandingList
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.model.Oefening
+import com.groep4.mindfulness.model.Sessie
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.fragment_sessie_page_info.view.*
 import java.util.*
 
 
 class FragmentSessiePageExercises : Fragment() {
 
-    private var oefeningen: ArrayList<Oefening> = ArrayList()
+    lateinit var sessie: Sessie
+    private lateinit var oefeningen: ArrayList<Oefening>
     lateinit var expandingList: ExpandingList
     lateinit var mp: MediaPlayer
 
@@ -31,6 +36,13 @@ class FragmentSessiePageExercises : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_sessie_page_exercises, container, false)
         expandingList = view.findViewById(R.id.expanding_list_main)
+
+        oefeningen = arrayListOf()
+
+        val bundle = this.arguments
+        if (bundle != null) {
+            sessie = bundle.getParcelable("key_sessie")
+        }
 
         // Audioplayer
         mp = MediaPlayer.create(context, R.raw.ademmeditatie)
@@ -46,21 +58,24 @@ class FragmentSessiePageExercises : Fragment() {
     private fun addOefeningen() {
         oefeningen.clear()
 
-        // Static 3 icons toevoegen voor elk van de 3 oefeningen
-        var icons: ArrayList<Int> = ArrayList()
+        // icons toevoegen
+        val icons: ArrayList<Int> = ArrayList()
         icons.add(R.mipmap.lotusposition1)
         icons.add(R.mipmap.lotusposition2)
         icons.add(R.mipmap.lotusposition3)
+        icons.add(R.mipmap.lotusposition4)
+        icons.add(R.mipmap.lotusposition5)
+        icons.add(R.mipmap.lotusposition6)
+        icons.add(R.mipmap.lotusposition7)
+        icons.add(R.mipmap.lotusposition8)
 
-        // Static 3 oefeningen toevoegen
-        for (i in 1..3) {
-            val oef = Oefening("Oefening 0$i", "Beschrijving 0$i")
-            oefeningen.add(oef)
+        if (sessie.oefeningen != null){
+            oefeningen.addAll(sessie.oefeningen!!)
         }
 
         // Voor elke oefening een ExpandedItem aanmaken om in de lijst te kunnen weergeven
-        for (oefening in oefeningen) {
-            var item = expandingList.createNewItem(R.layout.single_exercise_full)
+        for (oefening in oefeningen!!) {
+            val item = expandingList.createNewItem(R.layout.single_exercise_full)
 
             item.findViewById<TextView>(R.id.title).text = oefening.naam
 
@@ -98,7 +113,6 @@ class FragmentSessiePageExercises : Fragment() {
     private fun setCloseOtherExercises(item: ExpandingItem){
         item.setStateChangedListener{
             if (item.isExpanded) {
-                //Toasty.info(view!!.context, "EXPANDED").show()
                 for (i in 0 until expandingList.itemsCount){
                     if (item != expandingList.getItemByIndex(i) && expandingList.getItemByIndex(i).isExpanded)
                         expandingList.getItemByIndex(i).toggleExpanded()
@@ -109,8 +123,6 @@ class FragmentSessiePageExercises : Fragment() {
                     (item.findViewById<View>(R.id.ib_playAudio) as ImageButton).setImageResource(R.drawable.ic_play_arrow_white_24dp)
                     Toasty.info(view!!.context, "Audio Stopped").show()
                 }
-
-
             }
         }
     }
