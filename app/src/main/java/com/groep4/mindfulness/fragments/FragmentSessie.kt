@@ -30,10 +30,12 @@ class FragmentSessie : Fragment() {
     private var imgViewsBuildings: ArrayList<ImageView>? = null
     private var imgViewsMisc: ArrayList<ImageView>? = null
 
-    private var imgBuildings: ArrayList<Int>? = null
-    private var imgMisc: ArrayList<Int>? = null
+    private var objectAnimator: ObjectAnimator? = null
 
     private var random: Random? = null
+
+    private var screenWidth: Int? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         random = Random()
@@ -69,24 +71,10 @@ class FragmentSessie : Fragment() {
         imgViewsMisc!!.add(view.findViewById(R.id.iv_sessie_miscbg02))
         imgViewsMisc!!.add(view.findViewById(R.id.iv_sessie_miscbg03))
 
-        imgBuildings = ArrayList()
-        imgBuildings!!.add(R.mipmap.building00)
-        imgBuildings!!.add(R.mipmap.building01)
-        imgBuildings!!.add(R.mipmap.building02)
-        imgBuildings!!.add(R.mipmap.building03)
-        imgBuildings!!.add(R.mipmap.building04)
-        imgBuildings!!.add(R.mipmap.building05)
-        imgBuildings!!.add(R.mipmap.building06)
 
-        imgMisc = ArrayList()
-        imgMisc!!.add(R.mipmap.bush00)
-        imgMisc!!.add(R.mipmap.bush01)
-        imgMisc!!.add(R.mipmap.tree00)
-        imgMisc!!.add(R.mipmap.tree01)
-        imgMisc!!.add(R.mipmap.tree02)
-
+        // Dynamisch background images verdelen per sessie
         for (view in imgViewsBuildings!!) {
-            view.setImageResource(imgBuildings!![random!!.nextInt(imgBuildings!!.size)])
+            view.setImageResource((parentFragment as FragmentSessieList).imgBuildings!![random!!.nextInt((parentFragment as FragmentSessieList).imgBuildings!!.size)])
             when (random!!.nextBoolean()) {
                 true -> view.visibility = VISIBLE
                 false -> view.visibility = INVISIBLE
@@ -94,8 +82,10 @@ class FragmentSessie : Fragment() {
         }
 
         for (view in imgViewsMisc!!) {
-            view.setImageResource(imgMisc!![random!!.nextInt(imgMisc!!.size)])
+            view.setImageResource((parentFragment as FragmentSessieList).imgMisc!![random!!.nextInt((parentFragment as FragmentSessieList).imgMisc!!.size)])
         }
+
+        screenWidth = resources.displayMetrics.widthPixels
 
         return view
     }
@@ -153,26 +143,19 @@ class FragmentSessie : Fragment() {
             handleDriveBackward(root.iv_bus_gloss)
             handleDriveBackward(root.gl_bus_passengers)
         }
-
         setBusVisible(true)
     }
 
-    fun handleDriveForward(v: View){
-        val objectAnimator: ObjectAnimator
-        val screenWidth = resources.displayMetrics.widthPixels
-
-        objectAnimator = ObjectAnimator.ofFloat(v, "translationX", -screenWidth.toFloat(), 0f)
-        objectAnimator.duration = 1100
-        objectAnimator.start()
+    private fun handleDriveForward(v: View){
+        objectAnimator = ObjectAnimator.ofFloat(v, "translationX", -screenWidth!!.toFloat(), 0f)
+        objectAnimator!!.duration = 1100
+        objectAnimator!!.start()
     }
 
-    fun handleDriveBackward(v: View){
-        val objectAnimator: ObjectAnimator
-        val screenWidth = resources.displayMetrics.widthPixels
-
-        objectAnimator = ObjectAnimator.ofFloat(v, "translationX", screenWidth.toFloat(), 0f)
-        objectAnimator.duration = 1100
-        objectAnimator.start()
+    private fun handleDriveBackward(v: View){
+        objectAnimator = ObjectAnimator.ofFloat(v, "translationX", screenWidth!!.toFloat(), 0f)
+        objectAnimator!!.duration = 1100
+        objectAnimator!!.start()
     }
 
     companion object {
