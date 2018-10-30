@@ -36,8 +36,9 @@ class ActivityLogin : AppCompatActivity(), LoaderCallbacks<Cursor> {
     /**
      * Houd de inlogtaak bij om ervoor te zorgen dat we deze kunnen annuleren als hierom wordt gevraagd.
      */
-   //  var mAuthTask: UserLoginTask? = null
+
     lateinit var mAuth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -52,6 +53,8 @@ class ActivityLogin : AppCompatActivity(), LoaderCallbacks<Cursor> {
         })
         email
         email_sign_in_button.setOnClickListener { attemptLogin() }
+
+        register_account.setOnClickListener { attemptRegister() }
     }
 
     private fun populateAutoComplete() {
@@ -91,6 +94,11 @@ class ActivityLogin : AppCompatActivity(), LoaderCallbacks<Cursor> {
         }
     }
 
+    private fun attemptRegister(){
+        val intent = Intent(this, ActivityRegister::class.java)
+        this.finish()
+        this.startActivity(intent)
+    }
 
     /**
      *Validatie en aanmelden van account
