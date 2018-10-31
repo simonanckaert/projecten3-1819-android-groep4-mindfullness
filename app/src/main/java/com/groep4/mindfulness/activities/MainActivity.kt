@@ -16,6 +16,7 @@ import com.groep4.mindfulness.utils.RetrofitUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Retrofit
 import android.os.StrictMode
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.groep4.mindfulness.model.User
@@ -27,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
-
+    lateinit var mAuth:FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -99,5 +100,12 @@ class MainActivity : AppCompatActivity() {
     fun openKalender(view: View) {
         val intent = Intent(this, ActivityKalender::class.java)
         startActivity(intent)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Toast.makeText(this,"Account uitgelogd", Toast.LENGTH_SHORT).show()
+        mAuth = FirebaseAuth.getInstance()
+        mAuth.signOut()
     }
 }

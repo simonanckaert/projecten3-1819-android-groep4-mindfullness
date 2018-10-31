@@ -32,4 +32,5 @@
     <string name="text">Text</string>
     <string name="instellingen">Instellingen</string>
     <string name="msg_token_fmt" translatable="false">InstanceID Token: %s</string>
+    <string name="wachtwoord_beleid"> Je paswoord moet minimum 8 karakters lang zijn, verschillend zijn van de gebruikersnaam en minstens karakters uit volgende categorieën bevatten: kleine letters, hoofdletters, cijfers</string>
 </resources>
