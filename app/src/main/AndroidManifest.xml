@@ -37,8 +37,12 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activities.MainActivity">
-             <intent-filter>
+        <activity android:name=".activities.MainActivity"/>
+
+        <activity android:name=".activities.ActivityAddTask" />
+        <activity android:name=".activities.ActivityKalender" />
+        <activity android:name=".activities.ActivityLogin">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
