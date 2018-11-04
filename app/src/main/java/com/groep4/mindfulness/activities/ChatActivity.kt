@@ -46,6 +46,11 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
+
+    /**
+     * De listAdapter zorgt ervoor dat de List opgevuld raakt met chatberichten
+     * Dit werkt nog niet. Vraag aan bram hoe je via authorisatie de gebruikernaam kan opvragen.
+     */
     private fun displayChatMessages() {
         listView = findViewById<View>(R.id.list_msg) as ListView
 
