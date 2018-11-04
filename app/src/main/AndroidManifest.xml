@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.groep4.mindfulness">
 
     <uses-permission android:name="android.permission.SET_ALARM" />
@@ -23,7 +24,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+
         <receiver
             android:name=".receivers.AlarmReceiver"
             android:enabled="true">
@@ -41,9 +44,6 @@
             android:exported="true" />
 
         <activity android:name=".activities.MainActivity"/>
-
-        <activity android:name=".activities.ActivityAddTask" />
-        <activity android:name=".activities.ActivityKalender" />
         <activity android:name=".activities.ActivityLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,11 +51,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.ActivityPage" />
-        <activity
-            android:name=".activities.ActivityContact"
-            android:label="@string/title_activity_contact"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".activities.ChatActivity"></activity>
+        <activity android:name=".activities.ChatActivity"/>
+
     </application>
 
 </manifest>

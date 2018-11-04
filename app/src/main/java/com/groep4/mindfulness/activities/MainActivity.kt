@@ -2,20 +2,19 @@ package com.groep4.mindfulness.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.widget.Toast
 import com.groep4.mindfulness.R
 import com.google.firebase.auth.FirebaseAuth
-import com.groep4.mindfulness.R.id.*
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity {
+class MainActivity : AppCompatActivity() {
 
     lateinit var mAuth:FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
 
         // belangrijk key_page mee te geven om juiste fragment te kunnen laden vanuit eenzelfde activity! (Zie AcitivityPage)
@@ -40,10 +39,7 @@ class MainActivity : AppCompatActivity {
 
 
     /** Button Handler voor Kalender Activity*/
-    fun openKalender(view: View) {
-        val intent = Intent(this, ActivityKalender::class.java)
-        startActivity(intent)
-    }
+
 
     override fun onBackPressed() {
         super.onBackPressed()
