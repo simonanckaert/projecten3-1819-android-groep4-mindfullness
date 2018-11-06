@@ -29,35 +29,49 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
+        displayChatMessages()
 
         btnSend = findViewById(R.id.btn_chat_send)
 
-        contactUser.text = "Gebruiker"
+        contactUser.text = FirebaseAuth.getInstance().currentUser!!.email
 
         /** Bericht sturen naar de database */
         btnSend!!.setOnClickListener {
             editText = findViewById(R.id.msg_type)
             dbinstance!!.reference.push().setValue(
                     Message(editText!!.text.toString(),
-                            FirebaseAuth.getInstance().currentUser!!.displayName.toString()))
+                            FirebaseAuth.getInstance().currentUser!!.email))
             editText!!.setText("")
         }
-        displayChatMessages()
+      displayChatMessages()
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        adapter!!.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter!!.stopListening()
     }
 
 
     /**
      * De listAdapter zorgt ervoor dat de List opgevuld raakt met chatberichten
-     * Dit werkt nog niet. Vraag aan bram hoe je via authorisatie de gebruikernaam kan opvragen.
+     * Dit werkt nog niet.
      */
     private fun displayChatMessages() {
+
         listView = findViewById<View>(R.id.list_msg) as ListView
 
         val options: FirebaseListOptions<Message> = FirebaseListOptions.Builder<Message>()
                 .setLayout(R.layout.message)
                 .setQuery(dbinstance!!.reference, Message::class.java)
+                .setLifecycleOwner(this)
                 .build()
+
 
         adapter = object : FirebaseListAdapter<Message>(options) {
             override fun populateView(v: View, model: Message, position: Int) {
@@ -69,6 +83,8 @@ class ChatActivity : AppCompatActivity() {
                 messageTime.text = DateFormat.getDateInstance().format(model.messageTime)
                 messageUser.text = model.messageUser
             }}
+
+
         listView!!.adapter = adapter
     }
 

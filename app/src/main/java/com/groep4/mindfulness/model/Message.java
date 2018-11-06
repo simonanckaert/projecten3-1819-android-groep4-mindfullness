@@ -8,6 +8,10 @@ public class Message {
     private String messageUser;
     private long messageTime;
 
+    public  Message(){
+
+    }
+
     public Message(String content, String messageUser) {
 
         this.content = content;
