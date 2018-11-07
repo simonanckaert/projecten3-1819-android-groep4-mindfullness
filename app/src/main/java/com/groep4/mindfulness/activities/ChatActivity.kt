@@ -12,39 +12,45 @@ import com.firebase.ui.database.FirebaseListOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import android.widget.TextView
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_chat.*
 import java.text.DateFormat
 
-
+/**
+ * TODO: zet om naar fragments
+ *
+ * Class zorgt voor het chat scherm met de psycholoog
+ * */
 class ChatActivity : AppCompatActivity() {
 
-
+/**
+ * Variabelen voor layout en data
+ * */
     private var listView: ListView? = null
     private var btnSend: View? = null
     private var editText: EditText? = null
-    private var messages: MutableList<Message>? = null
+
     private var adapter: FirebaseListAdapter<Message>? = null
-    private var dbinstance : FirebaseDatabase? = FirebaseDatabase.getInstance()
+
+    private var dbInstance : FirebaseDatabase? = FirebaseDatabase.getInstance()
+    private var currentUserId: FirebaseUser? = FirebaseAuth.getInstance().currentUser!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
-        displayChatMessages()
+
+        contactUser.text = currentUserId!!.email
 
         btnSend = findViewById(R.id.btn_chat_send)
-
-        contactUser.text = FirebaseAuth.getInstance().currentUser!!.email
-
-        /** Bericht sturen naar de database */
+        /** Bericht sturen naar de database met als sleutel het userid van de huidig ingelogde gebruiker. */
         btnSend!!.setOnClickListener {
             editText = findViewById(R.id.msg_type)
-            dbinstance!!.reference.push().setValue(
+            dbInstance!!.reference.child(currentUserId!!.uid).push().setValue(
                     Message(editText!!.text.toString(),
                             FirebaseAuth.getInstance().currentUser!!.email))
             editText!!.setText("")
         }
       displayChatMessages()
-
     }
 
     override fun onStart() {
@@ -59,8 +65,7 @@ class ChatActivity : AppCompatActivity() {
 
 
     /**
-     * De listAdapter zorgt ervoor dat de List opgevuld raakt met chatberichten
-     * Dit werkt nog niet.
+     * De listAdapter zorgt ervoor dat de List opgevuld raakt met chatberichten opgehaald uit de database met de huidige gebruiker's userid als argument.
      */
     private fun displayChatMessages() {
 
@@ -68,7 +73,7 @@ class ChatActivity : AppCompatActivity() {
 
         val options: FirebaseListOptions<Message> = FirebaseListOptions.Builder<Message>()
                 .setLayout(R.layout.message)
-                .setQuery(dbinstance!!.reference, Message::class.java)
+                .setQuery(dbInstance!!.reference.child(currentUserId!!.uid), Message::class.java)
                 .setLifecycleOwner(this)
                 .build()
 
@@ -83,7 +88,6 @@ class ChatActivity : AppCompatActivity() {
                 messageTime.text = DateFormat.getDateInstance().format(model.messageTime)
                 messageUser.text = model.messageUser
             }}
-
 
         listView!!.adapter = adapter
     }

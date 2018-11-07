@@ -2,12 +2,19 @@ package com.groep4.mindfulness.model;
 
 import java.util.Date;
 
+/**
+ * Simpele Class voor chat
+ */
 public class Message {
 
     private String content;
     private String messageUser;
     private long messageTime;
 
+
+    /**
+     * Chat list heeft no-args constructor nodig.
+     */
     public  Message(){
 
     }
