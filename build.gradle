@@ -25,3 +25,7 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+buildScan { 
+    termsOfServiceUrl = 'https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fgradle.com%2Fterms-of-service&amp;data=02%7C01%7Cglenn.desmedt.y7234%40student.hogent.be%7Cd2ba3c94bc2c40746bc508d6448a4957%7C5cf7310e091a4bc5acd726c721d4cccd%7C1%7C0%7C636771758062931302&amp;sdata=SOmVix%2BowvDvR3iqRpTuHGWk9tMDvaDPN4WM9jH3owc%3D&amp;reserved=0'; termsOfServiceAgree = 'yes' 
+}
