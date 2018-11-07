@@ -116,6 +116,7 @@ class LoginValidation {
             private fun setError(data: Any, error: String?) {
                 if (data is EditText) {
                     if (data.parent.parent is TextInputLayout) {
+                        (data.parent.parent as TextInputLayout).isHintEnabled = false
                         (data.parent.parent as TextInputLayout).setError(error)
                     } else {
                         data.setError(error)

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.groep4.mindfulness.R
@@ -99,8 +100,23 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         Toast.makeText(this,"Account uitgelogd", Toast.LENGTH_SHORT).show()
-        mAuth = FirebaseAuth.getInstance()
-        mAuth.signOut()
+        FirebaseAuth.getInstance().signOut()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle presses on the action bar menu items
+        when (item.itemId) {
+            R.id.action_logout -> {
+                FirebaseAuth.getInstance().signOut()
+                Toast.makeText(this,"Account uitgelogd", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, ActivityLogin::class.java)
+                this.startActivity(intent)
+                finish()
+                return true
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 }
