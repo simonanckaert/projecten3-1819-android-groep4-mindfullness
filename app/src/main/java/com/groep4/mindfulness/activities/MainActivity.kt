@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.model.Oefening
 import com.groep4.mindfulness.model.Sessie
@@ -14,23 +15,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.*
 import org.json.JSONArray
 import java.io.IOException
+import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
-import retrofit2.Retrofit
-import android.os.StrictMode
-import com.google.firebase.auth.FirebaseAuth
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.groep4.mindfulness.model.User
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.converter.gson.GsonConverterFactory
 
 
-
-    lateinit var mAuth:FirebaseAuth
+    lateinit var mAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -111,4 +102,5 @@ import retrofit2.converter.gson.GsonConverterFactory
         mAuth = FirebaseAuth.getInstance()
         mAuth.signOut()
     }
+
 }
