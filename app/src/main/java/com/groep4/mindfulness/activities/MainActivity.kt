@@ -17,6 +17,20 @@ import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
+import retrofit2.Retrofit
+import android.os.StrictMode
+import com.google.firebase.auth.FirebaseAuth
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.groep4.mindfulness.model.User
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.converter.gson.GsonConverterFactory
+
+
+
+    lateinit var mAuth:FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -89,5 +103,12 @@ class MainActivity : AppCompatActivity() {
             }
         })
         return sessies
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Toast.makeText(this,"Account uitgelogd", Toast.LENGTH_SHORT).show()
+        mAuth = FirebaseAuth.getInstance()
+        mAuth.signOut()
     }
 }
