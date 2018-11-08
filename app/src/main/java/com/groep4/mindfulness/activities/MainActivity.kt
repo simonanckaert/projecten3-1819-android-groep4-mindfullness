@@ -1,5 +1,6 @@
 package com.groep4.mindfulness.activities
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -107,11 +108,25 @@ class MainActivity : AppCompatActivity() {
         // Handle presses on the action bar menu items
         when (item.itemId) {
             R.id.action_logout -> {
-                FirebaseAuth.getInstance().signOut()
-                Toast.makeText(this,"Account uitgelogd", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, ActivityLogin::class.java)
-                this.startActivity(intent)
-                finish()
+
+                val builder = AlertDialog.Builder(this@MainActivity)
+                builder.setMessage("Wil je uitloggen ?")
+
+                builder.setPositiveButton("Ja"){dialog, which ->
+                    FirebaseAuth.getInstance().signOut()
+                    Toast.makeText(this,"Account uitgelogd", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, ActivityLogin::class.java)
+                    this.startActivity(intent)
+                    finish()
+                }
+
+                builder.setNegativeButton("Nee"){dialog,which ->
+                }
+
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+
+
                 return true
             }
 

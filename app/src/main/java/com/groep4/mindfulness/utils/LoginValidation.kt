@@ -10,8 +10,9 @@ class LoginValidation {
         companion object {
 
             // Validatie messages
-            private val WACHTWOORD_BELEID = """Wachtwoord moet minemaal 8 characters lang zijn,
-            """.trimMargin()
+            private val WACHTWOORD_BELEID = "Voer een geldig wachtwoord in"
+
+            // Moet min 8 letters bevatten,
             // |Moet 1 hoofdletter bevatten,
             // |Moet 1 kleine letter bevatten,
             //|Moet 1 nummer bevatten
@@ -105,7 +106,7 @@ class LoginValidation {
                     setError(data, error)
                 }
 
-                return true
+                return valid
             }
 
             /**
@@ -117,6 +118,7 @@ class LoginValidation {
                 if (data is EditText) {
                     if (data.parent.parent is TextInputLayout) {
                         (data.parent.parent as TextInputLayout).isHintEnabled = false
+                        (data.parent.parent as TextInputLayout).isPasswordVisibilityToggleEnabled = false
                         (data.parent.parent as TextInputLayout).setError(error)
                     } else {
                         data.setError(error)
