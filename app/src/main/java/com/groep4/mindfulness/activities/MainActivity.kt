@@ -50,6 +50,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        ll_contact.setOnClickListener{
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("key_page", "contact")
+            startActivity(intent)
 
     }
 

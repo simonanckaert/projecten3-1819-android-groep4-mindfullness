@@ -27,5 +27,3 @@ data class Oefening(var naam: String, var beschrijving: String) : Parcelable {
         }
     }
 }
-
-data class Message(val titel: String, val onderwerp: String, val afzender: String, val  tekst : String)
