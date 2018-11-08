@@ -92,7 +92,7 @@ class FragmentSessieList : Fragment() {
 
         // Indien DB niet bereikbaar is of DB telt minder dan 8 sessies, de lijst opvullen met lege sessies.
         while (sessies.size < 8){
-            sessies.add(Sessie("Geen sessie gevonden.", "", "", null, false))
+            sessies.add(Sessie(0, "Geen sessie gevonden.", "", "", null, false))
         }
     }
 

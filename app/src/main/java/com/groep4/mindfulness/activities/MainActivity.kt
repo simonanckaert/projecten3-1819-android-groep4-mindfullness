@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar)
 
-        var sessies: ArrayList<Sessie> = getSessies()
+        val sessies: ArrayList<Sessie> = getSessies()
 
         // belangrijk key_page mee te geven om juiste fragment te kunnen laden vanuit eenzelfde activity! (Zie AcitivityPage)
         ll_sessies.setOnClickListener {
@@ -56,20 +56,20 @@ class MainActivity : AppCompatActivity() {
 
     fun getSessies(): ArrayList<Sessie> {
         val sessies: ArrayList<Sessie> = ArrayList()
-        val oefeningen: ArrayList<Oefening> = ArrayList()
+        //val oefeningen: ArrayList<Oefening> = ArrayList()
 
         // Static oef toevoegen
-        for (i in 1..3) {
+        /*for (i in 1..3) {
             val oef = Oefening("Oefening 0$i", "Beschrijving 0$i")
             oefeningen.add(oef)
-        }
+        }*/
 
         // HTTP Request sessies
         val client = OkHttpClient()
 
         val request = Request.Builder()
                 /*.header("Authorization", "token abcd")*/
-                .url("http://10.0.2.2:3000/sessies")
+                .url("http://141.134.155.219:3000/sessies")
                 .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -81,13 +81,49 @@ class MainActivity : AppCompatActivity() {
                 val jsonarray = JSONArray(response.body()!!.string())
                 for (i in 0 until jsonarray.length()) {
                     val jsonobject = jsonarray.getJSONObject(i)
+                    val sessieId = jsonobject.getInt("sessieId")
                     val naam = jsonobject.getString("naam")
                     val beschrijving = jsonobject.getString("beschrijving")
-                    val sessie: Sessie = Sessie(naam, beschrijving, "Info", oefeningen, false)
+                    val oefeningen = getOefeningen(sessieId)
+                    val sessie: Sessie = Sessie(sessieId, naam, beschrijving, "Info", oefeningen, false)
                     sessies.add(sessie)
                 }
             }
         })
         return sessies
+    }
+
+    fun getOefeningen(sessieId: Int): ArrayList<Oefening>{
+        val oefeningen: ArrayList<Oefening> = ArrayList()
+
+        // HTTP Request sessies
+        val client = OkHttpClient()
+
+        val request = Request.Builder()
+                /*.header("Authorization", "token abcd")*/
+                .url("http://141.134.155.219:3000/oefeningen/$sessieId")
+                .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("ERROR", "HTTP request failed: $e")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val jsonarray = JSONArray(response.body()!!.string())
+                for (i in 0 until jsonarray.length()) {
+                    val jsonobject = jsonarray.getJSONObject(i)
+                    val oefeningenId = jsonobject.getInt("oefeningId")
+                    val naam = jsonobject.getString("naam")
+                    val beschrijving = jsonobject.getString("beschrijving")
+                    val sessieid = jsonobject.getInt("sessieId")
+
+                    val oefening: Oefening = Oefening(oefeningenId, naam, beschrijving, sessieid)
+                    oefeningen.add(oefening)
+                }
+            }
+        })
+
+        return oefeningen
     }
 }

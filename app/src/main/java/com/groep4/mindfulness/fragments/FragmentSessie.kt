@@ -106,7 +106,6 @@ class FragmentSessie : Fragment() {
         }
 
         txtSessieTitel!!.text = sessie.naam
-        txtSessieBeschrijving!!.text = sessie.beschrijving
 
         cv_sessie.setOnClickListener{
             val sessiePageFragment = FragmentSessiePage()

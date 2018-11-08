@@ -3,7 +3,7 @@ package com.groep4.mindfulness.model
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Oefening(var naam: String, var beschrijving: String) : Parcelable {
+/*data class Oefening(var naam: String, var beschrijving: String) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString())
@@ -26,6 +26,6 @@ data class Oefening(var naam: String, var beschrijving: String) : Parcelable {
             return arrayOfNulls(size)
         }
     }
-}
+}*/
 
 data class Message(val titel: String, val onderwerp: String, val afzender: String, val  tekst : String)
