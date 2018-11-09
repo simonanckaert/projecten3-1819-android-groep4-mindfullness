@@ -20,7 +20,6 @@
     <string name="error_incorrect_password">Incorrect wachtwoord</string>
     <string name="error_incorrect_email">Incorrect e-mailadres</string>
 
-    <string name="title_activity_contact">ActivityContact</string>
     <string name="praktijk_psychologen">Pieter-Jan De Schryver en medewerkers</string>
     <string name="title_activity_contact">Contact</string>
     <string name="uren_dag">09:00-21:00</string>
