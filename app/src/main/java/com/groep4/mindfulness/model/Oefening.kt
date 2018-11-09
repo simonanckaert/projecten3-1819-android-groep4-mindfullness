@@ -5,9 +5,12 @@ import android.os.Parcelable
 
 class Oefening : Parcelable {
     var oefenigenId: Int
+    var sessieId: Int
     var naam: String
     var beschrijving: String
-    var sessieId: Int
+
+    // File
+
 
     constructor(id: Int, naam: String, beschrijving: String, sId: Int){
         this.oefenigenId = id

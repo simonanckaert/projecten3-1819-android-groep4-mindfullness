@@ -82,7 +82,8 @@ class FragmentSessiePageExercises : Fragment() {
             //content van oefening aanmaken
             item.createSubItems(1)
             val content = item.getSubItemView(0)
-            (content.findViewById<View>(R.id.sub_title) as TextView).text = oefening.beschrijving
+            (content.findViewById<View>(R.id.tv_oefening_beschrijving) as TextView).text = oefening.beschrijving
+            (content.findViewById<View>(R.id.tv_oefening_beschrijving) as TextView).movementMethod = ScrollingMovementMethod()
 
             // Audio Play functionaliteit onClick
             (content.findViewById<View>(R.id.ib_playAudio) as ImageButton).setOnClickListener{

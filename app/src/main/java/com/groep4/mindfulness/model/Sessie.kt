@@ -1,12 +1,7 @@
 package com.groep4.mindfulness.model
 
-import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
-import android.R.attr.author
-
-
-
 
 class Sessie : Parcelable {
     var sessieId: Int

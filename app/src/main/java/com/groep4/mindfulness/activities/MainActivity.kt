@@ -14,22 +14,31 @@ import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.*
 import org.json.JSONArray
 import java.io.IOException
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.Logger.addLogAdapter
+
+
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val client = OkHttpClient()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Find the toolbar view inside the activity layout
+        Logger.addLogAdapter(AndroidLogAdapter())
+
+        // Toolbar
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar)
 
+        // Sessies
         val sessies: ArrayList<Sessie> = getSessies()
 
-        // belangrijk key_page mee te geven om juiste fragment te kunnen laden vanuit eenzelfde activity! (Zie AcitivityPage)
+        // belangrijk key_page mee te geven om juiste fragment te kunnen laden vanuit eenzelfde activity!
         ll_sessies.setOnClickListener {
             val intent = Intent(this, ActivityPage::class.java)
             intent.putExtra("key_page", "sessies")
@@ -43,8 +52,6 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("sessielist", sessies)
             startActivity(intent)
         }
-
-
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -54,19 +61,11 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    // Sessies ophalen
     fun getSessies(): ArrayList<Sessie> {
         val sessies: ArrayList<Sessie> = ArrayList()
-        //val oefeningen: ArrayList<Oefening> = ArrayList()
-
-        // Static oef toevoegen
-        /*for (i in 1..3) {
-            val oef = Oefening("Oefening 0$i", "Beschrijving 0$i")
-            oefeningen.add(oef)
-        }*/
 
         // HTTP Request sessies
-        val client = OkHttpClient()
-
         val request = Request.Builder()
                 /*.header("Authorization", "token abcd")*/
                 .url("http://141.134.155.219:3000/sessies")
@@ -93,12 +92,11 @@ class MainActivity : AppCompatActivity() {
         return sessies
     }
 
+    // Oefeningen van sessie ophalen
     fun getOefeningen(sessieId: Int): ArrayList<Oefening>{
         val oefeningen: ArrayList<Oefening> = ArrayList()
 
-        // HTTP Request sessies
-        val client = OkHttpClient()
-
+        // HTTP Request oefeningen
         val request = Request.Builder()
                 /*.header("Authorization", "token abcd")*/
                 .url("http://141.134.155.219:3000/oefeningen/$sessieId")

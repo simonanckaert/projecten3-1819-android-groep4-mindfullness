@@ -14,6 +14,7 @@ import android.widget.TextView
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.activities.ActivityPage
 import com.groep4.mindfulness.model.Sessie
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment_sessie.*
 import kotlinx.android.synthetic.main.fragment_sessie.view.*
 import java.util.*
@@ -73,16 +74,16 @@ class FragmentSessie : Fragment() {
 
 
         // Dynamisch background images verdelen per sessie
-        for (view in imgViewsBuildings!!) {
-            view.setImageResource((parentFragment as FragmentSessieList).imgBuildings!![random!!.nextInt((parentFragment as FragmentSessieList).imgBuildings!!.size)])
+        for (v in imgViewsBuildings!!) {
+            v.setImageResource((parentFragment as FragmentSessieList).imgBuildings!![random!!.nextInt((parentFragment as FragmentSessieList).imgBuildings!!.size)])
             when (random!!.nextBoolean()) {
-                true -> view.visibility = VISIBLE
-                false -> view.visibility = INVISIBLE
+                true -> v.visibility = VISIBLE
+                false -> v.visibility = INVISIBLE
             }
         }
 
-        for (view in imgViewsMisc!!) {
-            view.setImageResource((parentFragment as FragmentSessieList).imgMisc!![random!!.nextInt((parentFragment as FragmentSessieList).imgMisc!!.size)])
+        for (v in imgViewsMisc!!) {
+            v.setImageResource((parentFragment as FragmentSessieList).imgMisc!![random!!.nextInt((parentFragment as FragmentSessieList).imgMisc!!.size)])
         }
 
         screenWidth = resources.displayMetrics.widthPixels
@@ -95,17 +96,18 @@ class FragmentSessie : Fragment() {
         val page = arguments!!.getInt("page", 0)
         val sessie = arguments!!.getParcelable<Sessie>("sessie")
 
-        var imgRes = context!!.resources.getIdentifier("mnstr$page","mipmap", context!!.packageName)
+        val imgRes = context!!.resources.getIdentifier("mnstr$page","mipmap", context!!.packageName)
         imgSessie!!.setImageResource(imgRes)
 
         // Naargelang hoe ver je zit in de sessies de bus opvullen met monsters.
         for (i in 0 until page){
-            var imgResBus = context!!.resources.getIdentifier("mnstr" + (i+1),"mipmap", context!!.packageName)
+            val imgResBus = context!!.resources.getIdentifier("mnstr" + (i+1),"mipmap", context!!.packageName)
             imgBusMonsters!![i].setImageResource(imgResBus)
             imgBusMonsters!![i].visibility = VISIBLE
         }
 
         txtSessieTitel!!.text = sessie.naam
+        Logger.e(sessie.naam)
 
         cv_sessie.setOnClickListener{
             val sessiePageFragment = FragmentSessiePage()

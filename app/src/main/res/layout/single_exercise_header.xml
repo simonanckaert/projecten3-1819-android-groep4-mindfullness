@@ -32,5 +32,8 @@
         android:layout_centerVertical="true"
         android:clickable="false"
         android:gravity="center_vertical|left"
-        android:textSize="22sp" />
+        android:textAlignment="textStart"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        android:textStyle="italic" />
 </RelativeLayout>

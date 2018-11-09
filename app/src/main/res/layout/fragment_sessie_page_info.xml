@@ -20,11 +20,17 @@
 
         <ImageView
             android:id="@+id/iv_sessie_monster"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             app:srcCompat="@mipmap/mnstr1" />
+
+        <TextView
+            android:id="@+id/tv_sessie_naam"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold|italic" />
 
         <TextView
             android:id="@+id/tv_sessie_beschrijving"

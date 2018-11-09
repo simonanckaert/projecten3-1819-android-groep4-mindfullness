@@ -11,6 +11,7 @@ import com.groep4.mindfulness.model.Sessie
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_page.*
 import kotlinx.android.synthetic.main.fragment_sessie_page.view.*
+import kotlinx.android.synthetic.main.fragment_sessie_page_info.*
 
 class FragmentSessiePage : Fragment() {
 
@@ -30,9 +31,11 @@ class FragmentSessiePage : Fragment() {
 
         if (bundle != null) {
             sessie = bundle.getParcelable("key_sessie")
-            activity!!.tv_page.text = sessie.naam
-
             page = bundle.getInt("key_page")
+
+            activity!!.tv_page.text = sessie.naam
+            activity!!.tv_page.text = "Sessie $page"
+
         }
 
         val fragmentAdapter = SessiePagerAdapter(activity!!.supportFragmentManager, sessie, page)
@@ -41,6 +44,4 @@ class FragmentSessiePage : Fragment() {
 
         return view
     }
-
-
 }
