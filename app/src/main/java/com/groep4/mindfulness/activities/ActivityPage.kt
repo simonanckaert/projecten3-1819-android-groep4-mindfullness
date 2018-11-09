@@ -1,11 +1,16 @@
 package com.groep4.mindfulness.activities
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.fragments.FragmentReminder
 import com.groep4.mindfulness.fragments.FragmentSessieList
@@ -51,6 +56,33 @@ class ActivityPage : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle presses on the action bar menu items
+        when (item.itemId) {
+            R.id.action_logout -> {
+                val builder = AlertDialog.Builder(this@ActivityPage)
+                builder.setMessage("Wil je uitloggen ?")
+
+                builder.setPositiveButton("Ja"){dialog, which ->
+                    FirebaseAuth.getInstance().signOut()
+                    Toast.makeText(this,"Account uitgelogd", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, ActivityLogin::class.java)
+                    this.startActivity(intent)
+                    finish()
+                }
+
+                builder.setNegativeButton("Nee"){dialog,which ->
+                }
+
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+                return true
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

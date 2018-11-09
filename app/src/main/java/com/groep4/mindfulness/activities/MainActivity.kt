@@ -1,12 +1,15 @@
 package com.groep4.mindfulness.activities
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.model.Oefening
 import com.groep4.mindfulness.model.Sessie
@@ -17,13 +20,14 @@ import java.io.IOException
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.Logger.addLogAdapter
-
-
+import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
 
     private val client = OkHttpClient()
+
+    lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +57,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+        ll_contact.setOnClickListener{
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("key_page", "contact")
+            startActivity(intent)
+
+    }}
 
     // Menu icons are inflated just as they were with actionbar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -124,4 +135,42 @@ class MainActivity : AppCompatActivity() {
 
         return oefeningen
     }
+}
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Toast.makeText(this,"Account uitgelogd", Toast.LENGTH_SHORT).show()
+        FirebaseAuth.getInstance().signOut()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle presses on the action bar menu items
+        when (item.itemId) {
+            R.id.action_logout -> {
+
+                val builder = AlertDialog.Builder(this@MainActivity)
+                builder.setMessage("Wil je uitloggen ?")
+
+                builder.setPositiveButton("Ja"){dialog, which ->
+                    FirebaseAuth.getInstance().signOut()
+                    Toast.makeText(this,"Account uitgelogd", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, ActivityLogin::class.java)
+                    this.startActivity(intent)
+                    finish()
+                }
+
+                builder.setNegativeButton("Nee"){dialog,which ->
+                }
+
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+
+
+                return true
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }
