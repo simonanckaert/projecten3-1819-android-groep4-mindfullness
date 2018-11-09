@@ -5,13 +5,17 @@ import android.animation.AnimatorListenerAdapter
 import android.annotation.TargetApi
 import android.os.Build
 import android.os.Bundle
+import android.support.design.widget.TextInputLayout
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 import com.groep4.mindfulness.R
+import com.groep4.mindfulness.model.User
 import com.groep4.mindfulness.utils.LoginValidation
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -44,6 +48,7 @@ class FragmentRegister : Fragment() {
         // values
         val emailStr = register_email.text.toString()
         val passwordStr = register_password.text.toString()
+        val nameStr = register_name.text.toString()
 
         var cancel = false
         var focusView: View? = null
@@ -53,32 +58,44 @@ class FragmentRegister : Fragment() {
         if (!LoginValidation.isValidEmail(register_email)) {
 
             focusView = view!!.register_email
+            ( view!!.register_name.parent.parent as TextInputLayout).isHintEnabled = false
             cancel = true
         }
 
         if (!LoginValidation.isValidPassword(register_password)) {
             focusView = view!!.register_password
+            ( view!!.register_name.parent.parent as TextInputLayout).isHintEnabled = false
             cancel = true
         }
 
         if (cancel) {
             focusView?.requestFocus()
-        } else {
+        }
+        else {
             showProgress(true)
             mAuth = FirebaseAuth.getInstance()
             mAuth.createUserWithEmailAndPassword(emailStr,passwordStr)
                     .addOnCompleteListener(activity!!){
                         task ->
+
+                        showProgress(false)
                         activity!!.tv_register.visibility = View.INVISIBLE
-
-
                         if (task.isSuccessful()) {
-                            val fm = fragmentManager
-                            Toast.makeText(context,"Account aangemaakt", Toast.LENGTH_SHORT).show()
-                            activity!!.tv_register.visibility = View.VISIBLE
-                            activity!!.tv_register.text = resources.getString(R.string.registreer)
-                            activity!!.tv_register.isClickable
-                            fm!!.popBackStack()
+
+                            val user = User(nameStr , emailStr)
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                    .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                                    .setValue(user).addOnCompleteListener(activity!!){
+                                task ->
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(context,"Account aangemaakt", Toast.LENGTH_SHORT).show()
+                                            val fm = fragmentManager
+                                            activity!!.tv_register.visibility = View.VISIBLE
+                                            activity!!.tv_register.text = resources.getString(R.string.registreer)
+                                            activity!!.tv_register.isClickable
+                                            fm!!.popBackStack()
+                                        }
+                                    }
 
 
                         } else {
@@ -88,7 +105,7 @@ class FragmentRegister : Fragment() {
                         }
 
                     }
-            showProgress(false)
+
         }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
