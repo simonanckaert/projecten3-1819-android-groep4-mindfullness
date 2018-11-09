@@ -1,15 +1,20 @@
 package com.groep4.mindfulness.activities
 
+import android.content.Intent
 import android.os.Bundle
 
 import android.support.v7.app.AppCompatActivity
 
 import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
 
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.fragments.FragmentLogin
 import com.groep4.mindfulness.fragments.FragmentRegister
 import kotlinx.android.synthetic.main.activity_login.*
+import com.google.firebase.auth.FirebaseUser
+
+
 
 
 class ActivityLogin : AppCompatActivity(){
@@ -17,22 +22,20 @@ class ActivityLogin : AppCompatActivity(){
     lateinit var mLoginFragment: FragmentLogin
     lateinit var mRegisterFragment: FragmentRegister
     var tvRegister: TextView?=null
+    lateinit var  mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        mAuth = FirebaseAuth.getInstance()
         initFragment()
         showLoginFragment()
 
         tvRegister = findViewById(R.id.tv_register) as TextView
 
-
         tvRegister?.setOnClickListener {
 
-            System.out.println("click register")
             showRegisterFragment()
-
 
         }
 
@@ -61,7 +64,17 @@ class ActivityLogin : AppCompatActivity(){
 
     }
 
+    public override fun onStart() {
+        super.onStart()
+        // Check if user is signed in (non-null) and update UI accordingly.
+        val currentUser = mAuth.getCurrentUser()
 
+        if (currentUser != null) {
+            val intent = Intent(this, MainActivity::class.java)
+            this.startActivity(intent)
+         }
+
+    }
 
     override fun onBackPressed() {
         val count = fragmentManager.backStackEntryCount

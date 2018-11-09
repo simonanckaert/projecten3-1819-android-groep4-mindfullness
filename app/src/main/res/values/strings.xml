@@ -13,7 +13,7 @@
     <string name="prompt_email">Email address</string>
     <string name="prompt_paswoord">Wachtwoord</string>
     <string name="action_login">Login</string>
-    <string name="action_login_facebook">Login met facebook</string>
+    <string name="action_login_google">Login met google account</string>
     <string name="action_register">Registreer</string>
     <string name="registreer">Meld je aan.</string>
     <string name="permission_rationale">Toestemming tot contacten is nodig</string>
@@ -33,7 +33,7 @@
     <string name="onderwerp">Onderwerp</string>
     <string name="text">Text</string>
     <string name="instellingen">Instellingen</string>
-
+    <string name="logout">uitloggen</string>
     <string-array name="stepLabels">
         <item>1</item>
         <item>2</item>

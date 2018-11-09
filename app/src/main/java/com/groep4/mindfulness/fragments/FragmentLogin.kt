@@ -1,41 +1,24 @@
 package com.groep4.mindfulness.fragments
 
-
-import android.content.pm.PackageManager
-import android.support.design.widget.Snackbar
-
-import android.content.CursorLoader
-import android.content.Loader
-import android.database.Cursor
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.ArrayAdapter
 import android.widget.TextView
-import java.util.ArrayList
-import android.Manifest.permission.READ_CONTACTS
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.annotation.TargetApi
-import android.app.Activity
-
-
 import android.content.Intent
-import android.os.AsyncTask
-import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
-import android.support.v4.app.LoaderManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+
 import com.google.firebase.auth.FirebaseAuth
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.activities.ActivityLogin
-
 import com.groep4.mindfulness.activities.MainActivity
 import com.groep4.mindfulness.utils.LoginValidation
+
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
@@ -63,6 +46,7 @@ class FragmentLogin : Fragment(){
         })
         view.email
         view.email_sign_in_button.setOnClickListener { attemptLogin() }
+        view.email_sign_in_google_button.setOnClickListener{attemptGoogleLogin()}
         activity!!.tv_register.visibility = View.VISIBLE
         activity!!.tv_register.text = resources.getString(R.string.registreer)
         activity!!.tv_register.isClickable
@@ -91,17 +75,21 @@ class FragmentLogin : Fragment(){
         if (!LoginValidation.isValidEmail(view!!.email)) {
 
             focusView =view!!.email
+
             cancel = true
         }
 
         if (!LoginValidation.isValidPassword(view!!.password)) {
+
             focusView =view!!.password
+
             cancel = true
         }
 
         if (cancel) {
 
             focusView?.requestFocus()
+
 
         } else {
 
@@ -112,16 +100,16 @@ class FragmentLogin : Fragment(){
             mAuth.signInWithEmailAndPassword(emailStr,passwordStr)
                     .addOnCompleteListener(activity!!){
                     task ->
+                        showProgress(false)
                     activity!!.tv_register.visibility = View.INVISIBLE
-
-
                     if (task.isSuccessful()) {
+
                         //mainactivity tonen
                         val intent = Intent(activity, MainActivity::class.java)
                         this.startActivity(intent)
 
                     } else {
-                        //showProgress((false))
+
                         activity!!.tv_register.visibility = View.VISIBLE
                         view!!.password.error = this.getString(R.string.error_incorrect_password)
                         view!!.password.requestFocus()
@@ -129,7 +117,7 @@ class FragmentLogin : Fragment(){
 
             }
 
-            showProgress(false)
+
 
         }
     }
@@ -137,9 +125,7 @@ class FragmentLogin : Fragment(){
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     fun showProgress(show: Boolean) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime).toLong()
 
@@ -170,6 +156,16 @@ class FragmentLogin : Fragment(){
         }
     }
 
+    private fun attemptGoogleLogin(){
 
+        //ToDo: Google login
+
+    }
+
+
+     override fun onResume() {
+        super.onResume()
+         showProgress(false)
+    }
 
 }
