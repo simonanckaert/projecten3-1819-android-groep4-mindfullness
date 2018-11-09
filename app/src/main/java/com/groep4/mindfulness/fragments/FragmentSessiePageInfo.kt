@@ -29,9 +29,9 @@ class FragmentSessiePageInfo : Fragment() {
 
         if (bundle != null) {
             sessie = bundle.getParcelable("key_sessie")
+            view.tv_sessie_naam.text = sessie.naam
             view.tv_sessie_beschrijving.text = sessie.beschrijving
-            view.tv_sessie_info.text = sessie.info
-            view.tv_sessie_info.movementMethod = ScrollingMovementMethod()
+            view.tv_sessie_beschrijving.movementMethod = ScrollingMovementMethod()
 
             var page = bundle.getInt("key_page")
             view.iv_sessie_monster.setImageResource(context!!.resources.getIdentifier("mnstr$page","mipmap", context!!.packageName))

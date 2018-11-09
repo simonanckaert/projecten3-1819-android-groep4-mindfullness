@@ -7,13 +7,26 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/sub_title"
+        android:id="@+id/tv_oefening_naam"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="8dp"
         android:clickable="false"
         android:gravity="center_vertical|left"
+        android:text="Naam"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_oefening_beschrijving"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
+        android:clickable="false"
+        android:gravity="center_vertical|left"
+        android:text="Beschrijving"
         android:textSize="18sp" />
 
     <ImageButton
@@ -24,5 +37,6 @@
         android:layout_margin="35dp"
         android:background="@color/colorPrimaryDark"
         android:contentDescription="@string/sessies"
+        android:visibility="gone"
         app:srcCompat="@drawable/ic_play_arrow_white_24dp" />
 </LinearLayout>

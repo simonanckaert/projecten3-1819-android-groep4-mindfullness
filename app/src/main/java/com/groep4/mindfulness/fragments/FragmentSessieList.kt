@@ -38,7 +38,7 @@ class FragmentSessieList : Fragment() {
         // Background images toevoegen aan arrays zodat de sessieviews ze kunnen gebruiken
         addBackgroundImages()
 
-        val pager = view.findViewById<ViewPager>(R.id.pager)!!
+        val pager = view.findViewById<ViewPager>(R.id.pager_sessies)!!
         // offscreenpagelimit nodig zodat de pages niet telkens herladen worden bij het scrollen
         pager.offscreenPageLimit = 8
         val pagerAdapter = SessieListPagerAdapter(childFragmentManager, sessies)
@@ -92,7 +92,7 @@ class FragmentSessieList : Fragment() {
 
         // Indien DB niet bereikbaar is of DB telt minder dan 8 sessies, de lijst opvullen met lege sessies.
         while (sessies.size < 8){
-            sessies.add(Sessie("Geen sessie gevonden.", "", "", null, false))
+            sessies.add(Sessie(0, "Geen sessie gevonden.", "", "", null, false))
         }
     }
 
