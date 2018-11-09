@@ -20,29 +20,20 @@
 
         <ImageView
             android:id="@+id/iv_sessie_monster"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             app:srcCompat="@mipmap/mnstr1" />
 
         <TextView
-            android:id="@+id/tv_sessie_beschrijving"
+            android:id="@+id/tv_sessie_naam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:gravity="center"
-            android:text=""
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="italic"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="172dp" />
+            android:textStyle="bold|italic" />
 
         <TextView
-            android:id="@+id/tv_sessie_info"
+            android:id="@+id/tv_sessie_beschrijving"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
