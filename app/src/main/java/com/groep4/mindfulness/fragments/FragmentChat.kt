@@ -23,23 +23,21 @@ import java.text.DateFormat
 
 class FragmentChat : Fragment(){
 
+    //Layout objecten
     private var listView: ListView? = null
     private var btnSend: View? = null
     private var editText: EditText? = null
-
+    //Firebase objecten
     private var adapter: FirebaseListAdapter<Message>? = null
-
     private var dbInstance : FirebaseDatabase? = FirebaseDatabase.getInstance()
     private var currentUserId: FirebaseUser? = FirebaseAuth.getInstance().currentUser!!
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        //return inflater.inflate(R.layout.fragment_chat, container, false)
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
 
         view.contactUser.text = currentUserId!!.email
-
 
         btnSend = view.findViewById(R.id.btn_chat_send)
 
@@ -89,10 +87,14 @@ class FragmentChat : Fragment(){
                 val messageUser = v.findViewById(R.id.message_user) as TextView
                 val messageTime = v.findViewById(R.id.message_time) as TextView
 
+                /**
+                 * Als het bericht in de db niet matcht met de huidige gebruiker, zet de achtergrond blauw.
+                 * */
                 if(model.messageUser != currentUserId!!.email){
                     val messageBackground = v.findViewById(R.id.message_background) as RelativeLayout
                     messageBackground.setBackgroundColor(Color.parseColor("#9BBBD8"))
                 }
+
                 messageText.text = model.content
                 messageTime.text = DateFormat.getDateInstance().format(model.messageTime)
                 messageUser.text = model.messageUser
