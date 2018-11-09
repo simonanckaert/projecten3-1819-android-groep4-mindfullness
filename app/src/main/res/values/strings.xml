@@ -33,7 +33,7 @@
     <string name="text">Text</string>
     <string name="instellingen">Instellingen</string>
 
-    <string-array name="stepLabels">
+    <string-array name="stepperLabels">
         <item>1</item>
         <item>2</item>
         <item>3</item>
