@@ -87,11 +87,12 @@ class FragmentChat : Fragment(){
                 val messageUser = v.findViewById(R.id.message_user) as TextView
                 val messageTime = v.findViewById(R.id.message_time) as TextView
 
+                val messageBackground = v.findViewById(R.id.message_background) as RelativeLayout
+                messageBackground.setBackgroundColor(Color.WHITE)
                 /**
                  * Als het bericht in de db niet matcht met de huidige gebruiker, zet de achtergrond blauw.
                  * */
                 if(model.messageUser != currentUserId!!.email){
-                    val messageBackground = v.findViewById(R.id.message_background) as RelativeLayout
                     messageBackground.setBackgroundColor(Color.parseColor("#9BBBD8"))
                 }
 
