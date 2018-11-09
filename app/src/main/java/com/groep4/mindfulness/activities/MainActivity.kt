@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
 
     lateinit var mAuth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -50,8 +51,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        ll_contact.setOnClickListener{
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("key_page", "contact")
+            startActivity(intent)
 
-    }
+    }}
 
     // Menu icons are inflated just as they were with actionbar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
