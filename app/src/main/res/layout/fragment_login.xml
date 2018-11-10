@@ -71,7 +71,7 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:textSize="18sp"
-                
+
                 />
 
         </android.support.design.widget.TextInputLayout>
