@@ -1,6 +1,5 @@
 package com.groep4.mindfulness.activities
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -26,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth
 class MainActivity : AppCompatActivity() {
 
     private val client = OkHttpClient()
+
 
     lateinit var mAuth: FirebaseAuth
 
@@ -56,14 +56,16 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("sessielist", sessies)
             startActivity(intent)
         }
-    }
 
         ll_contact.setOnClickListener{
             val intent = Intent(this, ChatActivity::class.java)
             intent.putExtra("key_page", "contact")
             startActivity(intent)
 
-    }}
+        }
+    }
+
+
 
     // Menu icons are inflated just as they were with actionbar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -135,7 +137,6 @@ class MainActivity : AppCompatActivity() {
 
         return oefeningen
     }
-}
 
     override fun onBackPressed() {
         super.onBackPressed()
