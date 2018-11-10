@@ -33,7 +33,9 @@
     <string name="onderwerp">Onderwerp</string>
     <string name="text">Text</string>
     <string name="instellingen">Instellingen</string>
+
     <string name="logout">uitloggen</string>
+    <string name="register_name">Naam</string>
     <string-array name="stepperLabels">
         <item>1</item>
         <item>2</item>

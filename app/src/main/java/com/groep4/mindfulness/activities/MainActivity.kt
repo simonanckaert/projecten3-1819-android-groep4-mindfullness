@@ -19,15 +19,12 @@ import java.io.IOException
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.Logger.addLogAdapter
-
-
 import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
 
     private val client = OkHttpClient()
-
 
 
     lateinit var mAuth: FirebaseAuth
@@ -59,14 +56,16 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("sessielist", sessies)
             startActivity(intent)
         }
-    }
 
         ll_contact.setOnClickListener{
             val intent = Intent(this, ChatActivity::class.java)
             intent.putExtra("key_page", "contact")
             startActivity(intent)
 
-    }}
+        }
+    }
+
+
 
     // Menu icons are inflated just as they were with actionbar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -149,11 +148,25 @@ class MainActivity : AppCompatActivity() {
         // Handle presses on the action bar menu items
         when (item.itemId) {
             R.id.action_logout -> {
-                FirebaseAuth.getInstance().signOut()
-                Toast.makeText(this,"Account uitgelogd", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, ActivityLogin::class.java)
-                this.startActivity(intent)
-                finish()
+
+                val builder = AlertDialog.Builder(this@MainActivity)
+                builder.setMessage("Wil je uitloggen ?")
+
+                builder.setPositiveButton("Ja"){dialog, which ->
+                    FirebaseAuth.getInstance().signOut()
+                    Toast.makeText(this,"Account uitgelogd", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, ActivityLogin::class.java)
+                    this.startActivity(intent)
+                    finish()
+                }
+
+                builder.setNegativeButton("Nee"){dialog,which ->
+                }
+
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+
+
                 return true
             }
 
