@@ -15,6 +15,7 @@ import com.firebase.ui.database.FirebaseListAdapter
 import com.firebase.ui.database.FirebaseListOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.model.Message
@@ -29,7 +30,7 @@ class FragmentChat : Fragment(){
     private var editText: EditText? = null
     //Firebase objecten
     private var adapter: FirebaseListAdapter<Message>? = null
-    private var dbInstance : FirebaseDatabase? = FirebaseDatabase.getInstance()
+    private var dbInstance : DatabaseReference? = FirebaseDatabase.getInstance().reference.child("Chat")
     private var currentUserId: FirebaseUser? = FirebaseAuth.getInstance().currentUser!!
 
 
@@ -44,9 +45,9 @@ class FragmentChat : Fragment(){
         /** Bericht sturen naar de database met als sleutel het userid van de huidig ingelogde gebruiker. */
         btnSend!!.setOnClickListener {
             editText = view.findViewById(R.id.msg_type)
-            dbInstance!!.reference.child(currentUserId!!.uid).push().setValue(
+            dbInstance!!.child(currentUserId!!.uid).push().setValue(
                     Message(editText!!.text.toString(),
-                            FirebaseAuth.getInstance().currentUser!!.email))
+                            FirebaseAuth.getInstance().currentUser!!.displayName))
             editText!!.setText("")
         }
         displayChatMessages(view)
@@ -76,7 +77,7 @@ class FragmentChat : Fragment(){
 
         val options: FirebaseListOptions<Message> = FirebaseListOptions.Builder<Message>()
                 .setLayout(R.layout.message)
-                .setQuery(dbInstance!!.reference.child(currentUserId!!.uid), Message::class.java)
+                .setQuery(dbInstance!!.child(currentUserId!!.uid), Message::class.java)
                 .setLifecycleOwner(this)
                 .build()
 
