@@ -6,10 +6,8 @@ import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.model.Sessie
-import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_sessie_page_info.view.*
 
 class FragmentSessiePageInfo : Fragment() {

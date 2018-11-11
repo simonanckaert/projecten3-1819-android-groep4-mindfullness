@@ -4,24 +4,21 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.util.SparseArray
-import android.view.View
 import android.view.ViewGroup
-import com.groep4.mindfulness.fragments.FragmentOefening
 import com.groep4.mindfulness.fragments.FragmentSessie
-import com.groep4.mindfulness.model.Oefening
 import com.groep4.mindfulness.model.Sessie
 
 
-internal class OefeningListPagerAdapter(fm: FragmentManager, val oefeningen: ArrayList<Oefening>) : FragmentPagerAdapter(fm) {
+internal class SessiesPagerAdapter(fm: FragmentManager, val sessies: ArrayList<Sessie>) : FragmentPagerAdapter(fm) {
 
     var registeredFragments: SparseArray<Fragment> = SparseArray()
 
     override fun getCount(): Int {
-        return oefeningen.size
+        return sessies.size
     }
 
     override fun getItem(position: Int): Fragment {
-        return FragmentOefening.newInstance(position + 1, position == count - 1, oefeningen[position])
+        return FragmentSessie.newInstance(position + 1, position == count - 1, sessies[position])
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

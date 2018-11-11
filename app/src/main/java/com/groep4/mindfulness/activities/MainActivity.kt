@@ -10,24 +10,21 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.model.Oefening
 import com.groep4.mindfulness.model.Sessie
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.*
 import org.json.JSONArray
 import java.io.IOException
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
-import com.orhanobut.logger.Logger.addLogAdapter
-import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
 
     private val client = OkHttpClient()
-
-
     lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -129,13 +126,14 @@ class MainActivity : AppCompatActivity() {
                     val naam = jsonobject.getString("naam")
                     val beschrijving = jsonobject.getString("beschrijving")
                     val sessieid = jsonobject.getInt("sessieId")
+                    val fileUrl = jsonobject.getString("fileName")
+                    val fileMimeType = jsonobject.getString("fileMimetype")
 
-                    val oefening: Oefening = Oefening(oefeningenId, naam, beschrijving, sessieid)
+                    val oefening: Oefening = Oefening(oefeningenId, naam, beschrijving, sessieid, fileUrl, fileMimeType)
                     oefeningen.add(oefening)
                 }
             }
         })
-
         return oefeningen
     }
 

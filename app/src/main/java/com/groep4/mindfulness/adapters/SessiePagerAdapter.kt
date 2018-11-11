@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
-import com.groep4.mindfulness.fragments.FragmentSessiePageExercises
 import com.groep4.mindfulness.fragments.FragmentSessiePageInfo
+import com.groep4.mindfulness.fragments.FragmentSessiePageOefeningen
 import com.groep4.mindfulness.model.Sessie
 
 class SessiePagerAdapter(fm: FragmentManager, sessie: Sessie, page: Int) : FragmentStatePagerAdapter(fm) {
@@ -29,7 +29,7 @@ class SessiePagerAdapter(fm: FragmentManager, sessie: Sessie, page: Int) : Fragm
                 fragmentInfo
             }
             1 -> {
-                val fragmentExercises = FragmentSessiePageExercises.newInstance()
+                val fragmentExercises = FragmentSessiePageOefeningen.newInstance()
                 fragmentExercises.arguments = bundle
                 fragmentExercises
             }

@@ -13,18 +13,15 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.fragments.FragmentReminder
-import com.groep4.mindfulness.fragments.FragmentSessieList
-import com.google.gson.Gson
+import com.groep4.mindfulness.fragments.FragmentSessieLijst
 import com.groep4.mindfulness.model.Sessie
-import es.dmoral.toasty.Toasty
-import okhttp3.*
-import java.io.IOException
 
 
 class ActivityPage : AppCompatActivity() {
 
     private val BACK_STACK_ROOT_TAG = "root_fragment"
     var sessies: ArrayList<Sessie> = ArrayList()
+    private lateinit var fragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +34,9 @@ class ActivityPage : AppCompatActivity() {
         // naargelang 'key_page value' (meegegeven via de MainActivity) kiezen welke Fragment er geladen moet worden
         if (savedInstanceState == null) {
             val fragment: Fragment = when(keyPage) {
-                "sessie" -> FragmentSessieList()
+                "sessie" -> FragmentSessieLijst()
                 "reminder" -> FragmentReminder()
-                else -> FragmentSessieList()
+                else -> FragmentSessieLijst()
             }
             setFragment(fragment, false)
         }

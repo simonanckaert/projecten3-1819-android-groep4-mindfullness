@@ -10,13 +10,17 @@ class Oefening : Parcelable {
     var beschrijving: String
 
     // File
+    var fileUrl: String
+    var fileMimeType: String
 
 
-    constructor(id: Int, naam: String, beschrijving: String, sId: Int){
+    constructor(id: Int, naam: String, beschrijving: String, sId: Int, url: String, mimeType: String){
         this.oefenigenId = id
         this.naam = naam
         this.beschrijving = beschrijving
         this.sessieId = sId
+        this.fileUrl = url
+        this.fileMimeType = mimeType
     }
 
     private constructor(parcel: Parcel) {
@@ -24,6 +28,8 @@ class Oefening : Parcelable {
         this.naam = parcel.readString()
         this.beschrijving = parcel.readString()
         this.sessieId = parcel.readInt()
+        this.fileUrl = parcel.readString()
+        this.fileMimeType = parcel.readString()
     }
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
@@ -31,6 +37,8 @@ class Oefening : Parcelable {
         dest?.writeString(naam)
         dest?.writeString(beschrijving)
         dest?.writeInt(sessieId)
+        dest?.writeString(fileUrl)
+        dest?.writeString(fileMimeType)
     }
 
     override fun describeContents(): Int {

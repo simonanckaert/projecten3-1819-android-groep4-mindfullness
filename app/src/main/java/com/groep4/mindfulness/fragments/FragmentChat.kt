@@ -47,7 +47,7 @@ class FragmentChat : Fragment(){
             editText = view.findViewById(R.id.msg_type)
             dbInstance!!.child(currentUserId!!.uid).push().setValue(
                     Message(editText!!.text.toString(),
-                            FirebaseAuth.getInstance().currentUser!!.displayName))
+                            FirebaseAuth.getInstance().currentUser!!.displayName!!))
             editText!!.setText("")
         }
         displayChatMessages(view)

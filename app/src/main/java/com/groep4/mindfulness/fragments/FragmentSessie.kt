@@ -14,7 +14,7 @@ import android.widget.TextView
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.activities.ActivityPage
 import com.groep4.mindfulness.model.Sessie
-import com.orhanobut.logger.Logger
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_sessie.*
 import kotlinx.android.synthetic.main.fragment_sessie.view.*
 import java.util.*
@@ -75,7 +75,7 @@ class FragmentSessie : Fragment() {
 
         // Dynamisch background images verdelen per sessie
         for (v in imgViewsBuildings!!) {
-            v.setImageResource((parentFragment as FragmentSessieList).imgBuildings!![random!!.nextInt((parentFragment as FragmentSessieList).imgBuildings!!.size)])
+            v.setImageResource((parentFragment as FragmentSessieLijst).imgBuildings!![random!!.nextInt((parentFragment as FragmentSessieLijst).imgBuildings!!.size)])
             when (random!!.nextBoolean()) {
                 true -> v.visibility = VISIBLE
                 false -> v.visibility = INVISIBLE
@@ -83,7 +83,7 @@ class FragmentSessie : Fragment() {
         }
 
         for (v in imgViewsMisc!!) {
-            v.setImageResource((parentFragment as FragmentSessieList).imgMisc!![random!!.nextInt((parentFragment as FragmentSessieList).imgMisc!!.size)])
+            v.setImageResource((parentFragment as FragmentSessieLijst).imgMisc!![random!!.nextInt((parentFragment as FragmentSessieLijst).imgMisc!!.size)])
         }
 
         screenWidth = resources.displayMetrics.widthPixels
@@ -109,12 +109,16 @@ class FragmentSessie : Fragment() {
         txtSessieTitel!!.text = sessie.naam
 
         cv_sessie.setOnClickListener{
-            val sessiePageFragment = FragmentSessiePage()
-            val bundle = Bundle()
-            bundle.putParcelable("key_sessie", sessie)
-            bundle.putInt("key_page", page)
-            sessiePageFragment.arguments = bundle
-            (activity as ActivityPage).setFragment(sessiePageFragment, true)
+            if (sessie!!.naam != "Geen sessie gevonden."){
+                val sessiePageFragment = FragmentSessiePage()
+                val bundle = Bundle()
+                bundle.putParcelable("key_sessie", sessie)
+                bundle.putInt("key_page", page)
+                sessiePageFragment.arguments = bundle
+                (activity as ActivityPage).setFragment(sessiePageFragment, true)
+            }else{
+                Toasty.info(view!!.context, "Geen sessie gevonden, controleer uw internetverbinding.").show()
+            }
         }
     }
 

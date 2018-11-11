@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="false"
@@ -39,4 +40,24 @@
         android:contentDescription="@string/sessies"
         android:visibility="gone"
         app:srcCompat="@drawable/ic_play_arrow_white_24dp" />
+
+    <WebView
+        android:id="@+id/wv_pdf"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        tools:ignore="WebViewLayout">
+
+    </WebView>
+
+    <ImageView
+        android:id="@+id/iv_oefening"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        app:srcCompat="@android:drawable/arrow_up_float" />
+
+
 </LinearLayout>

@@ -11,12 +11,12 @@ import android.view.ViewGroup
 import com.badoualy.stepperindicator.StepperIndicator
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.activities.ActivityPage
-import com.groep4.mindfulness.adapters.SessieListPagerAdapter
+import com.groep4.mindfulness.adapters.SessiesPagerAdapter
 import com.groep4.mindfulness.model.Sessie
 import kotlinx.android.synthetic.main.activity_page.*
 
 
-class FragmentSessieList : Fragment() {
+class FragmentSessieLijst : Fragment() {
 
     var sessies: ArrayList<Sessie> = ArrayList()
     var previousPage: Int = 0
@@ -27,7 +27,7 @@ class FragmentSessieList : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val view: View = inflater.inflate(R.layout.fragment_sessie_list, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_sessie_lijst, container, false)
         // (Statische) sessies toevoegen, in afwachting van DB
         addSessies()
 
@@ -41,7 +41,7 @@ class FragmentSessieList : Fragment() {
         val pager = view.findViewById<ViewPager>(R.id.pager_sessies)!!
         // offscreenpagelimit nodig zodat de pages niet telkens herladen worden bij het scrollen
         pager.offscreenPageLimit = 8
-        val pagerAdapter = SessieListPagerAdapter(childFragmentManager, sessies)
+        val pagerAdapter = SessiesPagerAdapter(childFragmentManager, sessies)
         pager.adapter = pagerAdapter
 
         // Bij de start van sessielistview de bus laten rijden

@@ -1,39 +1,102 @@
 package com.groep4.mindfulness.fragments
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.model.Oefening
+import com.koushikdutta.ion.Ion
+import es.dmoral.toasty.Toasty
 
 
 class FragmentOefening : Fragment() {
 
     private var txtOefeningNaam: TextView? = null
     private var txtOefeningBeschrijving: TextView? = null
+    private var ibAudio: ImageButton? = null
+    private var wvPDF: WebView? = null
+    private var ivOefening: ImageView? = null
 
+    private var isPlaying: Boolean = false
+    private val mp = MediaPlayer()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_oefening, container, false)
 
         txtOefeningNaam = view.findViewById(R.id.tv_oefening_naam)
         txtOefeningBeschrijving = view.findViewById(R.id.tv_oefening_beschrijving)
+        ibAudio = view.findViewById(R.id.ib_playAudio)
+        wvPDF = view.findViewById(R.id.wv_pdf)
+        ivOefening = view.findViewById(R.id.iv_oefening)
 
         return view
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val page = arguments!!.getInt("page", 0)
         val oefening = arguments!!.getParcelable<Oefening>("oefening")
 
-        txtOefeningNaam!!.text = oefening.naam
+        txtOefeningNaam!!.text = oefening!!.naam
         txtOefeningBeschrijving!!.text = oefening.beschrijving
         txtOefeningBeschrijving!!.movementMethod = ScrollingMovementMethod()
+
+        if (oefening.fileMimeType == "application/pdf"){
+            wvPDF!!.visibility = View.VISIBLE
+            wvPDF!!.settings.javaScriptEnabled = true
+            wvPDF!!.loadUrl("https://docs.google.com/gview?embedded=true&url=http://141.134.155.219:3000/oefeningen/files/" + oefening.fileUrl)
+        }
+
+        if (oefening.fileMimeType == "image/jpeg"){
+            ivOefening!!.visibility = View.VISIBLE
+
+
+            Ion.with(ivOefening)
+                    .load("http://141.134.155.219:3000/oefeningen/files/" + oefening.fileUrl)
+
+            ivOefening!!.setOnClickListener{
+                val i = Intent(android.content.Intent.ACTION_VIEW)
+                i.setDataAndType(Uri.parse("http://141.134.155.219:3000/oefeningen/files/" + oefening.fileUrl), "image/jpg")
+                startActivity(i)
+            }
+        }
+
+        if (oefening.fileMimeType == "audio/vnd.dlna.adts"){
+            mp.setDataSource("http://141.134.155.219:3000/oefeningen/files/" + oefening.fileUrl)
+
+
+            ibAudio!!.visibility = View.VISIBLE
+            ibAudio!!.setOnClickListener {
+                isPlaying = if (!isPlaying){
+                    ibAudio!!.setImageResource(R.drawable.ic_pause_white_24dp)
+                    mp.prepare()
+                    mp.start()
+                    true
+                }else{
+                    ibAudio!!.setImageResource(R.drawable.ic_play_arrow_white_24dp)
+                    mp.stop()
+                    false
+                }
+            }
+        }
+    }
+
+    override fun onStop() {
+        mp.stop()
+        mp.release()
+        super.onStop()
     }
 
     companion object {
