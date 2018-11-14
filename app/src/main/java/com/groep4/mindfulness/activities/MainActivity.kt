@@ -61,6 +61,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
 
         }
+
+        ll_kalender.setOnClickListener{
+            val intent = Intent(this, ActivityKalender::class.java)
+            intent.putExtra("key_page", "kalender")
+            startActivity(intent)
+
+        }
     }
 
 
