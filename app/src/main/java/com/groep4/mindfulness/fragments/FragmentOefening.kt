@@ -11,10 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.groep4.mindfulness.R
+import com.groep4.mindfulness.activities.ActivityPage
 import com.groep4.mindfulness.model.Oefening
 import com.koushikdutta.ion.Ion
 import es.dmoral.toasty.Toasty
@@ -27,9 +29,12 @@ class FragmentOefening : Fragment() {
     private var ibAudio: ImageButton? = null
     private var wvPDF: WebView? = null
     private var ivOefening: ImageView? = null
+    private var buttonOefeningGedaan: Button? = null
+    private var buttonFeedback : Button? = null
 
     private var isPlaying: Boolean = false
     private val mp = MediaPlayer()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_oefening, container, false)
@@ -39,6 +44,8 @@ class FragmentOefening : Fragment() {
         ibAudio = view.findViewById(R.id.ib_playAudio)
         wvPDF = view.findViewById(R.id.wv_pdf)
         ivOefening = view.findViewById(R.id.iv_oefening)
+        buttonOefeningGedaan = view.findViewById(R.id.buttonOefeningGedaan)
+        buttonFeedback = view.findViewById(R.id.buttonFeedback)
 
         return view
     }
@@ -52,6 +59,7 @@ class FragmentOefening : Fragment() {
         txtOefeningNaam!!.text = oefening!!.naam
         txtOefeningBeschrijving!!.text = oefening.beschrijving
         txtOefeningBeschrijving!!.movementMethod = ScrollingMovementMethod()
+
 
         if (oefening.fileMimeType == "application/pdf"){
             wvPDF!!.visibility = View.VISIBLE
@@ -89,6 +97,19 @@ class FragmentOefening : Fragment() {
                     mp.stop()
                     false
                 }
+            }
+        }
+
+        buttonFeedback!!.setOnClickListener{
+            if (oefening!!.naam != "Geen oefening gevonden."){
+                val oefeningFeedbackFragment = FragmentOefeningFeedback()
+                val bundle = Bundle()
+                bundle.putParcelable("key_oefening", oefening)
+                bundle.putInt("key_page", page)
+                oefeningFeedbackFragment.arguments = bundle
+                (activity as ActivityPage).setFragment(oefeningFeedbackFragment, true)
+            }else{
+                Toasty.info(view!!.context, "Geen oefening gevonden, controleer uw internetverbinding.").show()
             }
         }
     }
