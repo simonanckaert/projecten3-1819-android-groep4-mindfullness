@@ -104,7 +104,7 @@ class FragmentOefening : Fragment() {
             if (oefening!!.naam != "Geen oefening gevonden."){
                 val oefeningFeedbackFragment = FragmentOefeningFeedback()
                 val bundle = Bundle()
-                bundle.putParcelable("key_oefening", oefening)
+                bundle.putParcelable("oefening", oefening)
                 bundle.putInt("key_page", page)
                 oefeningFeedbackFragment.arguments = bundle
                 (activity as ActivityPage).setFragment(oefeningFeedbackFragment, true)
