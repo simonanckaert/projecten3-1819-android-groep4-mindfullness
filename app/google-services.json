@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "1084064931254-tds28uvp660c0itvkv4a7rns65009p7h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.groep4.mindfulness",
+            "certificate_hash": "1d862057dce5cf790a490f08464d460952d40e7f"
+          }
+        },
+        {
           "client_id": "1084064931254-a8fbrvocakf3ghanqmkjksnruh8g6eb3.apps.googleusercontent.com",
           "client_type": 3
         }
