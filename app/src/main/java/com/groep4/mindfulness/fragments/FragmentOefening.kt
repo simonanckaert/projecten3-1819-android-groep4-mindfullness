@@ -107,7 +107,7 @@ class FragmentOefening : Fragment() {
                 bundle.putParcelable("oefening", oefening)
                 bundle.putInt("key_page", page)
                 oefeningFeedbackFragment.arguments = bundle
-                (activity as ActivityPage).setFragment(oefeningFeedbackFragment, true)
+                (activity as ActivityPage).setFragment(oefeningFeedbackFragment, false)
             }else{
                 Toasty.info(view!!.context, "Geen oefening gevonden, controleer uw internetverbinding.").show()
             }
