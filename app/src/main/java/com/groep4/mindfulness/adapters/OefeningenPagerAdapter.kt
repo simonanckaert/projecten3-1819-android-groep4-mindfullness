@@ -16,6 +16,7 @@ internal class OefeningenPagerAdapter(fm: FragmentManager, val oefeningen: Array
 
     var registeredFragments: SparseArray<Fragment> = SparseArray()
 
+
     override fun getCount(): Int {
         return oefeningen.size
     }

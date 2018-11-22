@@ -2,6 +2,7 @@ package com.groep4.mindfulness.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -12,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.groep4.mindfulness.R
+import com.groep4.mindfulness.fragments.FragmentProfiel
 import com.groep4.mindfulness.model.Oefening
 import com.groep4.mindfulness.model.Sessie
 import com.orhanobut.logger.AndroidLogAdapter
@@ -24,8 +26,10 @@ import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
+    private val BACK_STACK_ROOT_TAG = "root_fragment"
     private val client = OkHttpClient()
     lateinit var mAuth: FirebaseAuth
+    private var isFragmentProfielLoaded = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +72,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
 
         }
+
+
     }
 
 
@@ -145,9 +151,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        Toast.makeText(this,"Account uitgelogd", Toast.LENGTH_SHORT).show()
-        FirebaseAuth.getInstance().signOut()
+        if (isFragmentProfielLoaded) {
+            super.onBackPressed()
+            isFragmentProfielLoaded = false
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -176,8 +183,27 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
 
+            R.id.action_profiel -> {
+                setFragment(FragmentProfiel(), true)
+                isFragmentProfielLoaded = true
+                return true
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setFragment(fragment: Fragment, addToBackstack: Boolean) {
+        if (addToBackstack)
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_holder_main, fragment, "pageContent")
+                    .addToBackStack(BACK_STACK_ROOT_TAG)
+                    .commit()
+        else
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragment_holder_main, fragment, "pageContent")
+                    .commit()
     }
 
 }

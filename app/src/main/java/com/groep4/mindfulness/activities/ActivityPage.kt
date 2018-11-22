@@ -6,12 +6,14 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.groep4.mindfulness.R
+import com.groep4.mindfulness.fragments.FragmentProfiel
 import com.groep4.mindfulness.fragments.FragmentReminder
 import com.groep4.mindfulness.fragments.FragmentSessieLijst
 import com.groep4.mindfulness.model.Sessie
@@ -76,6 +78,10 @@ class ActivityPage : AppCompatActivity() {
                 val dialog: AlertDialog = builder.create()
                 dialog.show()
                 return true
+            }
+
+            R.id.action_profiel -> {
+                setFragment(FragmentProfiel(), true)
             }
 
         }

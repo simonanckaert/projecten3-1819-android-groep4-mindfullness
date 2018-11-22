@@ -20,5 +20,7 @@
     <color name="colorSpace">#D2D2D2</color>
     <color name="colorGrey">#444444</color>
     <color name="colorGoogle">#DF4A32</color>
+    <color name="tabIndexText">#fff</color>
+    <color name="tabIndicatorColor">#2d2d2d</color>
 </resources>
 

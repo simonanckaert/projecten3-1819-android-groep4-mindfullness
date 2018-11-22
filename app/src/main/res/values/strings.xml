@@ -32,9 +32,9 @@
     <string name="email">Email</string>
     <string name="onderwerp">Onderwerp</string>
     <string name="text">Text</string>
-    <string name="instellingen">Instellingen</string>
+    <string name="profile">Profiel weergeven</string>
 
-    <string name="logout">uitloggen</string>
+    <string name="logout">Uitloggen</string>
     <string name="register_name">Naam</string>
     <string-array name="stepperLabels">
         <item>1</item>
