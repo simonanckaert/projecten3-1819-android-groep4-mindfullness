@@ -59,5 +59,25 @@
         android:visibility="gone"
         app:srcCompat="@android:drawable/arrow_up_float" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonOefeningGedaan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Oefening gedaan" />
+
+        <Button
+            android:id="@+id/buttonFeedback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Feedback geven" />
+    </LinearLayout>
+
 
 </LinearLayout>
