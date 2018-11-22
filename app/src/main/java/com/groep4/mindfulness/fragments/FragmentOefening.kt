@@ -81,7 +81,7 @@ class FragmentOefening : Fragment() {
             }
         }
 
-        if (oefening.fileMimeType == "audio/vnd.dlna.adts"){
+        if (oefening.fileMimeType.startsWith("audio")){
             mp.setDataSource("http://141.134.155.219:3000/oefeningen/files/" + oefening.fileUrl)
 
 
