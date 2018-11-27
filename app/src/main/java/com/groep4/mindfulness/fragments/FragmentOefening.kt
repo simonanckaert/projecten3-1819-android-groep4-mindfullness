@@ -29,7 +29,6 @@ class FragmentOefening : Fragment() {
     private var ibAudio: ImageButton? = null
     private var wvPDF: WebView? = null
     private var ivOefening: ImageView? = null
-    private var buttonOefeningGedaan: Button? = null
     private var buttonFeedback : Button? = null
 
     private var isPlaying: Boolean = false
@@ -44,7 +43,6 @@ class FragmentOefening : Fragment() {
         ibAudio = view.findViewById(R.id.ib_playAudio)
         wvPDF = view.findViewById(R.id.wv_pdf)
         ivOefening = view.findViewById(R.id.iv_oefening)
-        buttonOefeningGedaan = view.findViewById(R.id.buttonOefeningGedaan)
         buttonFeedback = view.findViewById(R.id.buttonFeedback)
 
         return view
