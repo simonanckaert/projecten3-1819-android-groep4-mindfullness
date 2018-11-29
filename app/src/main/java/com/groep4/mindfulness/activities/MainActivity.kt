@@ -206,4 +206,13 @@ class MainActivity : AppCompatActivity() {
                     .commit()
     }
 
+    fun postFeedback(url: String, json: String): String {
+        val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8")
+        val client: OkHttpClient = OkHttpClient()
+        val body: RequestBody = RequestBody.create(mediaType, json)
+        val request: Request = Request.Builder().url(url).post(body).build()
+        val response: Response = client.newCall(request).execute()
+        return response.body().toString()
+    }
+
 }

@@ -17,6 +17,7 @@ import com.groep4.mindfulness.fragments.FragmentProfiel
 import com.groep4.mindfulness.fragments.FragmentReminder
 import com.groep4.mindfulness.fragments.FragmentSessieLijst
 import com.groep4.mindfulness.model.Sessie
+import okhttp3.*
 
 
 class ActivityPage : AppCompatActivity() {
@@ -101,5 +102,20 @@ class ActivityPage : AppCompatActivity() {
                     .beginTransaction()
                     .replace(R.id.frag_content, fragment, "pageContent")
                     .commit()
+    }
+
+    fun postFeedback(url: String, body:FormBody): String {
+        var response2 : String? = null
+        val thread = Thread(Runnable {
+            val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8")
+            val client: OkHttpClient = OkHttpClient()
+            //val body: RequestBody = RequestBody.create(mediaType, json)
+            val request: Request = Request.Builder().url(url).post(body).build()
+            val response = client.newCall(request).execute()
+            response2 = response.body().toString()
+        })
+        thread.start()
+        return response2.orEmpty()
+
     }
 }
