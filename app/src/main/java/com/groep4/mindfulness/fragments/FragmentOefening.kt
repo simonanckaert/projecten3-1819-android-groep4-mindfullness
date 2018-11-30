@@ -11,15 +11,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.activities.ActivityPage
 import com.groep4.mindfulness.model.Oefening
 import com.koushikdutta.ion.Ion
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.fragment_oefening.*
 
 
 class FragmentOefening : Fragment() {
@@ -96,6 +94,28 @@ class FragmentOefening : Fragment() {
                     false
                 }
             }
+        }
+
+        if (oefening.fileMimeType.startsWith("video")){
+
+            var controller = MediaController(context)
+            controller.setMediaPlayer(videoView)
+            videoView!!.setMediaController(controller)
+            videoView!!.visibility = View.VISIBLE
+            videoView!!.setVideoPath("http://141.134.155.219:3000/oefeningen/files/" + oefening.fileUrl)
+            videoView.start()
+//            videoView!!.setOnClickListener {
+//                isPlaying = if (!isPlaying){
+//                    ibAudio!!.setImageResource(R.drawable.ic_pause_white_24dp)
+//                    mp.prepare()
+//                    mp.start()
+//                    true
+//                }else{
+//                    ibAudio!!.setImageResource(R.drawable.ic_play_arrow_white_24dp)
+//                    mp.stop()
+//                    false
+//                }
+//            }
         }
 
         buttonFeedback!!.setOnClickListener{
