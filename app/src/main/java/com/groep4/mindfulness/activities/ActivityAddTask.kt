@@ -11,6 +11,9 @@ import com.groep4.mindfulness.R
 import com.groep4.mindfulness.database.DBHelper
 import com.groep4.mindfulness.utils.KalenderFunction
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class ActivityAddTask : AppCompatActivity(), com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener {
@@ -23,6 +26,9 @@ class ActivityAddTask : AppCompatActivity(), com.wdullaer.materialdatetimepicker
     var nameFinal: String = ""
     var isUpdate: Boolean = false
     var id: String = ""
+    var yearNow = 0
+    var monthNow = 0
+    var dayNow = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +49,9 @@ class ActivityAddTask : AppCompatActivity(), com.wdullaer.materialdatetimepicker
         startYear = cal.get(Calendar.YEAR)
         startMonth = cal.get(Calendar.MONTH)
         startDay = cal.get(Calendar.DAY_OF_MONTH)
+        yearNow = cal.get(Calendar.YEAR)
+        monthNow = cal.get(Calendar.MONTH)
+        dayNow = cal.get(Calendar.DAY_OF_MONTH)
 
         if (isUpdate!!) {
             init_update()
@@ -109,10 +118,23 @@ class ActivityAddTask : AppCompatActivity(), com.wdullaer.materialdatetimepicker
             errorStep++
             task_name.setError("Geef een taaknaam op.")
         }
-
         if (dateFinal.trim { it <= ' ' }.length < 4) {
             errorStep++
             task_date.setError("Geef een specifieke datum op.")
+        }
+        else {
+            if(startYear < yearNow) {
+                errorStep++
+                Toast.makeText(applicationContext, "Datum mag niet in het verleden liggen", Toast.LENGTH_SHORT).show()
+            }
+            else if(startYear == yearNow && startMonth < monthNow) {
+                errorStep++
+                Toast.makeText(applicationContext, "Datum mag niet in het verleden liggen", Toast.LENGTH_SHORT).show()
+            }
+            else if(startYear == yearNow && startMonth == monthNow && startDay < dayNow) {
+                errorStep++
+                Toast.makeText(applicationContext, "Datum mag niet in het verleden liggen", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
@@ -128,7 +150,7 @@ class ActivityAddTask : AppCompatActivity(), com.wdullaer.materialdatetimepicker
 
             finish()
         } else {
-            Toast.makeText(applicationContext, "Probeer opnieuw.", Toast.LENGTH_SHORT).show()
+
         }
 
     }
