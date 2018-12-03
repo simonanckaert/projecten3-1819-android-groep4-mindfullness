@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1084064931254-l6jj4b28e0h6r2shnh878jhjqqc467t4.apps.googleusercontent.com",
+          "client_id": "1084064931254-ih2vrccs3vsa3tlakg2vfa3e8aojpom1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.groep4.mindfulness",
-            "certificate_hash": "5fcabf8ea1982811533ae898a365b9e979c6362c"
+            "certificate_hash": "79A632932B7AAE730D3682BB9A69E676E2A75C38"
           }
         },
         {
