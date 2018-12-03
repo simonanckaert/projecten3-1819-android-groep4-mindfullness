@@ -25,17 +25,8 @@ class FragmentProfielInfo: Fragment() {
     private var txtRegio: TextView? = null */
 
 
-    companion object {
-        fun newInstance(): FragmentProfielInfo {
-            return FragmentProfielInfo()
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profiel_info, container, false)
-       // txtEmail = view.findViewById(R.id.txtEmail)
-       // txtNaam = view.findViewById(R.id.txtNaam)
-       // txtRegio = view.findViewById(R.id.txtRegio)
         return view
     }
 

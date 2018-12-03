@@ -108,7 +108,8 @@ class MainActivity : AppCompatActivity() {
                     val naam = jsonobject.getString("naam")
                     val beschrijving = jsonobject.getString("beschrijving")
                     val oefeningen = getOefeningen(sessieId)
-                    val sessie: Sessie = Sessie(sessieId, naam, beschrijving, "Info", oefeningen, false)
+                    val sessieCode = jsonobject.getString("sessieCode")
+                    val sessie: Sessie = Sessie(sessieId, naam, beschrijving, oefeningen, sessieCode,false)
                     sessies.add(sessie)
                 }
             }

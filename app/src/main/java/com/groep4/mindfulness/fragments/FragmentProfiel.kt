@@ -15,8 +15,7 @@ class FragmentProfiel: Fragment() {
 
     private var tabLayout: TabLayout? = null
     private var appBarLayout: AppBarLayout? = null
-    private var viewPager: ViewPager? = null
-
+    private lateinit var viewPager: ViewPager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_profiel, container, false)
