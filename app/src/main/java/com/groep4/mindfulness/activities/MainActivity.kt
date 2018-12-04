@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ActivityPage::class.java)
             intent.putExtra("key_page", "sessies")
             intent.putExtra("sessielist", sessies)
+            //intent.putParcelableArrayListExtra("sessielist", sessies)
             startActivity(intent)
         }
 
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, ActivityPage::class.java)
             intent.putExtra("key_page", "reminder")
             intent.putExtra("sessielist", sessies)
+            //intent.putParcelableArrayListExtra("sessielist", sessies)
             startActivity(intent)
         }
 
@@ -108,6 +110,7 @@ class MainActivity : AppCompatActivity() {
                     val naam = jsonobject.getString("naam")
                     val beschrijving = jsonobject.getString("beschrijving")
                     val oefeningen = getOefeningen(sessieId)
+                    //val oefeningen = ArrayList<Oefening>()
                     val sessieCode = jsonobject.getString("sessieCode")
                     val sessie: Sessie = Sessie(sessieId, naam, beschrijving, oefeningen, sessieCode,false)
                     sessies.add(sessie)
@@ -142,8 +145,9 @@ class MainActivity : AppCompatActivity() {
                     val sessieid = jsonobject.getInt("sessieId")
                     val fileUrl = jsonobject.getString("fileName")
                     val fileMimeType = jsonobject.getString("fileMimetype")
+                    val groepen = jsonobject.getString("groepen")
 
-                    val oefening: Oefening = Oefening(oefeningenId, naam, beschrijving, sessieid, fileUrl, fileMimeType)
+                    val oefening: Oefening = Oefening(oefeningenId, naam, beschrijving, sessieid, fileUrl, fileMimeType, groepen)
                     oefeningen.add(oefening)
                 }
             }

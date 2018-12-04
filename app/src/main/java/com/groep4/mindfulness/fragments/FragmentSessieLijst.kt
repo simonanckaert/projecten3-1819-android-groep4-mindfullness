@@ -45,7 +45,8 @@ class FragmentSessieLijst : Fragment() {
 
 
         //knop instellen
-        view.btnDialog.setOnClickListener { showDialog() }
+        //btnDialog = view.findViewById(R.id.butt)
+        //view.btnDialog.setOnClickListener { showDialog() }
 
 
         // Background images toevoegen aan arrays zodat de sessieviews ze kunnen gebruiken
