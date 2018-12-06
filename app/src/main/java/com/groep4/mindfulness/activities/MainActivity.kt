@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.fragments.FragmentProfiel
+import com.groep4.mindfulness.model.Gebruiker
 import com.groep4.mindfulness.model.Oefening
 import com.groep4.mindfulness.model.Sessie
 import com.orhanobut.logger.AndroidLogAdapter
@@ -21,6 +22,7 @@ import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.*
 import org.json.JSONArray
+import org.json.JSONObject
 import java.io.IOException
 
 
@@ -30,19 +32,23 @@ class MainActivity : AppCompatActivity() {
     private val client = OkHttpClient()
     lateinit var mAuth: FirebaseAuth
     private var isFragmentProfielLoaded = false
+    var gebruiker : Gebruiker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        mAuth = FirebaseAuth.getInstance()
         Logger.addLogAdapter(AndroidLogAdapter())
 
         // Toolbar
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
+        this.gebruiker = getAangemeldeGebruiker()
+
         // Sessies
         val sessies: ArrayList<Sessie> = getSessies()
+
 
         // belangrijk key_page mee te geven om juiste fragment te kunnen laden vanuit eenzelfde activity!
         ll_sessies.setOnClickListener {
@@ -114,6 +120,38 @@ class MainActivity : AppCompatActivity() {
             }
         })
         return sessies
+    }
+
+    fun getAangemeldeGebruiker() : Gebruiker{
+        var gebruiker : Gebruiker = Gebruiker()
+        val string1 = ("http://141.134.155.219:3000/users/".plus(mAuth.currentUser!!.uid))
+        val string = "http://141.134.155.219:3000/users/yXQmL8IGSCbN15fzWw60t5udU2o2"
+        Logger.d("MEOZOZOZ", string1)
+        // HTTP Request sessies
+        val request = Request.Builder()
+                /*.header("Authorization", "token abcd")*/
+                .url(HttpUrl.parse(string)/*+ mAuth.currentUser!!.uid*/)
+                .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("ERROR", "HTTP request failed: $e")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                //val jsonarray = JSONArray(response.body()!!.string())
+                val jsonobject = JSONObject(response.body()!!.string())
+
+                    gebruiker.uid = mAuth.currentUser!!.uid
+                    gebruiker.regio = jsonobject.getString("regio")
+                    gebruiker.email = jsonobject.getString("email")
+                    gebruiker.name = jsonobject.getString("name")
+                    gebruiker.telnr = jsonobject.getString("telnr")
+                    gebruiker.groepsnr = jsonobject.getInt("groepnr")
+
+            }
+        })
+        return gebruiker
     }
 
     // Oefeningen van sessie ophalen
@@ -192,7 +230,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setFragment(fragment: Fragment, addToBackstack: Boolean) {
+    fun setFragment(fragment: Fragment, addToBackstack: Boolean) {
         if (addToBackstack)
             supportFragmentManager
                     .beginTransaction()

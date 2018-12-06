@@ -8,21 +8,28 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.groep4.mindfulness.R
+import com.groep4.mindfulness.activities.ActivityPage
+import com.groep4.mindfulness.activities.MainActivity
+import com.groep4.mindfulness.model.Gebruiker
 import java.security.KeyStore
 
 class FragmentProfielInfo: Fragment() {
 
-   /* lateinit var mAuth: FirebaseAuth
-    var ref: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
+    /*lateinit var mAuth: FirebaseAuth
+    var ref: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")*/
     private var txtEmail: TextView? = null
     private var txtNaam: TextView? = null
-    private var txtRegio: TextView? = null */
+    private var gebruiker : Gebruiker? = null
+    private var txtRegio: TextView? = null
+
+    private var btnGegevensWijzigen : Button? = null
 
 
     companion object {
@@ -33,9 +40,24 @@ class FragmentProfielInfo: Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profiel_info, container, false)
-       // txtEmail = view.findViewById(R.id.txtEmail)
-       // txtNaam = view.findViewById(R.id.txtNaam)
-       // txtRegio = view.findViewById(R.id.txtRegio)
+
+        gebruiker = (activity as MainActivity).gebruiker
+
+        txtEmail = view.findViewById(R.id.txtEmail)
+        txtEmail!!.text = gebruiker!!.uid
+
+        txtNaam = view.findViewById(R.id.txtNaam)
+        txtNaam!!.text = gebruiker!!.name
+
+        txtRegio = view.findViewById(R.id.txtRegio)
+        txtRegio!!.text = gebruiker!!.regio
+
+        btnGegevensWijzigen = view.findViewById(R.id.btnGegevensWijzigen)
+        btnGegevensWijzigen!!.setOnClickListener {
+            val fragmentProfielGegevensWijzigen = FragmentProfielGegevensWijzigen()
+            (activity as MainActivity).setFragment(fragmentProfielGegevensWijzigen, true)
+        }
+
         return view
     }
 

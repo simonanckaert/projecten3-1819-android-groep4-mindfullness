@@ -3,11 +3,12 @@ package com.groep4.mindfulness.adapters
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.support.v4.app.FragmentStatePagerAdapter
 import android.util.SparseArray
 import com.groep4.mindfulness.fragments.FragmentProfielInfo
 import com.groep4.mindfulness.fragments.FragmentProfielOverzicht
 
-class ViewPagerAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
+class ViewPagerAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
 
     private val fragmentList: MutableList<Fragment> = ArrayList()
     private val fragmentListTitles: MutableList<String> = ArrayList()
