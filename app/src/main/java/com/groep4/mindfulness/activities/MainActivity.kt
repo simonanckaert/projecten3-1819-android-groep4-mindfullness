@@ -24,6 +24,7 @@ import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
+import java.net.URL
 
 
 class MainActivity : AppCompatActivity() {
@@ -124,13 +125,14 @@ class MainActivity : AppCompatActivity() {
 
     fun getAangemeldeGebruiker() : Gebruiker{
         var gebruiker : Gebruiker = Gebruiker()
-        val string1 = ("http://141.134.155.219:3000/users/".plus(mAuth.currentUser!!.uid))
+        val id = mAuth.currentUser!!.uid
+        val string1 = ("http://141.134.155.219:3000/users/" + id)
         val string = "http://141.134.155.219:3000/users/yXQmL8IGSCbN15fzWw60t5udU2o2"
         Logger.d("MEOZOZOZ", string1)
         // HTTP Request sessies
         val request = Request.Builder()
                 /*.header("Authorization", "token abcd")*/
-                .url(HttpUrl.parse(string)/*+ mAuth.currentUser!!.uid*/)
+                .url(string1/*+ mAuth.currentUser!!.uid*/)
                 .build()
 
         client.newCall(request).enqueue(object : Callback {
@@ -193,6 +195,20 @@ class MainActivity : AppCompatActivity() {
             super.onBackPressed()
             isFragmentProfielLoaded = false
         }
+    }
+
+    fun veranderGegevens(body : FormBody, url : String) : String {
+        var response2 : String? = null
+        val thread = Thread(Runnable {
+            val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8")
+            val client: OkHttpClient = OkHttpClient()
+            //val body: RequestBody = RequestBody.create(mediaType, json)
+            val request: Request = Request.Builder().url(url).put(body).build()
+            val response = client.newCall(request).execute()
+            response2 = response.body().toString()
+        })
+        thread.start()
+        return response2.orEmpty()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

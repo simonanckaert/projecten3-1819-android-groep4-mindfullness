@@ -44,7 +44,7 @@ class FragmentProfielInfo: Fragment() {
         gebruiker = (activity as MainActivity).gebruiker
 
         txtEmail = view.findViewById(R.id.txtEmail)
-        txtEmail!!.text = gebruiker!!.uid
+        txtEmail!!.text = gebruiker!!.email
 
         txtNaam = view.findViewById(R.id.txtNaam)
         txtNaam!!.text = gebruiker!!.name
