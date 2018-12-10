@@ -145,11 +145,11 @@ class MainActivity : AppCompatActivity() {
                 val jsonobject = JSONObject(response.body()!!.string())
 
                     gebruiker.uid = mAuth.currentUser!!.uid
-                    gebruiker.regio = jsonobject.getString("regio")
-                    gebruiker.email = jsonobject.getString("email")
-                    gebruiker.name = jsonobject.getString("name")
-                    gebruiker.telnr = jsonobject.getString("telnr")
-                    gebruiker.groepsnr = jsonobject.getInt("groepnr")
+                    gebruiker.regio = if (jsonobject.has("regio")) jsonobject.getString("regio") else ""
+                    gebruiker.email = if (jsonobject.has("email")) jsonobject.getString("email") else ""
+                    gebruiker.name = if (jsonobject.has("name")) jsonobject.getString("name") else ""
+                    gebruiker.telnr = if (jsonobject.has("telnr")) jsonobject.getString("telnr") else ""
+                    gebruiker.groepsnr = if (jsonobject.has("groepnr")) jsonobject.getInt("groepnr") else 0
 
             }
         })
@@ -191,9 +191,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (isFragmentProfielLoaded) {
+
+        //In case there are no fragments visible (mainactivity is visible) disable the back button
+        if (supportFragmentManager.backStackEntryCount > 0) {
             super.onBackPressed()
-            isFragmentProfielLoaded = false
         }
     }
 
