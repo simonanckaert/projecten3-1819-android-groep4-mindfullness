@@ -8,13 +8,15 @@ class Sessie : Parcelable {
     var naam: String
     var beschrijving: String
     var oefeningen: ArrayList<Oefening>? = null
+    var sessieCode: String
     var vergrendeld: Boolean = false
 
-    constructor(id: Int, naam: String, beschrijving: String, info: String, oefeningen: ArrayList<Oefening>?, vergrendeld: Boolean){
+    constructor(id: Int, naam: String, beschrijving: String, oefeningen: ArrayList<Oefening>?, sessieCode: String, vergrendeld: Boolean){
         this.sessieId = id
         this.naam = naam
         this.beschrijving = beschrijving
         this.oefeningen = oefeningen
+        this.sessieCode = sessieCode
         this.vergrendeld = vergrendeld
     }
 
@@ -22,6 +24,7 @@ class Sessie : Parcelable {
         this.sessieId = parcel.readInt()
         this.naam = parcel.readString()
         this.beschrijving = parcel.readString()
+        this.sessieCode = parcel.readString()
         this.oefeningen = parcel.createTypedArrayList(Oefening.CREATOR)
         this.vergrendeld = (parcel.readByte().toInt() != 0)
     }
@@ -31,6 +34,7 @@ class Sessie : Parcelable {
         dest?.writeString(naam)
         dest?.writeString(beschrijving)
         dest?.writeTypedList(oefeningen)
+        dest?.writeString(sessieCode)
         dest?.writeByte((if (vergrendeld) 1 else 0).toByte())
     }
 

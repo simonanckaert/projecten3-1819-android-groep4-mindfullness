@@ -33,14 +33,9 @@ class FragmentProfielInfo: Fragment() {
     private var btnGegevensWijzigen : Button? = null
 
 
-    companion object {
-        fun newInstance(): FragmentProfielInfo {
-            return FragmentProfielInfo()
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profiel_info, container, false)
+
 
         gebruiker = (activity as MainActivity).gebruiker
 

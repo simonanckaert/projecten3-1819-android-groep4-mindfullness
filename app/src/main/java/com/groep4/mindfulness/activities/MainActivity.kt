@@ -17,6 +17,7 @@ import com.groep4.mindfulness.fragments.FragmentProfiel
 import com.groep4.mindfulness.model.Gebruiker
 import com.groep4.mindfulness.model.Oefening
 import com.groep4.mindfulness.model.Sessie
+import com.groep4.mindfulness.utils.ExtendedDataHolder
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_main.*
@@ -55,14 +56,22 @@ class MainActivity : AppCompatActivity() {
         ll_sessies.setOnClickListener {
             val intent = Intent(this, ActivityPage::class.java)
             intent.putExtra("key_page", "sessies")
-            intent.putExtra("sessielist", sessies)
+
+            //save sessies in een externe klasse aangezien app crasht door grootte indien meegegeven met een intent
+            var extras = ExtendedDataHolder.getInstance()
+            extras.putExtra("sessielist", sessies)
+
             startActivity(intent)
         }
 
         ll_reminder.setOnClickListener {
             val intent = Intent(this, ActivityPage::class.java)
             intent.putExtra("key_page", "reminder")
-            intent.putExtra("sessielist", sessies)
+
+            //save sessies in een externe klasse aangezien app crasht door grootte indien meegegeven met een intent
+            var extras = ExtendedDataHolder.getInstance()
+            extras.putExtra("sessielist", sessies)
+
             startActivity(intent)
         }
 
@@ -108,6 +117,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call, response: Response) {
+                sessies.clear()
                 val jsonarray = JSONArray(response.body()!!.string())
                 for (i in 0 until jsonarray.length()) {
                     val jsonobject = jsonarray.getJSONObject(i)
@@ -115,7 +125,9 @@ class MainActivity : AppCompatActivity() {
                     val naam = jsonobject.getString("naam")
                     val beschrijving = jsonobject.getString("beschrijving")
                     val oefeningen = getOefeningen(sessieId)
-                    val sessie: Sessie = Sessie(sessieId, naam, beschrijving, "Info", oefeningen, false)
+                    //val oefeningen = ArrayList<Oefening>()
+                    val sessieCode = jsonobject.getString("sessieCode")
+                    val sessie: Sessie = Sessie(sessieId, naam, beschrijving, oefeningen, sessieCode,false)
                     sessies.add(sessie)
                 }
             }
@@ -181,8 +193,9 @@ class MainActivity : AppCompatActivity() {
                     val sessieid = jsonobject.getInt("sessieId")
                     val fileUrl = jsonobject.getString("fileName")
                     val fileMimeType = jsonobject.getString("fileMimetype")
+                    val groepen = jsonobject.getString("groepen")
 
-                    val oefening: Oefening = Oefening(oefeningenId, naam, beschrijving, sessieid, fileUrl, fileMimeType)
+                    val oefening: Oefening = Oefening(oefeningenId, naam, beschrijving, sessieid, fileUrl, fileMimeType, groepen)
                     oefeningen.add(oefening)
                 }
             }

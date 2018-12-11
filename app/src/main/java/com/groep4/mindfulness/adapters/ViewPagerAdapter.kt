@@ -10,8 +10,8 @@ import com.groep4.mindfulness.fragments.FragmentProfielOverzicht
 
 class ViewPagerAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm) {
 
-    private val fragmentList: MutableList<Fragment> = ArrayList()
-    private val fragmentListTitles: MutableList<String> = ArrayList()
+    private val fragmentList: ArrayList<Fragment> = ArrayList()
+    private val fragmentListTitles: ArrayList<String> = ArrayList()
 
 
     override fun getItem(position: Int): Fragment {
