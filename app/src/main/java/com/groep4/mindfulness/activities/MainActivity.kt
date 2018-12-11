@@ -229,6 +229,7 @@ class MainActivity : AppCompatActivity() {
         })
         thread.start()
         getAangemeldeGebruiker()
+        setFragment(FragmentProfiel(), true)
         return response2.orEmpty()
     }
 

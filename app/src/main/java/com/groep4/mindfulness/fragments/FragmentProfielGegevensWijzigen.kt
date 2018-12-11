@@ -3,6 +3,7 @@ package com.groep4.mindfulness.fragments
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -24,9 +25,14 @@ class FragmentProfielGegevensWijzigen : Fragment() {
     private var txtTelnr : TextView? = null
     private var txtGebruikersnaamFout : TextView? = null
     private var txtTelnrFout : TextView? = null
+    private var inflater : LayoutInflater? = null
+    private var container : ViewGroup? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view:View=inflater!!.inflate(R.layout.fragment_profiel_gegevens_wijzigen,container,false)
+
+        this.inflater = inflater
+        this.container = container
 
         btnAnnuleren = view.findViewById(R.id.btnAnnuleren)
         btnBevestigen = view.findViewById(R.id.btnBevestigen)
@@ -50,7 +56,7 @@ class FragmentProfielGegevensWijzigen : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         btnAnnuleren!!.setOnClickListener{
-            activity!!.onBackPressed()
+            (activity as MainActivity)!!.setFragment(FragmentProfiel(), false)
         }
 
         btnBevestigen!!.setOnClickListener {
@@ -85,7 +91,6 @@ class FragmentProfielGegevensWijzigen : Fragment() {
                 fromBodyBuilder.add("groepnr", gebruiker!!.groepsnr.toString())
                 var url = "http://141.134.155.219:3000/users/" + gebruiker!!.uid
                 (activity as MainActivity)!!.gegevensGebruikerOpslaan(fromBodyBuilder.build(), url)
-                activity!!.onBackPressed()
             }
         }
     }
