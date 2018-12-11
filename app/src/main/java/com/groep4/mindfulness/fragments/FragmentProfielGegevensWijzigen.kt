@@ -22,6 +22,8 @@ class FragmentProfielGegevensWijzigen : Fragment() {
     private var txtRegio : TextView? = null
     private var txtGebruikersnaam : TextView? = null
     private var txtTelnr : TextView? = null
+    private var txtGebruikersnaamFout : TextView? = null
+    private var txtTelnrFout : TextView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view:View=inflater!!.inflate(R.layout.fragment_profiel_gegevens_wijzigen,container,false)
@@ -32,12 +34,15 @@ class FragmentProfielGegevensWijzigen : Fragment() {
         txtRegio = view.findViewById(R.id.txtRegio)
         txtGebruikersnaam = view.findViewById(R.id.txtGebruikersnaam)
         txtTelnr = view.findViewById(R.id.txtTelnr)
+        txtGebruikersnaamFout = view.findViewById(R.id.txtFoutGebruikersnaam)
+        txtTelnrFout = view.findViewById(R.id.txtFoutTelefoonnummer)
 
         gebruiker = (activity as MainActivity)!!.gebruiker
 
         txtRegio!!.text = gebruiker!!.regio
         txtGebruikersnaam!!.text = gebruiker!!.name
         txtTelnr!!.text = gebruiker!!.telnr
+
 
         return view
     }
@@ -49,16 +54,39 @@ class FragmentProfielGegevensWijzigen : Fragment() {
         }
 
         btnBevestigen!!.setOnClickListener {
-            val fromBodyBuilder = FormBody.Builder()
-            fromBodyBuilder.add("name", txtGebruikersnaam!!.text.toString())
-            fromBodyBuilder.add("regio", txtRegio!!.text.toString())
-            fromBodyBuilder.add("telnr", txtTelnr!!.text.toString())
-            fromBodyBuilder.add("uid", gebruiker!!.uid)
-            fromBodyBuilder.add("email", gebruiker!!.email)
-            fromBodyBuilder.add("groepnr", gebruiker!!.groepsnr.toString())
-            var url = "http://141.134.155.219:3000/users/" + gebruiker!!.uid
-            (activity as MainActivity)!!.veranderGegevens(fromBodyBuilder.build(), url)
-            activity!!.onBackPressed()
+            var fout : Boolean? = false
+
+            if(txtGebruikersnaam!!.text.toString().length > 3) {
+                txtGebruikersnaamFout!!.visibility = View.INVISIBLE
+            }
+            else {
+                fout = true
+                txtGebruikersnaamFout!!.visibility = View.VISIBLE
+            }
+            if(txtTelnr!!.text.isEmpty() || txtTelnr!!.text.length == 10 || txtTelnr!!.text.length == 9)
+                txtTelnrFout!!.visibility = View.INVISIBLE
+            else {
+                fout = true
+                txtTelnrFout!!.visibility = View.VISIBLE
+            }
+
+
+            if(!fout!!) {
+                (activity as MainActivity)!!
+                        .veranderGegevensGebruiker(txtGebruikersnaam!!.text.toString(),
+                                txtRegio!!.text.toString(), txtTelnr!!.text.toString())
+
+                val fromBodyBuilder = FormBody.Builder()
+                fromBodyBuilder.add("name", txtGebruikersnaam!!.text.toString())
+                fromBodyBuilder.add("regio", txtRegio!!.text.toString())
+                fromBodyBuilder.add("telnr", txtTelnr!!.text.toString())
+                fromBodyBuilder.add("uid", gebruiker!!.uid)
+                fromBodyBuilder.add("email", gebruiker!!.email)
+                fromBodyBuilder.add("groepnr", gebruiker!!.groepsnr.toString())
+                var url = "http://141.134.155.219:3000/users/" + gebruiker!!.uid
+                (activity as MainActivity)!!.gegevensGebruikerOpslaan(fromBodyBuilder.build(), url)
+                activity!!.onBackPressed()
+            }
         }
     }
 

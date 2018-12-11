@@ -198,7 +198,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun veranderGegevens(body : FormBody, url : String) : String {
+    fun veranderGegevensGebruiker(gebruikersnaam : String, regio : String, telnr : String) {
+        gebruiker!!.name = gebruikersnaam
+        gebruiker!!.regio = regio
+        gebruiker!!.telnr = telnr
+    }
+
+    fun gegevensGebruikerOpslaan(body : FormBody, url : String) : String {
         var response2 : String? = null
         val thread = Thread(Runnable {
             val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8")
@@ -209,6 +215,7 @@ class MainActivity : AppCompatActivity() {
             response2 = response.body().toString()
         })
         thread.start()
+        getAangemeldeGebruiker()
         return response2.orEmpty()
     }
 

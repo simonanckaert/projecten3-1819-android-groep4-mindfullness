@@ -28,6 +28,7 @@ class FragmentProfielInfo: Fragment() {
     private var txtNaam: TextView? = null
     private var gebruiker : Gebruiker? = null
     private var txtRegio: TextView? = null
+    private var txtTelnr : TextView? = null
 
     private var btnGegevensWijzigen : Button? = null
 
@@ -48,6 +49,9 @@ class FragmentProfielInfo: Fragment() {
 
         txtNaam = view.findViewById(R.id.txtNaam)
         txtNaam!!.text = gebruiker!!.name
+
+        txtTelnr = view.findViewById(R.id.txtTelnr)
+        txtTelnr!!.text = gebruiker!!.telnr
 
         txtRegio = view.findViewById(R.id.txtRegio)
         txtRegio!!.text = gebruiker!!.regio
