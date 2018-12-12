@@ -229,7 +229,9 @@ class MainActivity : AppCompatActivity() {
         })
         thread.start()
         getAangemeldeGebruiker()
-        setFragment(FragmentProfiel(), true)
+        //supportFragmentManager.popBackStack()
+
+
         return response2.orEmpty()
     }
 

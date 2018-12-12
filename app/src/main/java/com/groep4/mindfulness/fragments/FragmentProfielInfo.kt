@@ -53,8 +53,7 @@ class FragmentProfielInfo: Fragment() {
 
         btnGegevensWijzigen = view.findViewById(R.id.btnGegevensWijzigen)
         btnGegevensWijzigen!!.setOnClickListener {
-            val fragmentProfielGegevensWijzigen = FragmentProfielGegevensWijzigen()
-            (activity as MainActivity).setFragment(fragmentProfielGegevensWijzigen, true)
+            (activity as MainActivity).setFragment(FragmentProfielGegevensWijzigen(), false)
         }
 
         return view
