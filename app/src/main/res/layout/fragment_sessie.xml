@@ -119,6 +119,17 @@
                         app:layout_gravity="bottom"
                         app:srcCompat="@mipmap/building02" />
 
+                    <ImageView
+                        android:id="@+id/iv_sessie_finish"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
+                        android:scaleType="fitCenter"
+                        app:layout_columnWeight="1"
+                        app:layout_gravity="bottom"
+                        app:srcCompat="@mipmap/finish" />
+
                 </android.support.v7.widget.GridLayout>
 
                 <android.support.v7.widget.GridLayout

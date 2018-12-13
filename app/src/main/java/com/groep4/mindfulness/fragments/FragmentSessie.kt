@@ -3,14 +3,15 @@ package com.groep4.mindfulness.fragments
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
+import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.activities.ActivityPage
 import com.groep4.mindfulness.model.Sessie
@@ -27,9 +28,9 @@ class FragmentSessie : Fragment() {
     private var txtSessieTitel: TextView? = null
     private var txtSessieBeschrijving: TextView? = null
     private var imgBusMonsters: ArrayList<ImageView>? = null
-
     private var imgViewsBuildings: ArrayList<ImageView>? = null
     private var imgViewsMisc: ArrayList<ImageView>? = null
+    private var imgFinish: ImageView? = null
 
     private var objectAnimator: ObjectAnimator? = null
 
@@ -72,19 +73,20 @@ class FragmentSessie : Fragment() {
         imgViewsMisc!!.add(view.findViewById(R.id.iv_sessie_miscbg02))
         imgViewsMisc!!.add(view.findViewById(R.id.iv_sessie_miscbg03))
 
+        imgFinish = view.findViewById(R.id.iv_sessie_finish)
 
         // Dynamisch background images verdelen per sessie
-        for (v in imgViewsBuildings!!) {
-            v.setImageResource((parentFragment as FragmentSessieLijst).imgBuildings!![random!!.nextInt((parentFragment as FragmentSessieLijst).imgBuildings!!.size)])
-            when (random!!.nextBoolean()) {
-                true -> v.visibility = VISIBLE
-                false -> v.visibility = INVISIBLE
+            for (v in imgViewsBuildings!!) {
+                v.setImageResource((parentFragment as FragmentSessieLijst).imgBuildings!![random!!.nextInt((parentFragment as FragmentSessieLijst).imgBuildings!!.size)])
+                when (random!!.nextBoolean()) {
+                    true -> v.visibility = VISIBLE
+                    false -> v.visibility = INVISIBLE
+                }
             }
-        }
 
-        for (v in imgViewsMisc!!) {
-            v.setImageResource((parentFragment as FragmentSessieLijst).imgMisc!![random!!.nextInt((parentFragment as FragmentSessieLijst).imgMisc!!.size)])
-        }
+            for (v in imgViewsMisc!!) {
+                v.setImageResource((parentFragment as FragmentSessieLijst).imgMisc!![random!!.nextInt((parentFragment as FragmentSessieLijst).imgMisc!!.size)])
+            }
 
         screenWidth = resources.displayMetrics.widthPixels
 
@@ -99,23 +101,63 @@ class FragmentSessie : Fragment() {
         val imgRes = context!!.resources.getIdentifier("mnstr$page","mipmap", context!!.packageName)
         imgSessie!!.setImageResource(imgRes)
 
+
         // Naargelang hoe ver je zit in de sessies de bus opvullen met monsters.
         for (i in 0 until page){
-            val imgResBus = context!!.resources.getIdentifier("mnstr" + (i+1),"mipmap", context!!.packageName)
-            imgBusMonsters!![i].setImageResource(imgResBus)
-            imgBusMonsters!![i].visibility = VISIBLE
-        }
+            if (i < 8){
+                val imgResBus = context!!.resources.getIdentifier("mnstr" + (i+1),"mipmap", context!!.packageName)
+                imgBusMonsters!![i].setImageResource(imgResBus)
+                imgBusMonsters!![i].visibility = VISIBLE}
+            }
 
         txtSessieTitel!!.text = sessie.naam
 
         cv_sessie.setOnClickListener{
             if (sessie!!.naam != "Geen sessie gevonden."){
-                val sessiePageFragment = FragmentSessiePage()
-                val bundle = Bundle()
-                bundle.putParcelable("key_sessie", sessie)
-                bundle.putInt("key_page", page)
-                sessiePageFragment.arguments = bundle
-                (activity as ActivityPage).setFragment(sessiePageFragment, true)
+                if (sessie!!.sessieId == 1){
+                    val sessiePageFragment = FragmentSessiePage()
+                    val bundle = Bundle()
+                    bundle.putParcelable("key_sessie", sessie)
+                    bundle.putInt("key_page", page)
+                    sessiePageFragment.arguments = bundle
+                    (activity as ActivityPage).setFragment(sessiePageFragment, true)
+                } else {
+
+                    val builder = AlertDialog.Builder(context!!)
+                    var editTextCode: EditText
+
+                    builder.setTitle("Sessie gelocked!")
+                    builder.setMessage("Gelieve de sessiecode in te geven")
+                    builder.setCancelable(true)
+
+                    editTextCode = EditText(context)
+                    editTextCode.hint = "sessiecode"
+                    editTextCode.inputType = InputType.TYPE_CLASS_TEXT
+
+                    builder.setPositiveButton("Stuur") { dialog, which ->
+                        var code = editTextCode.text.toString()
+                        if ("goed" == code) {
+                            val sessiePageFragment = FragmentSessiePage()
+                            val bundle = Bundle()
+                            bundle.putParcelable("key_sessie", sessie)
+                            bundle.putInt("key_page", page)
+                            sessiePageFragment.arguments = bundle
+                            (activity as ActivityPage).setFragment(sessiePageFragment, true)
+                        } else {
+                            Toast.makeText(context, "Helaas, het antwoord is fout", Toast.LENGTH_SHORT).show()
+
+                        }
+                    }
+
+                    builder.setNeutralButton("Annuleer") { dialog, which ->
+                        dialog.cancel()
+                    }
+
+                    val dialog: AlertDialog = builder.create()
+
+                    dialog.setView(editTextCode)
+                    dialog.show()
+                }
             }else{
                 Toasty.info(view!!.context, "Geen sessie gevonden, controleer uw internetverbinding.").show()
             }
