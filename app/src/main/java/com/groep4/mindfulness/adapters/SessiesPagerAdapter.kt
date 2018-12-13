@@ -3,6 +3,7 @@ package com.groep4.mindfulness.adapters
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.util.Log
 import android.util.SparseArray
 import android.view.ViewGroup
 import com.groep4.mindfulness.fragments.FragmentSessie
@@ -18,6 +19,7 @@ internal class SessiesPagerAdapter(fm: FragmentManager, val sessies: ArrayList<S
     }
 
     override fun getItem(position: Int): Fragment {
+//        return FragmentSessie.newInstance(position + 1, position == count - 1, sessies[position])
         return FragmentSessie.newInstance(position + 1, position == count - 1, sessies[position])
     }
 

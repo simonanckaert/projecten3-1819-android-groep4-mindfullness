@@ -4,6 +4,7 @@ package com.groep4.mindfulness.fragments
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,9 +54,7 @@ class FragmentChat : Fragment(){
         displayChatMessages(view)
 
         return view
-
     }
-
 
     override fun onStart() {
         super.onStart()
@@ -66,7 +65,6 @@ class FragmentChat : Fragment(){
         super.onStop()
         adapter!!.stopListening()
     }
-
 
     /**
      * De listAdapter zorgt ervoor dat de List opgevuld raakt met chatberichten opgehaald uit de database met de huidige gebruiker's userid als argument.
