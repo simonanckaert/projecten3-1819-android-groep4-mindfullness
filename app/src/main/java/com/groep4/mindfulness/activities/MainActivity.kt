@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity() {
                     val oefeningen = getOefeningen(sessieId)
                     //val oefeningen = ArrayList<Oefening>()
                     val sessieCode = jsonobject.getString("sessieCode")
-                    val sessie: Sessie = Sessie(sessieId, naam, beschrijving, oefeningen, sessieCode,false)
+                    val sessie: Sessie = Sessie(sessieId, naam, beschrijving, oefeningen, sessieCode)
                     sessies.add(sessie)
                 }
             }
