@@ -83,11 +83,9 @@ class FragmentSessieLijst : Fragment() {
                     sessieFragmentPrevious.setBusVisible(false)
                     previousPage = position
 
-                    if (sessies.size <= position + 1){
-                        Log.d("tag","positie: " + position.toString())
-                        Log.d("tag", "sessies: " + sessies.size)
-                        //objecten op juiste plaats zetten
-                    }
+
+
+
 
                 }, 15)
             }

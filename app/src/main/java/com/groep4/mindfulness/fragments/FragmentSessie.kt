@@ -2,8 +2,10 @@ package com.groep4.mindfulness.fragments
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
+import android.support.v7.widget.CardView
 import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +13,8 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.*
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.activities.ActivityPage
@@ -25,13 +29,19 @@ import kotlin.collections.ArrayList
 class FragmentSessie : Fragment() {
 
     private var imgSessie: ImageView? = null
+    private var cvSessie: CardView? = null
     private var txtSessieTitel: TextView? = null
     private var txtSessieBeschrijving: TextView? = null
     private var imgBusMonsters: ArrayList<ImageView>? = null
     private var imgViewsBuildings: ArrayList<ImageView>? = null
     private var imgViewsMisc: ArrayList<ImageView>? = null
     private var imgViewsMiscfg: ArrayList<ImageView>? = null
+    private var imgViewsFw: ArrayList<ImageView>? = null
     private var imgFinish: ImageView? = null
+    private var fade_in: Animation? = null
+    private var fade_out: Animation? = null
+
+
 
     private var objectAnimator: ObjectAnimator? = null
 
@@ -43,6 +53,7 @@ class FragmentSessie : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         random = Random()
         val view = inflater.inflate(R.layout.fragment_sessie, container, false)
+        cvSessie = view.findViewById(R.id.cv_sessie)
         imgSessie = view.findViewById(R.id.iv_sessie)
         txtSessieTitel = view.findViewById(R.id.tv_sessie)
         txtSessieBeschrijving = view.findViewById(R.id.tv_sessie_beschrijving)
@@ -66,7 +77,7 @@ class FragmentSessie : Fragment() {
         imgViewsBuildings = ArrayList()
         imgViewsBuildings!!.add(view.findViewById(R.id.iv_sessie_building00))
         imgViewsBuildings!!.add(view.findViewById(R.id.iv_sessie_building01))
-        imgViewsBuildings!!.add(view.findViewById(R.id.iv_sessie_building02))
+       // imgViewsBuildings!!.add(view.findViewById(R.id.iv_sessie_building02))
 
         imgViewsMisc = ArrayList()
         imgViewsMisc!!.add(view.findViewById(R.id.iv_sessie_miscbg00))
@@ -80,6 +91,11 @@ class FragmentSessie : Fragment() {
         imgViewsMiscfg!!.add(view.findViewById(R.id.iv_sessie_miscfg02))
         imgViewsMiscfg!!.add(view.findViewById(R.id.iv_sessie_miscfg03))
         imgViewsMiscfg!!.add(view.findViewById(R.id.iv_sessie_miscfg04))
+
+        imgViewsFw = ArrayList()
+        imgViewsFw!!.add(view.findViewById(R.id.iv_fw1))
+        imgViewsFw!!.add(view.findViewById(R.id.iv_fw2))
+        imgViewsFw!!.add(view.findViewById(R.id.iv_fw3))
 
         imgFinish = view.findViewById(R.id.iv_sessie_finish)
 
@@ -218,16 +234,21 @@ class FragmentSessie : Fragment() {
             v.setImageResource((parentFragment as FragmentSessieLijst).imgMisc!![random!!.nextInt((parentFragment as FragmentSessieLijst).imgMisc!!.size)])
         }
 
+        for (v in imgViewsFw!!){
+            v.visibility = INVISIBLE
+        }
         imgFinish!!.visibility = INVISIBLE
     }
 
     private fun achtergrondFinish(){
         imgFinish!!.visibility = VISIBLE
 
+        cvSessie!!.visibility = INVISIBLE
 
         imgViewsBuildings!![0].visibility = INVISIBLE
         imgViewsBuildings!![1].visibility = INVISIBLE
-        imgViewsBuildings!![2].visibility = VISIBLE
+        // imgViewsBuildings!![2].visibility = INVISIBLE
+        // imgViewsBuildings!![3].visibility = VISIBLE
 
         imgViewsMisc!![0].visibility = INVISIBLE
         imgViewsMisc!![1].visibility = INVISIBLE
@@ -240,7 +261,6 @@ class FragmentSessie : Fragment() {
         imgViewsMiscfg!![3].visibility = INVISIBLE
         imgViewsMiscfg!![4].visibility = INVISIBLE
     }
-
 
     companion object {
         fun newInstance(page: Int, isLast: Boolean, sessie: Sessie): FragmentSessie {
