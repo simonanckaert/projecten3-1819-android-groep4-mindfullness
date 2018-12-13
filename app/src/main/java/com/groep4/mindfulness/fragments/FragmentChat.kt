@@ -93,7 +93,7 @@ class FragmentChat : Fragment(){
                 /**
                  * Als het bericht in de db niet matcht met de huidige gebruiker, zet de achtergrond blauw.
                  * */
-                if(model.messageUser != currentUserId!!.email){
+                if(model.messageUser != currentUserId!!.displayName!!){
                     messageBackground.setBackgroundColor(Color.parseColor("#9BBBD8"))
                 }
 
