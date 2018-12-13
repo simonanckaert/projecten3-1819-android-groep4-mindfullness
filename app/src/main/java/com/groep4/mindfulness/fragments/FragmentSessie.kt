@@ -30,6 +30,7 @@ class FragmentSessie : Fragment() {
     private var imgBusMonsters: ArrayList<ImageView>? = null
     private var imgViewsBuildings: ArrayList<ImageView>? = null
     private var imgViewsMisc: ArrayList<ImageView>? = null
+    private var imgViewsMiscfg: ArrayList<ImageView>? = null
     private var imgFinish: ImageView? = null
 
     private var objectAnimator: ObjectAnimator? = null
@@ -73,21 +74,21 @@ class FragmentSessie : Fragment() {
         imgViewsMisc!!.add(view.findViewById(R.id.iv_sessie_miscbg02))
         imgViewsMisc!!.add(view.findViewById(R.id.iv_sessie_miscbg03))
 
+        imgViewsMiscfg = ArrayList()
+        imgViewsMiscfg!!.add(view.findViewById(R.id.iv_sessie_miscfg00))
+        imgViewsMiscfg!!.add(view.findViewById(R.id.iv_sessie_miscfg01))
+        imgViewsMiscfg!!.add(view.findViewById(R.id.iv_sessie_miscfg02))
+        imgViewsMiscfg!!.add(view.findViewById(R.id.iv_sessie_miscfg03))
+        imgViewsMiscfg!!.add(view.findViewById(R.id.iv_sessie_miscfg04))
+
         imgFinish = view.findViewById(R.id.iv_sessie_finish)
 
         // Dynamisch background images verdelen per sessie
-            for (v in imgViewsBuildings!!) {
-                v.setImageResource((parentFragment as FragmentSessieLijst).imgBuildings!![random!!.nextInt((parentFragment as FragmentSessieLijst).imgBuildings!!.size)])
-                when (random!!.nextBoolean()) {
-                    true -> v.visibility = VISIBLE
-                    false -> v.visibility = INVISIBLE
-                }
-            }
-
-            for (v in imgViewsMisc!!) {
-                v.setImageResource((parentFragment as FragmentSessieLijst).imgMisc!![random!!.nextInt((parentFragment as FragmentSessieLijst).imgMisc!!.size)])
-            }
-
+        if (arguments!!.containsKey("isLast")){
+            achtergrondFinish()
+        } else {
+            achtergrondRandomizen()
+        }
         screenWidth = resources.displayMetrics.widthPixels
 
         return view
@@ -203,6 +204,43 @@ class FragmentSessie : Fragment() {
         objectAnimator!!.duration = 1100
         objectAnimator!!.start()
     }
+
+    private fun achtergrondRandomizen(){
+        for (v in imgViewsBuildings!!) {
+            v.setImageResource((parentFragment as FragmentSessieLijst).imgBuildings!![random!!.nextInt((parentFragment as FragmentSessieLijst).imgBuildings!!.size)])
+            when (random!!.nextBoolean()) {
+                true -> v.visibility = VISIBLE
+                false -> v.visibility = INVISIBLE
+            }
+        }
+
+        for (v in imgViewsMisc!!) {
+            v.setImageResource((parentFragment as FragmentSessieLijst).imgMisc!![random!!.nextInt((parentFragment as FragmentSessieLijst).imgMisc!!.size)])
+        }
+
+        imgFinish!!.visibility = INVISIBLE
+    }
+
+    private fun achtergrondFinish(){
+        imgFinish!!.visibility = VISIBLE
+
+
+        imgViewsBuildings!![0].visibility = INVISIBLE
+        imgViewsBuildings!![1].visibility = INVISIBLE
+        imgViewsBuildings!![2].visibility = VISIBLE
+
+        imgViewsMisc!![0].visibility = INVISIBLE
+        imgViewsMisc!![1].visibility = INVISIBLE
+        imgViewsMisc!![2].visibility = INVISIBLE
+        imgViewsMisc!![3].visibility = INVISIBLE
+
+        imgViewsMiscfg!![0].visibility = INVISIBLE
+        imgViewsMiscfg!![1].visibility = INVISIBLE
+        imgViewsMiscfg!![2].visibility = INVISIBLE
+        imgViewsMiscfg!![3].visibility = INVISIBLE
+        imgViewsMiscfg!![4].visibility = INVISIBLE
+    }
+
 
     companion object {
         fun newInstance(page: Int, isLast: Boolean, sessie: Sessie): FragmentSessie {

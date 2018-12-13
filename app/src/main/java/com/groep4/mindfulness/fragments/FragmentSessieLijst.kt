@@ -131,8 +131,6 @@ class FragmentSessieLijst : Fragment() {
         imgMisc!!.add(R.mipmap.tree00)
         imgMisc!!.add(R.mipmap.tree01)
         imgMisc!!.add(R.mipmap.tree02)
-
-        imgBuildings!!.add(R.mipmap.finish)
     }
 }
 
