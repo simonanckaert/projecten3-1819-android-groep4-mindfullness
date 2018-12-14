@@ -147,6 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_weight="1"
+            android:background="@drawable/buttonstyleannuleren"
             android:text="Annuleren" />
 
         <Button
@@ -155,6 +156,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_weight="1"
+            android:background="@drawable/buttonstyle"
             android:text="Bevestigen" />
     </LinearLayout>
 </LinearLayout>

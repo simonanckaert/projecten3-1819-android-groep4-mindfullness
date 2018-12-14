@@ -104,6 +104,10 @@
             android:id="@+id/btnGegevensWijzigen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/buttonstyle"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:text="Gegevens wijzigen" />
     </LinearLayout>
 
