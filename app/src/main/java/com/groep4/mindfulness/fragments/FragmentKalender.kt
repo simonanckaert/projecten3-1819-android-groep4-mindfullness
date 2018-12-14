@@ -1,81 +1,106 @@
-package com.groep4.mindfulness.activities
+package com.groep4.mindfulness.fragments
 
-import android.app.Activity
-import android.content.Intent
 import android.database.Cursor
 import android.os.AsyncTask
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ListView
-import android.widget.TextView
+import android.view.ViewGroup
+import android.widget.*
 import com.groep4.mindfulness.R
+import com.groep4.mindfulness.activities.MainActivity
 import com.groep4.mindfulness.adapters.ListTaskAdapter
 import com.groep4.mindfulness.utils.NoScrollListView
 import com.groep4.mindfulness.database.DBHelper
 import com.groep4.mindfulness.utils.KalenderFunction
+import kotlinx.android.synthetic.main.fragment_kalender.*
 import java.util.ArrayList
 import java.util.HashMap
 
 
-class ActivityKalender : AppCompatActivity() {
+class FragmentKalender : Fragment()
+{
 
-    lateinit var activity: Activity
     lateinit var mydb: DBHelper
     lateinit var taskNoScrollListToday: NoScrollListView ; lateinit var taskNoScrollListTomorrow: NoScrollListView  ; lateinit var taskNoScrollListUpcoming: NoScrollListView
     lateinit var scrollView: NestedScrollView
     lateinit var todayText: TextView ; lateinit var tomorrowText: TextView ; lateinit var upcomingText: TextView
+
     var todayList = ArrayList<HashMap<String, String>>()
     var tomorrowList = ArrayList<HashMap<String, String>>()
     var upcomingList = ArrayList<HashMap<String, String>>()
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+    {
+        val view = inflater.inflate(R.layout.fragment_kalender, container, false)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_kalender)
+        scrollView = view.findViewById(R.id.scrollView) as NestedScrollView
 
-        //database opstellen
-        activity = this@ActivityKalender
-        mydb = DBHelper(activity)
+        taskNoScrollListToday = view.findViewById(R.id.taskListToday) as NoScrollListView
+        taskNoScrollListTomorrow = view.findViewById(R.id.taskListTomorrow) as NoScrollListView
+        taskNoScrollListUpcoming = view.findViewById(R.id.taskListUpcoming) as NoScrollListView
 
+        todayText = view.findViewById(R.id.todayText) as TextView
+        tomorrowText = view.findViewById(R.id.tomorrowText) as TextView
+        upcomingText = view.findViewById(R.id.upcomingText) as TextView
 
-        scrollView = findViewById(R.id.scrollView) as NestedScrollView
-        taskNoScrollListToday = findViewById(R.id.taskListToday) as NoScrollListView
-        taskNoScrollListTomorrow = findViewById(R.id.taskListTomorrow) as NoScrollListView
-        taskNoScrollListUpcoming = findViewById(R.id.taskListUpcoming) as NoScrollListView
+        //Fragment knop taak toevoegen
+        val addTaskButton = view.findViewById(R.id.addTaskButton) as ImageView
+        addTaskButton.setOnClickListener {
 
-        todayText = findViewById(R.id.todayText) as TextView
-        tomorrowText = findViewById(R.id.tomorrowText) as TextView
-        upcomingText = findViewById(R.id.upcomingText) as TextView
+            //Een nieuwe fragment aanmaken
+            var f = FragmentAddTask()
+            val bundle = Bundle()
 
+            //isUpdate = false aangezien dit een nieuwe taak is en geen aanpassing
+            bundle.putBoolean("isUpdate", false)
+            f.arguments = bundle
+            f.arguments = bundle
+
+            //Launch fragment
+            activity?.supportFragmentManager!!
+                    .beginTransaction()
+                    .replace(R.id.fragment_holder_main, f, "pageContent")
+                    .addToBackStack("root_fragment")
+                    .commit()
+        }
+
+        return view
     }
 
-    //Nieuwe AddTask Activity openen
+    override fun onActivityCreated(savedInstanceState: Bundle?)
+    {
+        super.onActivityCreated(savedInstanceState)
 
-    fun openAddTask(v: View) {
-        val i = Intent(this, ActivityAddTask::class.java)
-        startActivity(i)
+        //database opstellen
+        mydb = DBHelper(activity!!)
+        populateData()
     }
 
     fun populateData() {
-        mydb = DBHelper(activity)
+        mydb = DBHelper(activity!!)
         scrollView!!.visibility = View.GONE
         val loadTask = LoadTask()
         loadTask.execute()
     }
 
-    public override fun onResume() {
+    override fun onResume() {
         super.onResume()
+        (activity as AppCompatActivity).supportActionBar!!.hide()
         populateData()
     }
 
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity).supportActionBar!!.show()
+    }
 
     /**
      *  asynchroon ophalen van alle tasks
      */
-
     inner class LoadTask : AsyncTask<String, Void, String>() {
 
         override fun onPreExecute() {
@@ -159,16 +184,21 @@ class ActivityKalender : AppCompatActivity() {
      */
     fun loadListView(listView: ListView, dataList: ArrayList<HashMap<String, String>>) {
 
-        val adapter = ListTaskAdapter(activity, dataList)
+        val adapter = ListTaskAdapter(activity!!, dataList)
         listView.adapter = adapter
 
         listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
 
-            val i = Intent(activity, ActivityAddTask::class.java)
-            i.putExtra("isUpdate", true)
-            i.putExtra("id", dataList[+position][KEY_ID])
-            startActivity(i)
-
+            var f = FragmentAddTask()
+            val bundle = Bundle()
+            bundle.putBoolean("isUpdate", true)
+            bundle.putString("id", dataList[+position][KEY_ID])
+            f.arguments = bundle
+            activity?.supportFragmentManager!!
+                    .beginTransaction()
+                    .replace(R.id.fragment_holder_main, f, "pageContent")
+                    .addToBackStack("root_fragment")
+                    .commit()
         }
     }
 

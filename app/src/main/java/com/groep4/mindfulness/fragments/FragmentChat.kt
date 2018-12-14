@@ -4,6 +4,7 @@ package com.groep4.mindfulness.fragments
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,9 +54,7 @@ class FragmentChat : Fragment(){
         displayChatMessages(view)
 
         return view
-
     }
-
 
     override fun onStart() {
         super.onStart()
@@ -66,7 +65,6 @@ class FragmentChat : Fragment(){
         super.onStop()
         adapter!!.stopListening()
     }
-
 
     /**
      * De listAdapter zorgt ervoor dat de List opgevuld raakt met chatberichten opgehaald uit de database met de huidige gebruiker's userid als argument.
@@ -93,7 +91,7 @@ class FragmentChat : Fragment(){
                 /**
                  * Als het bericht in de db niet matcht met de huidige gebruiker, zet de achtergrond blauw.
                  * */
-                if(model.messageUser != currentUserId!!.email){
+                if(model.messageUser != currentUserId!!.displayName!!){
                     messageBackground.setBackgroundColor(Color.parseColor("#9BBBD8"))
                 }
 

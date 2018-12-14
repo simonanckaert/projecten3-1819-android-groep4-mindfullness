@@ -13,7 +13,10 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.groep4.mindfulness.R
+import com.groep4.mindfulness.fragments.FragmentChat
+import com.groep4.mindfulness.fragments.FragmentKalender
 import com.groep4.mindfulness.fragments.FragmentProfiel
+import com.groep4.mindfulness.model.Gebruiker
 import com.groep4.mindfulness.model.Oefening
 import com.groep4.mindfulness.model.Sessie
 import com.groep4.mindfulness.utils.ExtendedDataHolder
@@ -22,6 +25,7 @@ import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.*
 import org.json.JSONArray
+import org.json.JSONObject
 import java.io.IOException
 import java.util.*
 
@@ -32,11 +36,12 @@ class MainActivity : AppCompatActivity() {
     private val client = OkHttpClient()
     lateinit var mAuth: FirebaseAuth
     private var isFragmentProfielLoaded = false
+    var gebruiker : Gebruiker? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        mAuth = FirebaseAuth.getInstance()
         Logger.addLogAdapter(AndroidLogAdapter())
         Log.d("tag", "TIJD TIJD TIJD TIJD  " +  Calendar.DAY_OF_MONTH)
 
@@ -44,8 +49,11 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
+        this.gebruiker = getAangemeldeGebruiker()
+
         // Sessies
         val sessies: ArrayList<Sessie> = getSessies()
+
 
         // belangrijk key_page mee te geven om juiste fragment te kunnen laden vanuit eenzelfde activity!
         ll_sessies.setOnClickListener {
@@ -71,17 +79,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         ll_contact.setOnClickListener{
-            val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("key_page", "contact")
-            startActivity(intent)
-
+            setFragment(FragmentChat(), true)
         }
 
         ll_kalender.setOnClickListener{
-            val intent = Intent(this, ActivityKalender::class.java)
-            intent.putExtra("key_page", "kalender")
-            startActivity(intent)
-
+            setFragment(FragmentKalender(), true)
         }
 
 
@@ -130,6 +132,39 @@ class MainActivity : AppCompatActivity() {
         return sessies
     }
 
+    fun getAangemeldeGebruiker() : Gebruiker{
+        var gebruiker : Gebruiker = Gebruiker()
+        val id = mAuth.currentUser!!.uid
+        val string1 = ("http://141.134.155.219:3000/users/" + id)
+        val string = "http://141.134.155.219:3000/users/yXQmL8IGSCbN15fzWw60t5udU2o2"
+        Logger.d("MEOZOZOZ", string1)
+        // HTTP Request sessies
+        val request = Request.Builder()
+                /*.header("Authorization", "token abcd")*/
+                .url(string1/*+ mAuth.currentUser!!.uid*/)
+                .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("ERROR", "HTTP request failed: $e")
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                //val jsonarray = JSONArray(response.body()!!.string())
+                val jsonobject = JSONObject(response.body()!!.string())
+
+                    gebruiker.uid = mAuth.currentUser!!.uid
+                    gebruiker.regio = if (jsonobject.has("regio")) jsonobject.getString("regio") else ""
+                    gebruiker.email = if (jsonobject.has("email")) jsonobject.getString("email") else ""
+                    gebruiker.name = if (jsonobject.has("name")) jsonobject.getString("name") else ""
+                    gebruiker.telnr = if (jsonobject.has("telnr")) jsonobject.getString("telnr") else ""
+                    gebruiker.groepsnr = if (jsonobject.has("groepnr")) jsonobject.getInt("groepnr") else 0
+
+            }
+        })
+        return gebruiker
+    }
+
     // Oefeningen van sessie ophalen
     fun getOefeningen(sessieId: Int): ArrayList<Oefening>{
         val oefeningen: ArrayList<Oefening> = ArrayList()
@@ -166,10 +201,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (isFragmentProfielLoaded) {
-            super.onBackPressed()
-            isFragmentProfielLoaded = false
-        }
+
+        super.onBackPressed()
+    }
+    fun veranderGegevensGebruiker(gebruikersnaam : String, regio : String, telnr : String) {
+        gebruiker!!.name = gebruikersnaam
+        gebruiker!!.regio = regio
+        gebruiker!!.telnr = telnr
+    }
+
+    fun gegevensGebruikerOpslaan(body : FormBody, url : String) : String {
+        var response2 : String? = null
+        val thread = Thread(Runnable {
+            val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8")
+            val client: OkHttpClient = OkHttpClient()
+            //val body: RequestBody = RequestBody.create(mediaType, json)
+            val request: Request = Request.Builder().url(url).put(body).build()
+            val response = client.newCall(request).execute()
+            response2 = response.body().toString()
+        })
+        thread.start()
+        getAangemeldeGebruiker()
+        //supportFragmentManager.popBackStack()
+
+
+        return response2.orEmpty()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -200,14 +256,13 @@ class MainActivity : AppCompatActivity() {
 
             R.id.action_profiel -> {
                 setFragment(FragmentProfiel(), true)
-                isFragmentProfielLoaded = true
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setFragment(fragment: Fragment, addToBackstack: Boolean) {
+    fun setFragment(fragment: Fragment, addToBackstack: Boolean) {
         if (addToBackstack)
             supportFragmentManager
                     .beginTransaction()

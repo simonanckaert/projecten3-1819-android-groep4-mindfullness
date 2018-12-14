@@ -129,15 +129,24 @@ class FragmentSessie : Fragment() {
 
         txtSessieTitel!!.text = sessie.naam
 
+        //Open een sessie indien erop geklikt is
         cv_sessie.setOnClickListener{
             if (sessie!!.naam != "Geen sessie gevonden."){
                 if (sessie!!.sessieId == 1){
+
+                    //Creeer nieuwe fragment
                     val sessiePageFragment = FragmentSessiePage()
                     val bundle = Bundle()
                     bundle.putParcelable("key_sessie", sessie)
                     bundle.putInt("key_page", page)
                     sessiePageFragment.arguments = bundle
-                    (activity as ActivityPage).setFragment(sessiePageFragment, true)
+
+                    //Launch de fragment
+                    activity?.supportFragmentManager!!
+                            .beginTransaction()
+                            .replace(R.id.fragment_holder_main, sessiePageFragment, "pageContent")
+                            .addToBackStack("root_fragment")
+                            .commit()
                 } else {
 
                     val builder = AlertDialog.Builder(context!!)
@@ -153,13 +162,22 @@ class FragmentSessie : Fragment() {
 
                     builder.setPositiveButton("Stuur") { dialog, which ->
                         var code = editTextCode.text.toString()
+
                         if (sessie!!.sessieCode == code) {
+                          
+                            //creeer nieuwe fragment
                             val sessiePageFragment = FragmentSessiePage()
                             val bundle = Bundle()
                             bundle.putParcelable("key_sessie", sessie)
                             bundle.putInt("key_page", page)
                             sessiePageFragment.arguments = bundle
-                            (activity as ActivityPage).setFragment(sessiePageFragment, true)
+
+                            //Launch de fragment
+                            activity?.supportFragmentManager!!
+                                    .beginTransaction()
+                                    .replace(R.id.fragment_holder_main, sessiePageFragment, "pageContent")
+                                    .addToBackStack("root_fragment")
+                                    .commit()
                         } else {
                             Toast.makeText(context, "Helaas, het antwoord is fout", Toast.LENGTH_SHORT).show()
 
