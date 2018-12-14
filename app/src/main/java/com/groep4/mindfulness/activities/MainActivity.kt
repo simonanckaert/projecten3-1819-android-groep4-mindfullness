@@ -13,6 +13,8 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.groep4.mindfulness.R
+import com.groep4.mindfulness.fragments.FragmentChat
+import com.groep4.mindfulness.fragments.FragmentLogin
 import com.groep4.mindfulness.fragments.FragmentProfiel
 import com.groep4.mindfulness.model.Gebruiker
 import com.groep4.mindfulness.model.Oefening
@@ -25,7 +27,6 @@ import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
-import java.net.URL
 
 
 class MainActivity : AppCompatActivity() {
@@ -76,17 +77,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         ll_contact.setOnClickListener{
-            val intent = Intent(this, ChatActivity::class.java)
-            intent.putExtra("key_page", "contact")
-            startActivity(intent)
-
+            setFragment(FragmentChat(), true)
         }
 
         ll_kalender.setOnClickListener{
-            val intent = Intent(this, ActivityKalender::class.java)
-            intent.putExtra("key_page", "kalender")
-            startActivity(intent)
-
+            setFragment(FragmentKalender(), true)
         }
 
 
@@ -206,11 +201,11 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
 
         //In case there are no fragments visible (mainactivity is visible) disable the back button
+        Log.d("fff", supportFragmentManager.backStackEntryCount.toString())
         if (supportFragmentManager.backStackEntryCount > 0) {
             super.onBackPressed()
         }
     }
-
     fun veranderGegevensGebruiker(gebruikersnaam : String, regio : String, telnr : String) {
         gebruiker!!.name = gebruikersnaam
         gebruiker!!.regio = regio
