@@ -9,14 +9,14 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbarid"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
         android:elevation="0dp">
 
         <ImageView
             android:id="@+id/imgProfielmnstr"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:padding="10dp"
             android:src="@mipmap/frankenstein" />
     </android.support.design.widget.AppBarLayout>
