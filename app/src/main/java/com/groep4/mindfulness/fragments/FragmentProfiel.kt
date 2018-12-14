@@ -34,8 +34,6 @@ class FragmentProfiel: Fragment() {
         view.viewpager_id.adapter = fragmentAdapter
         view.tablayout_id.setupWithViewPager(view.viewpager_id)
 
-        Log.d("Meow", "createview")
-
         return view
     }
 
