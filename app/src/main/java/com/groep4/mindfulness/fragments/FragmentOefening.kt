@@ -118,14 +118,22 @@ class FragmentOefening : Fragment() {
 //            }
         }
 
+        //Toon de feedbackfragment indien of de feedbackknop geklikt is
         buttonFeedback!!.setOnClickListener{
             if (oefening!!.naam != "Geen oefening gevonden."){
+
+                //Creeer nieuwe fragment
                 val oefeningFeedbackFragment = FragmentOefeningFeedback()
                 val bundle = Bundle()
                 bundle.putParcelable("oefening", oefening)
                 bundle.putInt("key_page", page)
                 oefeningFeedbackFragment.arguments = bundle
-                (activity as ActivityPage).setFragment(oefeningFeedbackFragment, false)
+
+                //Launch de fragment en voeg niet toe aan backstack
+                activity?.supportFragmentManager!!
+                        .beginTransaction()
+                        .replace(R.id.fragment_holder_main, oefeningFeedbackFragment, "pageContent")
+                        .commit()
             }else{
                 Toasty.info(view!!.context, "Geen oefening gevonden, controleer uw internetverbinding.").show()
             }

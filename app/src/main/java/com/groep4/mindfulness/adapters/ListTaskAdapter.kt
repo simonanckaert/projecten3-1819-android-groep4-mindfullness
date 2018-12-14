@@ -10,7 +10,7 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.amulyakhare.textdrawable.util.ColorGenerator
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.activities.FragmentKalender
+import com.groep4.mindfulness.fragments.FragmentKalender
 import java.util.ArrayList
 import java.util.HashMap
 
