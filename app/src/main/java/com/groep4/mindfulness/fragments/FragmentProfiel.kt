@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.*
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.adapters.ViewPagerAdapter
@@ -24,7 +25,7 @@ class FragmentProfiel: Fragment() {
         appBarLayout = view.findViewById(R.id.appbarid)
         viewPager = view.findViewById(R.id.viewpager_id)
 
-        val fragmentAdapter = ViewPagerAdapter(activity!!.supportFragmentManager)
+        val fragmentAdapter = ViewPagerAdapter(childFragmentManager)
         // adding fragments
         fragmentAdapter.addFragment(FragmentProfielInfo(),"Info")
         fragmentAdapter.addFragment(FragmentProfielOverzicht(), "Voortgang")
@@ -32,6 +33,9 @@ class FragmentProfiel: Fragment() {
         //adapter setup
         view.viewpager_id.adapter = fragmentAdapter
         view.tablayout_id.setupWithViewPager(view.viewpager_id)
+
+        Log.d("Meow", "createview")
+
         return view
     }
 

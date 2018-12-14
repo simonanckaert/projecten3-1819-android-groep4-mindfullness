@@ -37,7 +37,6 @@ class FragmentProfielInfo: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profiel_info, container, false)
 
-
         gebruiker = (activity as MainActivity).gebruiker
 
         txtEmail = view.findViewById(R.id.txtEmail)
@@ -52,9 +51,14 @@ class FragmentProfielInfo: Fragment() {
         txtRegio = view.findViewById(R.id.txtRegio)
         txtRegio!!.text = gebruiker!!.regio
 
+        //Toon de gegevenswijzigenfragment indien op gegevenswijzigen geklikt is
         btnGegevensWijzigen = view.findViewById(R.id.btnGegevensWijzigen)
         btnGegevensWijzigen!!.setOnClickListener {
-            (activity as MainActivity).setFragment(FragmentProfielGegevensWijzigen(), false)
+            activity?.supportFragmentManager!!
+                    .beginTransaction()
+                    .replace(R.id.fragment_holder_main, FragmentProfielGegevensWijzigen(), "pageContent")
+                    .addToBackStack("root_fragment")
+                    .commit()
         }
 
         return view

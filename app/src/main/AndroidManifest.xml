@@ -49,9 +49,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.ActivityPage" />
-        <activity android:name=".activities.ChatActivity"/>
-        <activity android:name=".activities.ActivityAddTask" />
-        <activity android:name=".activities.ActivityKalender" />
     </application>
 
 </manifest>

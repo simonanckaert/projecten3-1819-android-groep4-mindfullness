@@ -14,7 +14,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.fragments.FragmentChat
-import com.groep4.mindfulness.fragments.FragmentLogin
+import com.groep4.mindfulness.fragments.FragmentKalender
 import com.groep4.mindfulness.fragments.FragmentProfiel
 import com.groep4.mindfulness.model.Gebruiker
 import com.groep4.mindfulness.model.Oefening
@@ -200,11 +200,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
 
-        //In case there are no fragments visible (mainactivity is visible) disable the back button
-        Log.d("fff", supportFragmentManager.backStackEntryCount.toString())
-        if (supportFragmentManager.backStackEntryCount > 0) {
-            super.onBackPressed()
-        }
+        super.onBackPressed()
     }
     fun veranderGegevensGebruiker(gebruikersnaam : String, regio : String, telnr : String) {
         gebruiker!!.name = gebruikersnaam
@@ -258,7 +254,6 @@ class MainActivity : AppCompatActivity() {
 
             R.id.action_profiel -> {
                 setFragment(FragmentProfiel(), true)
-                isFragmentProfielLoaded = true
                 return true
             }
         }

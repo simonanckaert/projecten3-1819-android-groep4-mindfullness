@@ -1,15 +1,12 @@
-package com.groep4.mindfulness.activities
+package com.groep4.mindfulness.fragments
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,8 +14,6 @@ import android.widget.Toast
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.database.DBHelper
 import com.groep4.mindfulness.utils.KalenderFunction
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.fragment_login.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,8 +33,8 @@ class FragmentAddTask : Fragment(), com.wdullaer.materialdatetimepicker.date.Dat
 
 
     lateinit var toolbar_task_add_title : TextView
-    lateinit var task_name : EditText
-    lateinit var task_date : EditText
+    lateinit var task_name : TextView
+    lateinit var task_date : TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -61,8 +56,8 @@ class FragmentAddTask : Fragment(), com.wdullaer.materialdatetimepicker.date.Dat
         dayNow = cal.get(Calendar.DAY_OF_MONTH)
 
         toolbar_task_add_title = view.findViewById(R.id.toolbar_task_add_title) as TextView
-        task_name = view.findViewById(R.id.task_name) as EditText
-        task_date = view.findViewById(R.id.task_date) as EditText
+        task_name = view.findViewById(R.id.task_name) as TextView
+        task_date = view.findViewById(R.id.task_date) as TextView
 
         val closeButton = view.findViewById(R.id.closeAddTask) as ImageView
         closeButton.setOnClickListener {
@@ -74,7 +69,7 @@ class FragmentAddTask : Fragment(), com.wdullaer.materialdatetimepicker.date.Dat
             doneAddTask(view!!)
         }
 
-        val dateButton = view.findViewById(R.id.task_date) as EditText
+        val dateButton = view.findViewById(R.id.task_date) as TextView
         dateButton.setOnClickListener {
             showStartDatePicker(view!!)
         }
@@ -132,8 +127,8 @@ class FragmentAddTask : Fragment(), com.wdullaer.materialdatetimepicker.date.Dat
     fun doneAddTask(v: View)
     {
         var errorStep = 0
-        val task_name = view?.findViewById(R.id.task_name) as EditText
-        val task_date = view?.findViewById(R.id.task_date) as EditText
+        val task_name = view?.findViewById(R.id.task_name) as TextView
+        val task_date = view?.findViewById(R.id.task_date) as TextView
         nameFinal = task_name.getText().toString()
         dateFinal = task_date.getText().toString()
 
@@ -212,7 +207,7 @@ class FragmentAddTask : Fragment(), com.wdullaer.materialdatetimepicker.date.Dat
         val date = (if (startDay < 10) "0$startDay" else "" + startDay) + "/" +
                 (if (monthAddOne < 10) "0$monthAddOne" else "" + monthAddOne) + "/" +
                 startYear
-        val task_date = getView()?.findViewById(R.id.task_date) as EditText
+        val task_date = getView()?.findViewById(R.id.task_date) as TextView
         task_date.setText(date)
     }
 

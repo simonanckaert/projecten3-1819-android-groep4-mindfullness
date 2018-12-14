@@ -1,28 +1,22 @@
-package com.groep4.mindfulness.activities
+package com.groep4.mindfulness.fragments
 
-import android.app.Activity
 import android.database.Cursor
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.groep4.mindfulness.R
+import com.groep4.mindfulness.activities.MainActivity
 import com.groep4.mindfulness.adapters.ListTaskAdapter
-import com.groep4.mindfulness.adapters.ViewPagerAdapter
 import com.groep4.mindfulness.utils.NoScrollListView
 import com.groep4.mindfulness.database.DBHelper
-import com.groep4.mindfulness.fragments.FragmentProfielInfo
-import com.groep4.mindfulness.fragments.FragmentProfielOverzicht
 import com.groep4.mindfulness.utils.KalenderFunction
 import kotlinx.android.synthetic.main.fragment_kalender.*
-import kotlinx.android.synthetic.main.fragment_profiel.view.*
-import org.jetbrains.anko.bundleOf
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -53,14 +47,25 @@ class FragmentKalender : Fragment()
         tomorrowText = view.findViewById(R.id.tomorrowText) as TextView
         upcomingText = view.findViewById(R.id.upcomingText) as TextView
 
-        //Nieuwe addtask fragment openen
+        //Fragment knop taak toevoegen
         val addTaskButton = view.findViewById(R.id.addTaskButton) as ImageView
         addTaskButton.setOnClickListener {
+
+            //Een nieuwe fragment aanmaken
             var f = FragmentAddTask()
             val bundle = Bundle()
+
+            //isUpdate = false aangezien dit een nieuwe taak is en geen aanpassing
             bundle.putBoolean("isUpdate", false)
             f.arguments = bundle
-            (activity as MainActivity).setFragment(f, true)
+            f.arguments = bundle
+
+            //Launch fragment
+            activity?.supportFragmentManager!!
+                    .beginTransaction()
+                    .replace(R.id.fragment_holder_main, f, "pageContent")
+                    .addToBackStack("root_fragment")
+                    .commit()
         }
 
         return view
@@ -96,7 +101,6 @@ class FragmentKalender : Fragment()
     /**
      *  asynchroon ophalen van alle tasks
      */
-
     inner class LoadTask : AsyncTask<String, Void, String>() {
 
         override fun onPreExecute() {
@@ -190,8 +194,11 @@ class FragmentKalender : Fragment()
             bundle.putBoolean("isUpdate", true)
             bundle.putString("id", dataList[+position][KEY_ID])
             f.arguments = bundle
-            (activity as MainActivity).setFragment(f, true)
-
+            activity?.supportFragmentManager!!
+                    .beginTransaction()
+                    .replace(R.id.fragment_holder_main, f, "pageContent")
+                    .addToBackStack("root_fragment")
+                    .commit()
         }
     }
 
