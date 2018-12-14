@@ -5,38 +5,18 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_marginTop="100dp">
-    
+
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="25dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:paddingLeft="25dp">
+
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_person_black_24dp"/>
-
-        <TextView
-            android:id="@+id/txtNaam"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:paddingLeft="20dp"
-            android:text="Arno Coorevits"
-            android:textSize="18dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="25dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_email_black_24dp"/>
+            android:src="@drawable/ic_email_black_24dp" />
 
         <TextView
             android:id="@+id/txtEmail"
@@ -45,6 +25,28 @@
             android:layout_gravity="center_vertical"
             android:paddingLeft="20dp"
             android:text="arno.coorevits@gmail.com"
+            android:textSize="18dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:paddingLeft="25dp">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_person_black_24dp" />
+
+        <TextView
+            android:id="@+id/txtNaam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="Arno Coorevits"
             android:textSize="18dp" />
     </LinearLayout>
 
@@ -79,21 +81,31 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_phone_android_black_24dp"/>
+
         <TextView
-            android:layout_gravity="center_vertical"
+            android:id="@+id/txtTelnr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:paddingLeft="20dp"
-            android:textSize="18dp"
-            android:text="0475/26.77.34"/>
+            android:text="0475/26.77.34"
+            android:textSize="18dp" />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnGegevensWijzigen"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Gegevens wijzigen" />
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:textAlignment="center">
+
+        <Button
+            android:id="@+id/btnGegevensWijzigen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gegevens wijzigen" />
+    </LinearLayout>
 
 
 </LinearLayout>

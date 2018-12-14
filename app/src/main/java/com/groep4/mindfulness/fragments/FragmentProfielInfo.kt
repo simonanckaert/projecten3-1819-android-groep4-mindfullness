@@ -29,18 +29,14 @@ class FragmentProfielInfo: Fragment() {
     private var txtNaam: TextView? = null
     private var gebruiker : Gebruiker? = null
     private var txtRegio: TextView? = null
+    private var txtTelnr : TextView? = null
 
     private var btnGegevensWijzigen : Button? = null
 
 
-    companion object {
-        fun newInstance(): FragmentProfielInfo {
-            return FragmentProfielInfo()
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profiel_info, container, false)
+
 
         gebruiker = (activity as MainActivity).gebruiker
 
@@ -50,13 +46,15 @@ class FragmentProfielInfo: Fragment() {
         txtNaam = view.findViewById(R.id.txtNaam)
         txtNaam!!.text = gebruiker!!.name
 
+        txtTelnr = view.findViewById(R.id.txtTelnr)
+        txtTelnr!!.text = gebruiker!!.telnr
+
         txtRegio = view.findViewById(R.id.txtRegio)
         txtRegio!!.text = gebruiker!!.regio
 
         btnGegevensWijzigen = view.findViewById(R.id.btnGegevensWijzigen)
         btnGegevensWijzigen!!.setOnClickListener {
-            val fragmentProfielGegevensWijzigen = FragmentProfielGegevensWijzigen()
-            (activity as MainActivity).setFragment(fragmentProfielGegevensWijzigen, true)
+            (activity as MainActivity).setFragment(FragmentProfielGegevensWijzigen(), false)
         }
 
         return view
