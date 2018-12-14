@@ -148,12 +148,12 @@ class FragmentSessie : Fragment() {
                     builder.setCancelable(true)
 
                     editTextCode = EditText(context)
-                    editTextCode.hint = "sessiecode"
+                    editTextCode.hint = "Sessiecode"
                     editTextCode.inputType = InputType.TYPE_CLASS_TEXT
 
                     builder.setPositiveButton("Stuur") { dialog, which ->
                         var code = editTextCode.text.toString()
-                        if ("goed" == code) {
+                        if (sessie!!.sessieCode == code) {
                             val sessiePageFragment = FragmentSessiePage()
                             val bundle = Bundle()
                             bundle.putParcelable("key_sessie", sessie)
