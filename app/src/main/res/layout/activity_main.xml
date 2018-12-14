@@ -62,7 +62,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_welkom"
+            android:id="@+id/tv_quote"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
@@ -71,7 +71,7 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
-            android:text="@string/welkom"
+            android:text="Shine bright today !"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
             android:textSize="30sp" />

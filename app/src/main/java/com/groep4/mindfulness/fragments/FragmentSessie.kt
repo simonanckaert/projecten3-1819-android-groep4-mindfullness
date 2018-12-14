@@ -1,6 +1,7 @@
 package com.groep4.mindfulness.fragments
 
 import android.animation.ObjectAnimator
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -38,10 +39,7 @@ class FragmentSessie : Fragment() {
     private var imgViewsMiscfg: ArrayList<ImageView>? = null
     private var imgViewsFw: ArrayList<ImageView>? = null
     private var imgFinish: ImageView? = null
-    private var fade_in: Animation? = null
-    private var fade_out: Animation? = null
-
-
+    private val handler = Handler()
 
     private var objectAnimator: ObjectAnimator? = null
 
@@ -245,21 +243,80 @@ class FragmentSessie : Fragment() {
 
         cvSessie!!.visibility = INVISIBLE
 
-        imgViewsBuildings!![0].visibility = INVISIBLE
-        imgViewsBuildings!![1].visibility = INVISIBLE
-        // imgViewsBuildings!![2].visibility = INVISIBLE
-        // imgViewsBuildings!![3].visibility = VISIBLE
 
-        imgViewsMisc!![0].visibility = INVISIBLE
-        imgViewsMisc!![1].visibility = INVISIBLE
-        imgViewsMisc!![2].visibility = INVISIBLE
-        imgViewsMisc!![3].visibility = INVISIBLE
+        for (v in imgViewsBuildings!!){
+            v.visibility = INVISIBLE
+        }
 
-        imgViewsMiscfg!![0].visibility = INVISIBLE
-        imgViewsMiscfg!![1].visibility = INVISIBLE
-        imgViewsMiscfg!![2].visibility = INVISIBLE
-        imgViewsMiscfg!![3].visibility = INVISIBLE
-        imgViewsMiscfg!![4].visibility = INVISIBLE
+
+        for (v in imgViewsMisc!!){
+            v.visibility = INVISIBLE
+        }
+
+        for (v in imgViewsMiscfg!!){
+            v.visibility = INVISIBLE
+        }
+        fireworkAnimationSmall()
+    }
+
+    fun fireworkAnimationSmall(){
+        for (v in imgViewsFw!!){
+            v.scaleX = 0f
+            v.scaleY = 0f
+        }
+    }
+
+    fun fireworkAnimationBig(){
+        objectAnimator = ObjectAnimator.ofFloat(imgViewsFw!![0], "scaleX", 1f)
+        objectAnimator!!.duration = 1500
+        objectAnimator!!.start()
+
+        objectAnimator = ObjectAnimator.ofFloat(imgViewsFw!![0], "scaleY", 1f)
+        objectAnimator!!.duration = 1500
+        objectAnimator!!.start()
+
+        objectAnimator = ObjectAnimator.ofFloat(imgViewsFw!![1], "scaleX", 1f)
+        objectAnimator!!.duration = 1500
+        objectAnimator!!.startDelay = 500
+        objectAnimator!!.start()
+
+        objectAnimator = ObjectAnimator.ofFloat(imgViewsFw!![1], "scaleY", 1f)
+        objectAnimator!!.duration = 1500
+        objectAnimator!!.startDelay = 500
+        objectAnimator!!.start()
+
+        objectAnimator = ObjectAnimator.ofFloat(imgViewsFw!![2], "scaleX", 1f)
+        objectAnimator!!.duration = 1500
+        objectAnimator!!.startDelay = 1000
+        objectAnimator!!.start()
+
+        objectAnimator = ObjectAnimator.ofFloat(imgViewsFw!![2], "scaleY", 1f)
+        objectAnimator!!.duration = 1500
+        objectAnimator!!.startDelay = 1000
+        objectAnimator!!.start()
+    }
+
+     fun playSound(){
+        val mp1: MediaPlayer = MediaPlayer.create(context, R.raw.vuurwerk)
+        mp1.isLooping = false
+
+         val mp2: MediaPlayer = MediaPlayer.create(context, R.raw.vuurwerk)
+         mp1.isLooping = false
+
+         val mp3: MediaPlayer = MediaPlayer.create(context, R.raw.vuurwerk)
+         mp1.isLooping = false
+
+        mp1.start()
+
+         handler.postDelayed({
+             mp2.start()
+             Log.d("tag","ARNO ARNO ARNO ARNO")
+         },500)
+
+         handler.postDelayed({
+             mp3.start()
+             Log.d("tag","ARNO ARNO ARNO ARNO")
+         },1000)
     }
 
     companion object {
