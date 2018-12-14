@@ -127,6 +127,7 @@ import kotlinx.android.synthetic.main.fragment_login.view.*
                         //mainactivity tonen
                         val intent = Intent(activity, MainActivity::class.java)
                         this.startActivity(intent)
+                        activity!!.finish()
 
                     } else {
 
@@ -208,6 +209,7 @@ import kotlinx.android.synthetic.main.fragment_login.view.*
                         val user = mAuth.currentUser
                         val intent = Intent(activity, MainActivity::class.java)
                         this.startActivity(intent)
+                        activity!!.finish()
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)

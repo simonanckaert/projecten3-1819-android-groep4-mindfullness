@@ -34,7 +34,6 @@ class ActivityPage : AppCompatActivity() {
         val myIntent = intent // parent intent ophalen
         val keyPage = myIntent.getStringExtra("key_page") // key_page value ophalen
         sessies = ExtendedDataHolder.getInstance().getExtra("sessielist") as ArrayList<Sessie>
-//        Log.d("Ange", "Get read " + intent.getParcelableArrayListExtra<Sessie>("sessielist").toString())
 
         // naargelang 'key_page value' (meegegeven via de MainActivity) kiezen welke Fragment er geladen moet worden
         if (savedInstanceState == null) {

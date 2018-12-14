@@ -144,7 +144,7 @@ class FragmentSessie : Fragment() {
                     //Launch de fragment
                     activity?.supportFragmentManager!!
                             .beginTransaction()
-                            .replace(R.id.fragment_holder_main, sessiePageFragment, "pageContent")
+                            .replace(R.id.frag_content, sessiePageFragment, "pageContent")
                             .addToBackStack("root_fragment")
                             .commit()
                 } else {
@@ -175,7 +175,7 @@ class FragmentSessie : Fragment() {
                             //Launch de fragment
                             activity?.supportFragmentManager!!
                                     .beginTransaction()
-                                    .replace(R.id.fragment_holder_main, sessiePageFragment, "pageContent")
+                                    .replace(R.id.frag_content, sessiePageFragment, "pageContent")
                                     .addToBackStack("root_fragment")
                                     .commit()
                         } else {

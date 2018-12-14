@@ -53,36 +53,33 @@ class MainActivity : AppCompatActivity() {
 
         // Sessies
         val sessies: ArrayList<Sessie> = getSessies()
-
+        var extras = ExtendedDataHolder.getInstance()
+        extras.putExtra("sessielist", sessies)
 
         // belangrijk key_page mee te geven om juiste fragment te kunnen laden vanuit eenzelfde activity!
         ll_sessies.setOnClickListener {
+            ll_sessies.isEnabled = false
             val intent = Intent(this, ActivityPage::class.java)
             intent.putExtra("key_page", "sessies")
-
-            //save sessies in een externe klasse aangezien app crasht door grootte indien meegegeven met een intent
-            var extras = ExtendedDataHolder.getInstance()
-            extras.putExtra("sessielist", sessies)
 
             startActivity(intent)
         }
 
         ll_reminder.setOnClickListener {
+            ll_reminder.isEnabled = false
             val intent = Intent(this, ActivityPage::class.java)
             intent.putExtra("key_page", "reminder")
-
-            //save sessies in een externe klasse aangezien app crasht door grootte indien meegegeven met een intent
-            var extras = ExtendedDataHolder.getInstance()
-            extras.putExtra("sessielist", sessies)
 
             startActivity(intent)
         }
 
         ll_contact.setOnClickListener{
+            ll_contact.isEnabled = false
             setFragment(FragmentChat(), true)
         }
 
         ll_kalender.setOnClickListener{
+            ll_kalender.isEnabled = false
             setFragment(FragmentKalender(), true)
         }
 
@@ -90,6 +87,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    override fun onResume()
+    {
+        super.onResume()
+        ll_sessies.isEnabled = true
+        ll_reminder.isEnabled = true
+        ll_contact.isEnabled = true
+        ll_kalender.isEnabled = true
+    }
 
     // Menu icons are inflated just as they were with actionbar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -137,7 +142,7 @@ class MainActivity : AppCompatActivity() {
         val id = mAuth.currentUser!!.uid
         val string1 = ("http://141.134.155.219:3000/users/" + id)
         val string = "http://141.134.155.219:3000/users/yXQmL8IGSCbN15fzWw60t5udU2o2"
-        Logger.d("MEOZOZOZ", string1)
+
         // HTTP Request sessies
         val request = Request.Builder()
                 /*.header("Authorization", "token abcd")*/
@@ -204,6 +209,7 @@ class MainActivity : AppCompatActivity() {
 
         super.onBackPressed()
     }
+
     fun veranderGegevensGebruiker(gebruikersnaam : String, regio : String, telnr : String) {
         gebruiker!!.name = gebruikersnaam
         gebruiker!!.regio = regio
