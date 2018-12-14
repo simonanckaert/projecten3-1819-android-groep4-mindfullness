@@ -27,6 +27,7 @@ import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         mAuth = FirebaseAuth.getInstance()
         Logger.addLogAdapter(AndroidLogAdapter())
+        Log.d("tag", "TIJD TIJD TIJD TIJD  " +  Calendar.DAY_OF_MONTH)
 
         // Toolbar
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
