@@ -10,6 +10,7 @@ class Gebruiker : Parcelable {
     var telnr : String? = ""
     var groepsnr : Int? = 0
     var name : String? = ""
+    var sessieId : Int = 2
 
 
     constructor(uid : String, email : String, regio : String, telnr : String, groepsnr : Int, name : String) {

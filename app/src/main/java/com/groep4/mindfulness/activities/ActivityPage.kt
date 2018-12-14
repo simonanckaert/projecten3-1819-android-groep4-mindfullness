@@ -16,6 +16,7 @@ import com.groep4.mindfulness.R
 import com.groep4.mindfulness.fragments.FragmentProfiel
 import com.groep4.mindfulness.fragments.FragmentReminder
 import com.groep4.mindfulness.fragments.FragmentSessieLijst
+import com.groep4.mindfulness.model.Gebruiker
 import com.groep4.mindfulness.model.Sessie
 import com.groep4.mindfulness.utils.ExtendedDataHolder
 import okhttp3.*
@@ -26,6 +27,7 @@ class ActivityPage : AppCompatActivity() {
     private val BACK_STACK_ROOT_TAG = "root_fragment"
     var sessies: ArrayList<Sessie> = ArrayList()
     private lateinit var fragment: Fragment
+    var gebruiker : Gebruiker = Gebruiker()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +36,7 @@ class ActivityPage : AppCompatActivity() {
         val myIntent = intent // parent intent ophalen
         val keyPage = myIntent.getStringExtra("key_page") // key_page value ophalen
         sessies = ExtendedDataHolder.getInstance().getExtra("sessielist") as ArrayList<Sessie>
+        gebruiker = myIntent.getParcelableExtra("gebruiker")
 
         // naargelang 'key_page value' (meegegeven via de MainActivity) kiezen welke Fragment er geladen moet worden
         if (savedInstanceState == null) {
