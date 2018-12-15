@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
             ll_reminder.isEnabled = false
             val intent = Intent(this, ActivityPage::class.java)
             intent.putExtra("key_page", "reminder")
+            intent.putExtra("gebruiker", gebruiker)
             startActivity(intent)
         }
 
