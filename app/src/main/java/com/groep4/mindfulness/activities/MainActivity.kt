@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     private val client = OkHttpClient()
     lateinit var mAuth: FirebaseAuth
     private var isFragmentProfielLoaded = false
-    var gebruiker : Gebruiker? = null
+    var gebruiker : Gebruiker = Gebruiker()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             ll_sessies.isEnabled = false
             val intent = Intent(this, ActivityPage::class.java)
             intent.putExtra("key_page", "sessies")
-
+            intent.putExtra("gebruiker", gebruiker)
             startActivity(intent)
         }
 

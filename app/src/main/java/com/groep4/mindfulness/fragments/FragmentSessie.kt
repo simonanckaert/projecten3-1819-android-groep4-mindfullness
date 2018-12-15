@@ -18,6 +18,7 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.activities.ActivityPage
+import com.groep4.mindfulness.model.Gebruiker
 import com.groep4.mindfulness.model.Sessie
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_sessie.*
@@ -41,7 +42,7 @@ class FragmentSessie : Fragment() {
     private var fade_in: Animation? = null
     private var fade_out: Animation? = null
 
-
+    private var gebruiker : Gebruiker? = Gebruiker()
 
     private var objectAnimator: ObjectAnimator? = null
 
@@ -118,6 +119,7 @@ class FragmentSessie : Fragment() {
         val imgRes = context!!.resources.getIdentifier("mnstr$page","mipmap", context!!.packageName)
         imgSessie!!.setImageResource(imgRes)
 
+        gebruiker = (activity as ActivityPage)!!.gebruiker
 
         // Naargelang hoe ver je zit in de sessies de bus opvullen met monsters.
         for (i in 0 until page){
@@ -147,7 +149,24 @@ class FragmentSessie : Fragment() {
                             .replace(R.id.frag_content, sessiePageFragment, "pageContent")
                             .addToBackStack("root_fragment")
                             .commit()
-                } else {
+                }
+                else if(gebruiker!!.sessieId+1 > sessie!!.sessieId) {
+                    //creeer nieuwe fragment
+                    val sessiePageFragment = FragmentSessiePage()
+                    val bundle = Bundle()
+                    bundle.putParcelable("key_sessie", sessie)
+                    bundle.putInt("key_page", page)
+                    sessiePageFragment.arguments = bundle
+
+                    //Launch de fragment
+                    activity?.supportFragmentManager!!
+                            .beginTransaction()
+                            .replace(R.id.frag_content, sessiePageFragment, "pageContent")
+                            .addToBackStack("root_fragment")
+                            .commit()
+                } else if(gebruiker!!.sessieId+1 < sessie!!.sessieId)
+                    Toast.makeText(context, "De sessie is nog niet toegankelijk", Toast.LENGTH_SHORT).show()
+                else {
 
                     val builder = AlertDialog.Builder(context!!)
                     var editTextCode: EditText
@@ -171,6 +190,7 @@ class FragmentSessie : Fragment() {
                             bundle.putParcelable("key_sessie", sessie)
                             bundle.putInt("key_page", page)
                             sessiePageFragment.arguments = bundle
+                            (activity as ActivityPage)!!.sessieUnlocked()
 
                             //Launch de fragment
                             activity?.supportFragmentManager!!
