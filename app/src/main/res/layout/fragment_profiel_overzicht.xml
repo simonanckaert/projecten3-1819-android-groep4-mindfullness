@@ -12,11 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:text="U bent nu bezig met sessie:"
+        android:text="U bent nu bezig met:"
         android:textAlignment="center" />
 
     <TextView
-        android:id="@+id/txtNaam"
+        android:id="@+id/txtHuidigeSessie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sessie 1"
@@ -53,6 +53,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="6dp"
                 android:layout_marginBottom="20dp"
+                android:visibility="invisible"
                 app:layout_row="0"
                 app:layout_rowSpan="1"
                 app:srcCompat="@mipmap/mnstr8" />
@@ -63,6 +64,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="6dp"
                 android:layout_marginBottom="20dp"
+                android:visibility="invisible"
                 app:layout_row="0"
                 app:layout_rowSpan="1"
                 app:srcCompat="@mipmap/mnstr7" />
@@ -73,6 +75,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="6dp"
                 android:layout_marginBottom="20dp"
+                android:visibility="invisible"
                 app:layout_row="0"
                 app:layout_rowSpan="1"
                 app:srcCompat="@mipmap/mnstr6" />
@@ -83,6 +86,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="6dp"
                 android:layout_marginBottom="20dp"
+                android:visibility="invisible"
                 app:layout_row="0"
                 app:layout_rowSpan="1"
                 app:srcCompat="@mipmap/mnstr5" />
@@ -93,6 +97,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="6dp"
                 android:layout_marginBottom="20dp"
+                android:visibility="invisible"
                 app:layout_column="0"
                 app:layout_row="1"
                 app:srcCompat="@mipmap/mnstr4" />
@@ -103,6 +108,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="6dp"
                 android:layout_marginBottom="20dp"
+                android:visibility="invisible"
                 app:layout_column="1"
                 app:layout_row="1"
                 app:srcCompat="@mipmap/mnstr3" />
@@ -113,6 +119,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="6dp"
                 android:layout_marginBottom="20dp"
+                android:visibility="invisible"
                 app:layout_column="2"
                 app:layout_row="1"
                 app:srcCompat="@mipmap/mnstr2" />
@@ -123,6 +130,7 @@
                 android:layout_height="30dp"
                 android:layout_margin="6dp"
                 android:layout_marginBottom="20dp"
+                android:visibility="invisible"
                 app:layout_column="3"
                 app:layout_row="1"
                 app:srcCompat="@mipmap/mnstr1" />
