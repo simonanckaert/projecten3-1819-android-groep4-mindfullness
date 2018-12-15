@@ -7,36 +7,30 @@
     android:background="@mipmap/trianglify_01"
     tools:context=".activities.MainActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/AppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimaryDark"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    </android.support.design.widget.AppBarLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="fill_vertical|fill_horizontal|center"
+        android:gravity="center"
         android:orientation="vertical">
-
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:layout_weight="0"
-            android:foregroundGravity="top"
-            android:gravity="top"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                style="@style/AppTheme"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimaryDark"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-        </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:gravity="top|center"
             android:orientation="horizontal">
 
@@ -85,10 +79,9 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="fill_horizontal|center|fill"
+            android:layout_gravity="center"
             android:layout_weight="0"
-            android:foregroundGravity="center|fill"
-            android:gravity="center_vertical|fill_vertical|center_horizontal|fill_horizontal|center|fill">
+            android:gravity="center_horizontal">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -131,6 +124,7 @@
                         android:textSize="25sp" />
                 </LinearLayout>
 
+                <!-- Button Kalender -->
                 <LinearLayout
                     android:id="@+id/ll_kalender"
                     android:layout_width="135dp"
@@ -164,7 +158,14 @@
                         android:textColor="@android:color/white"
                         android:textSize="25sp" />
                 </LinearLayout>
+            </TableRow>
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <!-- Button Reminders -->
                 <LinearLayout
                     android:id="@+id/ll_reminder"
                     android:layout_width="135dp"
@@ -199,6 +200,7 @@
                         android:textSize="25sp" />
                 </LinearLayout>
 
+                <!-- Button Contact -->
                 <LinearLayout
                     android:id="@+id/ll_contact"
                     android:layout_width="135dp"
@@ -232,22 +234,17 @@
                         android:textColor="@android:color/white"
                         android:textSize="25sp" />
                 </LinearLayout>
-
-                <!-- Button Kalender -->
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal">
-
-                <!-- Button Reminders -->
-
-                <!-- Button Contact -->
             </TableRow>
 
 
         </TableLayout>
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_holder_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -13,9 +12,8 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.fragments.FragmentChat
-import com.groep4.mindfulness.fragments.FragmentKalender
-import com.groep4.mindfulness.fragments.FragmentProfiel
+import com.groep4.mindfulness.fragments.*
+import com.groep4.mindfulness.interfaces.CallbackInterface
 import com.groep4.mindfulness.model.Gebruiker
 import com.groep4.mindfulness.model.Oefening
 import com.groep4.mindfulness.model.Sessie
@@ -30,13 +28,16 @@ import java.io.IOException
 import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CallbackInterface {
 
     private val BACK_STACK_ROOT_TAG = "root_fragment"
     private val client = OkHttpClient()
     lateinit var mAuth: FirebaseAuth
-    private var isFragmentProfielLoaded = false
+    // private var isFragmentProfielLoaded = false
     var gebruiker : Gebruiker = Gebruiker()
+
+    var sessies: ArrayList<Sessie> = ArrayList()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,58 +47,64 @@ class MainActivity : AppCompatActivity() {
         Log.d("tag", "TIJD TIJD TIJD TIJD  " +  Calendar.DAY_OF_MONTH)
 
         // Toolbar
-        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
-        setSupportActionBar(toolbar)
+        //val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        //setSupportActionBar(toolbar)
 
+        // Set gebruiker
         this.gebruiker = getAangemeldeGebruiker()
 
         // Sessies
-        val sessies: ArrayList<Sessie> = getSessies()
+        sessies = getSessiesFromDB()
         val extras = ExtendedDataHolder.getInstance()
         extras.putExtra("sessielist", sessies)
 
-        // Gebruik nieuwe activity (ActivityPage) voor al het beheer van de fragments.
-        // belangrijk key_page mee te geven om juiste fragment te kunnen laden vanuit de activity!
-        ll_sessies.setOnClickListener {
+        setFragment(FragmentMain(), true)
+
+        // Set fragment on btnclick
+        /*ll_sessies.setOnClickListener {
             ll_sessies.isEnabled = false
-            val intent = Intent(this, ActivityPage::class.java)
-            intent.putExtra("key_page", "sessies")
-            intent.putExtra("gebruiker", gebruiker)
-            startActivity(intent)
+            setFragment(FragmentSessieLijst(), false)
         }
 
         ll_reminder.setOnClickListener {
             ll_reminder.isEnabled = false
-            val intent = Intent(this, ActivityPage::class.java)
-            intent.putExtra("key_page", "reminder")
-            intent.putExtra("gebruiker", gebruiker)
-            startActivity(intent)
+            setFragment(FragmentReminder(), false)
         }
 
         ll_contact.setOnClickListener{
             ll_contact.isEnabled = false
-            val intent = Intent(this, ActivityPage::class.java)
-            intent.putExtra("key_page", "chat")
-            startActivity(intent)
+            setFragment(FragmentChat(), false)
         }
 
         ll_kalender.setOnClickListener{
             ll_kalender.isEnabled = false
-            val intent = Intent(this, ActivityPage::class.java)
-            intent.putExtra("key_page", "kalender")
-            startActivity(intent)
-        }
+            setFragment(FragmentKalender(), false)
+        }*/
     }
 
+    // Callback Function
+    override fun setFragment(fragment: Fragment, addToBackstack: Boolean) {
+        if (addToBackstack)
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.frag_content, fragment, "pageContent")
+                    .addToBackStack(BACK_STACK_ROOT_TAG)
+                    .commit()
+        else
+            supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.frag_content, fragment, "pageContent")
+                    .commit()
+    }
 
-    override fun onResume()
+    /*override fun onResume()
     {
         super.onResume()
         ll_sessies.isEnabled = true
         ll_reminder.isEnabled = true
         ll_contact.isEnabled = true
         ll_kalender.isEnabled = true
-    }
+    }*/
 
     // Menu icons are inflated just as they were with actionbar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -107,8 +114,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Sessies ophalen
-    fun getSessies(): ArrayList<Sessie> {
-        val sessies: ArrayList<Sessie> = ArrayList()
+    fun getSessiesFromDB(): ArrayList<Sessie> {
+        val tempSessies: ArrayList<Sessie> = ArrayList()
 
         // HTTP Request sessies
         val request = Request.Builder()
@@ -122,7 +129,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                sessies.clear()
+                tempSessies.clear()
                 val jsonarray = JSONArray(response.body()!!.string())
                 for (i in 0 until jsonarray.length()) {
                     val jsonobject = jsonarray.getJSONObject(i)
@@ -133,11 +140,11 @@ class MainActivity : AppCompatActivity() {
                     //val oefeningen = ArrayList<Oefening>()
                     val sessieCode = jsonobject.getString("sessieCode")
                     val sessie: Sessie = Sessie(sessieId, naam, beschrijving, oefeningen, sessieCode)
-                    sessies.add(sessie)
+                    tempSessies.add(sessie)
                 }
             }
         })
-        return sessies
+        return tempSessies
     }
 
     fun getAangemeldeGebruiker() : Gebruiker{
@@ -237,6 +244,22 @@ class MainActivity : AppCompatActivity() {
         return response2.orEmpty()
     }
 
+    /*fun gegevensGebruikerOpslaan(body : FormBody, url : String) : String {
+        var response2 : String? = null
+        val thread = Thread(Runnable {
+            val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8")
+            val client: OkHttpClient = OkHttpClient()
+            //val body: RequestBody = RequestBody.create(mediaType, json)
+            val request: Request = Request.Builder().url(url).put(body).build()
+            val response = client.newCall(request).execute()
+            response2 = response.body().toString()
+        })
+        thread.start()
+        //supportFragmentManager.popBackStack()
+
+        return response2.orEmpty()
+    }*/
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle presses on the action bar menu items
         when (item.itemId) {
@@ -275,13 +298,30 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun postFeedback(url: String, json: String): String {
+    /*fun postFeedback(url: String, json: String): String {
         val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8")
         val client: OkHttpClient = OkHttpClient()
         val body: RequestBody = RequestBody.create(mediaType, json)
         val request: Request = Request.Builder().url(url).post(body).build()
         val response: Response = client.newCall(request).execute()
         return response.body().toString()
+    }*/
+
+    fun postFeedback(url: String, body:FormBody): String {
+        var response2 : String? = null
+        val thread = Thread(Runnable {
+            val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8")
+            val client: OkHttpClient = OkHttpClient()
+            //val body: RequestBody = RequestBody.create(mediaType, json)
+            val request: Request = Request.Builder().url(url).post(body).build()
+            val response = client.newCall(request).execute()
+            response2 = response.body().toString()
+        })
+        thread.start()
+        return response2.orEmpty()
     }
 
+    fun sessieUnlocked() {
+        gebruiker!!.sessieId += 1
+    }
 }

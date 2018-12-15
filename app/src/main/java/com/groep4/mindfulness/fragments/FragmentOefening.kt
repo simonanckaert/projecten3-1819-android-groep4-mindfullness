@@ -14,8 +14,7 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.*
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.activities.ActivityPage
-import com.groep4.mindfulness.activities.CallbackInterface
+import com.groep4.mindfulness.interfaces.CallbackInterface
 import com.groep4.mindfulness.model.Oefening
 import com.koushikdutta.ion.Ion
 import es.dmoral.toasty.Toasty
