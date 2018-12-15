@@ -53,10 +53,11 @@ class MainActivity : AppCompatActivity() {
 
         // Sessies
         val sessies: ArrayList<Sessie> = getSessies()
-        var extras = ExtendedDataHolder.getInstance()
+        val extras = ExtendedDataHolder.getInstance()
         extras.putExtra("sessielist", sessies)
 
-        // belangrijk key_page mee te geven om juiste fragment te kunnen laden vanuit eenzelfde activity!
+        // Gebruik nieuwe activity (ActivityPage) voor al het beheer van de fragments.
+        // belangrijk key_page mee te geven om juiste fragment te kunnen laden vanuit de activity!
         ll_sessies.setOnClickListener {
             ll_sessies.isEnabled = false
             val intent = Intent(this, ActivityPage::class.java)
@@ -69,21 +70,22 @@ class MainActivity : AppCompatActivity() {
             ll_reminder.isEnabled = false
             val intent = Intent(this, ActivityPage::class.java)
             intent.putExtra("key_page", "reminder")
-
             startActivity(intent)
         }
 
         ll_contact.setOnClickListener{
             ll_contact.isEnabled = false
-            setFragment(FragmentChat(), true)
+            val intent = Intent(this, ActivityPage::class.java)
+            intent.putExtra("key_page", "chat")
+            startActivity(intent)
         }
 
         ll_kalender.setOnClickListener{
             ll_kalender.isEnabled = false
-            setFragment(FragmentKalender(), true)
+            val intent = Intent(this, ActivityPage::class.java)
+            intent.putExtra("key_page", "kalender")
+            startActivity(intent)
         }
-
-
     }
 
 
@@ -138,7 +140,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getAangemeldeGebruiker() : Gebruiker{
-        var gebruiker : Gebruiker = Gebruiker()
+        val gebruiker : Gebruiker = Gebruiker()
         val id = mAuth.currentUser!!.uid
         val string1 = ("http://141.134.155.219:3000/users/" + id)
         val string = "http://141.134.155.219:3000/users/yXQmL8IGSCbN15fzWw60t5udU2o2"
@@ -261,25 +263,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.action_profiel -> {
-                setFragment(FragmentProfiel(), true)
+                supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fragment_holder_main, FragmentProfiel(), "pageContent")
+                        .addToBackStack(BACK_STACK_ROOT_TAG)
+                        .commit()
                 return true
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    fun setFragment(fragment: Fragment, addToBackstack: Boolean) {
-        if (addToBackstack)
-            supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_holder_main, fragment, "pageContent")
-                    .addToBackStack(BACK_STACK_ROOT_TAG)
-                    .commit()
-        else
-            supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_holder_main, fragment, "pageContent")
-                    .commit()
     }
 
     fun postFeedback(url: String, json: String): String {

@@ -216,7 +216,6 @@ class FragmentAddTask : Fragment(), com.wdullaer.materialdatetimepicker.date.Dat
      */
 
     fun showStartDatePicker(v: View) {
-
         dpd = com.wdullaer.materialdatetimepicker.date.DatePickerDialog.newInstance { view, year, monthOfYear, dayOfMonth -> this@FragmentAddTask; startYear; startMonth; startDay }
         dpd!!.setOnDateSetListener(this)
         dpd!!.show(activity?.fragmentManager, "startDatepickerdialog")
