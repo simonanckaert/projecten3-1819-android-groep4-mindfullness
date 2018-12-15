@@ -2,26 +2,16 @@ package com.groep4.mindfulness.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.os.DropBoxManager
-import android.renderscript.Sampler
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.activities.ActivityPage
-import com.groep4.mindfulness.activities.CallbackInterface
+import com.groep4.mindfulness.interfaces.CallbackInterface
 import com.groep4.mindfulness.activities.MainActivity
 import com.groep4.mindfulness.model.Gebruiker
-import java.security.KeyStore
 
 class FragmentProfielInfo: Fragment() {
 

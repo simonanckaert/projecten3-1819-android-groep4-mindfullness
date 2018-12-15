@@ -1,26 +1,17 @@
 package com.groep4.mindfulness.fragments
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.activities.ActivityPage
 import com.groep4.mindfulness.activities.MainActivity
 import com.groep4.mindfulness.model.Oefening
 import com.groep4.mindfulness.model.Sessie
-import kotlinx.android.synthetic.main.fragment_oefening_feedback.*
-import java.io.DataOutputStream
-import java.net.HttpURLConnection
 import java.net.URL
-import com.koushikdutta.async.http.callback.RequestCallback
-import android.R.attr.keySet
-import com.koushikdutta.ion.builder.RequestBuilder
 import okhttp3.*
 
 
@@ -47,7 +38,7 @@ class FragmentOefeningFeedback : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         var oefening = arguments!!.getParcelable<Oefening>("oefening")
-        val pageActivity = activity as ActivityPage
+        val mainActivity = activity as MainActivity
 
         buttonOpslaan!!.setOnClickListener {
             /*val sessiePageFragment = FragmentSessiePage()
@@ -117,12 +108,12 @@ class FragmentOefeningFeedback : Fragment() {
 
 
                 // val response = builder.post(RequestBody.create(sb.toString(),sb.toString()))
-                var response = (activity as ActivityPage)
+                var response = (activity as MainActivity)
                         .postFeedback("http://141.134.155.219:3000/oefeningen/oef/" + oefening.oefenigenId + "/feedback", fromBodyBuilder.build())
 
 
                 txtOefeningNaam!!.text = response
-            (activity as ActivityPage).onBackPressed()
+            (activity as MainActivity).onBackPressed()
                 /*} catch (e: Exception) {
                     e.printStackTrace()
                 }*/

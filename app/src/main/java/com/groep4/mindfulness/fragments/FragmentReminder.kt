@@ -16,16 +16,14 @@ import android.widget.TextView
 import android.widget.Toast
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.utils.NotificationUtils
-import kotlinx.android.synthetic.main.activity_page.*
 import kotlinx.android.synthetic.main.fragment_reminder.view.*
 import java.text.DateFormat
 import java.util.*
-import java.util.prefs.Preferences
-import android.content.Context.ALARM_SERVICE
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import com.groep4.mindfulness.interfaces.CallbackInterface
 import com.groep4.mindfulness.receivers.AlarmReceiver
 import es.dmoral.toasty.Toasty
 
@@ -52,9 +50,9 @@ class FragmentReminder : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_reminder, container, false)
 
-        activity!!.tr_page.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorPink))
+        view.tr_page.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorPink))
         //activity!!.iv_page.setImageResource(R.mipmap.reminders)
-        activity!!.tv_page.setText(R.string.reminder)
+        view.tv_page.setText(R.string.reminder)
 
 
         prefs = context?.getSharedPreferences(PREFS_REMINDER, 0)

@@ -25,7 +25,6 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.activities.ActivityPage
 import com.groep4.mindfulness.activities.MainActivity
 import com.groep4.mindfulness.utils.LoginValidation
 

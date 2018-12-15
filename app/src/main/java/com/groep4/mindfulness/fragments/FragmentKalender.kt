@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.NestedScrollView
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
@@ -12,13 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.activities.CallbackInterface
-import com.groep4.mindfulness.activities.MainActivity
+import com.groep4.mindfulness.interfaces.CallbackInterface
 import com.groep4.mindfulness.adapters.ListTaskAdapter
 import com.groep4.mindfulness.utils.NoScrollListView
 import com.groep4.mindfulness.database.DBHelper
 import com.groep4.mindfulness.utils.KalenderFunction
-import kotlinx.android.synthetic.main.fragment_kalender.*
+import kotlinx.android.synthetic.main.fragment_kalender.view.*
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -47,6 +47,10 @@ class FragmentKalender : Fragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         val view = inflater.inflate(R.layout.fragment_kalender, container, false)
+
+        // Top bar info instellen
+        view.tr_page.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorPurple))
+        view.tv_page.setText(R.string.kalender)
 
         scrollView = view.findViewById(R.id.scrollView) as NestedScrollView
 

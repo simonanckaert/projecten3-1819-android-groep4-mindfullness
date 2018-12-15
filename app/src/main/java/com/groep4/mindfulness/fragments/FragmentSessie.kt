@@ -3,23 +3,20 @@ package com.groep4.mindfulness.fragments
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.CardView
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.*
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.activities.ActivityPage
-import com.groep4.mindfulness.activities.CallbackInterface
+import com.groep4.mindfulness.interfaces.CallbackInterface
+import com.groep4.mindfulness.activities.MainActivity
 import com.groep4.mindfulness.model.Gebruiker
 import com.groep4.mindfulness.model.Sessie
 import es.dmoral.toasty.Toasty
@@ -130,7 +127,7 @@ class FragmentSessie : Fragment() {
         val imgRes = context!!.resources.getIdentifier("mnstr$page","mipmap", context!!.packageName)
         imgSessie!!.setImageResource(imgRes)
 
-        gebruiker = (activity as ActivityPage)!!.gebruiker
+        gebruiker = (activity as MainActivity)!!.gebruiker
 
         // Naargelang hoe ver je zit in de sessies de bus opvullen met monsters.
         for (i in 0 until page){
@@ -193,7 +190,7 @@ class FragmentSessie : Fragment() {
                             bundle.putParcelable("key_sessie", sessie)
                             bundle.putInt("key_page", page)
                             sessiePageFragment.arguments = bundle
-                            (activity as ActivityPage)!!.sessieUnlocked()
+                            (activity as MainActivity)!!.sessieUnlocked()
 
                             // Launch fragment met callback naar activity
                             callback?.setFragment(sessiePageFragment, true)
