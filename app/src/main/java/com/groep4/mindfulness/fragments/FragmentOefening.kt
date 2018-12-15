@@ -1,6 +1,7 @@
 package com.groep4.mindfulness.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
@@ -14,6 +15,7 @@ import android.webkit.WebView
 import android.widget.*
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.activities.ActivityPage
+import com.groep4.mindfulness.activities.CallbackInterface
 import com.groep4.mindfulness.model.Oefening
 import com.koushikdutta.ion.Ion
 import es.dmoral.toasty.Toasty
@@ -21,6 +23,8 @@ import kotlinx.android.synthetic.main.fragment_oefening.*
 
 
 class FragmentOefening : Fragment() {
+
+    private var callback: CallbackInterface? = null
 
     private var txtOefeningNaam: TextView? = null
     private var txtOefeningBeschrijving: TextView? = null
@@ -32,6 +36,13 @@ class FragmentOefening : Fragment() {
     private var isPlaying: Boolean = false
     private val mp = MediaPlayer()
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = context as? CallbackInterface
+        if (callback == null) {
+            throw ClassCastException("$context must implement OnArticleSelectedListener")
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_oefening, container, false)
@@ -129,11 +140,8 @@ class FragmentOefening : Fragment() {
                 bundle.putInt("key_page", page)
                 oefeningFeedbackFragment.arguments = bundle
 
-                //Launch de fragment en voeg niet toe aan backstack
-                activity?.supportFragmentManager!!
-                        .beginTransaction()
-                        .replace(R.id.fragment_holder_main, oefeningFeedbackFragment, "pageContent")
-                        .commit()
+                // Launch fragment met callback naar activity
+                callback?.setFragment(oefeningFeedbackFragment, false)
             }else{
                 Toasty.info(view!!.context, "Geen oefening gevonden, controleer uw internetverbinding.").show()
             }

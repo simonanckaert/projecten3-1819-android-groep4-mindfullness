@@ -1,6 +1,7 @@
 package com.groep4.mindfulness.fragments
 
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -18,6 +19,7 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.activities.ActivityPage
+import com.groep4.mindfulness.activities.CallbackInterface
 import com.groep4.mindfulness.model.Gebruiker
 import com.groep4.mindfulness.model.Sessie
 import es.dmoral.toasty.Toasty
@@ -28,6 +30,8 @@ import kotlin.collections.ArrayList
 
 
 class FragmentSessie : Fragment() {
+
+    private var callback: CallbackInterface? = null
 
     private var imgSessie: ImageView? = null
     private var cvSessie: CardView? = null
@@ -50,6 +54,13 @@ class FragmentSessie : Fragment() {
 
     private var screenWidth: Int? = null
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = context as? CallbackInterface
+        if (callback == null) {
+            throw ClassCastException("$context must implement OnArticleSelectedListener")
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         random = Random()
@@ -143,12 +154,8 @@ class FragmentSessie : Fragment() {
                     bundle.putInt("key_page", page)
                     sessiePageFragment.arguments = bundle
 
-                    //Launch de fragment
-                    activity?.supportFragmentManager!!
-                            .beginTransaction()
-                            .replace(R.id.frag_content, sessiePageFragment, "pageContent")
-                            .addToBackStack("root_fragment")
-                            .commit()
+                    // Launch fragment met callback naar activity
+                    callback?.setFragment(sessiePageFragment, true)
                 }
                 else if(gebruiker!!.sessieId+1 > sessie!!.sessieId) {
                     //creeer nieuwe fragment
@@ -158,12 +165,8 @@ class FragmentSessie : Fragment() {
                     bundle.putInt("key_page", page)
                     sessiePageFragment.arguments = bundle
 
-                    //Launch de fragment
-                    activity?.supportFragmentManager!!
-                            .beginTransaction()
-                            .replace(R.id.frag_content, sessiePageFragment, "pageContent")
-                            .addToBackStack("root_fragment")
-                            .commit()
+                    // Launch fragment met callback naar activity
+                    callback?.setFragment(sessiePageFragment, true)
                 } else if(gebruiker!!.sessieId+1 < sessie!!.sessieId)
                     Toast.makeText(context, "De sessie is nog niet toegankelijk", Toast.LENGTH_SHORT).show()
                 else {
@@ -192,12 +195,8 @@ class FragmentSessie : Fragment() {
                             sessiePageFragment.arguments = bundle
                             (activity as ActivityPage)!!.sessieUnlocked()
 
-                            //Launch de fragment
-                            activity?.supportFragmentManager!!
-                                    .beginTransaction()
-                                    .replace(R.id.frag_content, sessiePageFragment, "pageContent")
-                                    .addToBackStack("root_fragment")
-                                    .commit()
+                            // Launch fragment met callback naar activity
+                            callback?.setFragment(sessiePageFragment, true)
                         } else {
                             Toast.makeText(context, "Helaas, het antwoord is fout", Toast.LENGTH_SHORT).show()
 

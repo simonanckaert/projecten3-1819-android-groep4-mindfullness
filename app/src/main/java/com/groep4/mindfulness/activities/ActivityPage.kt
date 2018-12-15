@@ -13,17 +13,14 @@ import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.fragments.FragmentProfiel
-import com.groep4.mindfulness.fragments.FragmentReminder
-import com.groep4.mindfulness.fragments.FragmentSessieLijst
+import com.groep4.mindfulness.fragments.*
 import com.groep4.mindfulness.model.Gebruiker
 import com.groep4.mindfulness.model.Sessie
 import com.groep4.mindfulness.utils.ExtendedDataHolder
 import okhttp3.*
 
 
-class ActivityPage : AppCompatActivity() {
-
+class ActivityPage : AppCompatActivity(), CallbackInterface {
     private val BACK_STACK_ROOT_TAG = "root_fragment"
     var sessies: ArrayList<Sessie> = ArrayList()
     private lateinit var fragment: Fragment
@@ -43,6 +40,8 @@ class ActivityPage : AppCompatActivity() {
             val fragment: Fragment = when(keyPage) {
                 "sessie" -> FragmentSessieLijst()
                 "reminder" -> FragmentReminder()
+                "kalender" -> FragmentKalender()
+                "chat" -> FragmentChat()
                 else -> FragmentSessieLijst()
             }
             setFragment(fragment, false)
@@ -93,8 +92,8 @@ class ActivityPage : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-
-    fun setFragment(fragment: Fragment, addToBackstack: Boolean) {
+    // Callback Function
+    override fun setFragment(fragment: Fragment, addToBackstack: Boolean) {
         if (addToBackstack)
             supportFragmentManager
                     .beginTransaction()

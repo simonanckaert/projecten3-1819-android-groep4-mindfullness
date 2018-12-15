@@ -1,5 +1,6 @@
 package com.groep4.mindfulness.fragments
 
+import android.content.Context
 import android.database.Cursor
 import android.os.AsyncTask
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.groep4.mindfulness.R
+import com.groep4.mindfulness.activities.CallbackInterface
 import com.groep4.mindfulness.activities.MainActivity
 import com.groep4.mindfulness.adapters.ListTaskAdapter
 import com.groep4.mindfulness.utils.NoScrollListView
@@ -23,6 +25,7 @@ import java.util.HashMap
 
 class FragmentKalender : Fragment()
 {
+    private var callback: CallbackInterface? = null
 
     lateinit var mydb: DBHelper
     lateinit var taskNoScrollListToday: NoScrollListView ; lateinit var taskNoScrollListTomorrow: NoScrollListView  ; lateinit var taskNoScrollListUpcoming: NoScrollListView
@@ -32,6 +35,14 @@ class FragmentKalender : Fragment()
     var todayList = ArrayList<HashMap<String, String>>()
     var tomorrowList = ArrayList<HashMap<String, String>>()
     var upcomingList = ArrayList<HashMap<String, String>>()
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = context as? CallbackInterface
+        if (callback == null) {
+            throw ClassCastException("$context must implement OnArticleSelectedListener")
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
@@ -52,7 +63,7 @@ class FragmentKalender : Fragment()
         addTaskButton.setOnClickListener {
 
             //Een nieuwe fragment aanmaken
-            var f = FragmentAddTask()
+            val f = FragmentAddTask()
             val bundle = Bundle()
 
             //isUpdate = false aangezien dit een nieuwe taak is en geen aanpassing
@@ -60,12 +71,8 @@ class FragmentKalender : Fragment()
             f.arguments = bundle
             f.arguments = bundle
 
-            //Launch fragment
-            activity?.supportFragmentManager!!
-                    .beginTransaction()
-                    .replace(R.id.fragment_holder_main, f, "pageContent")
-                    .addToBackStack("root_fragment")
-                    .commit()
+            // Launch fragment met callback naar activity
+            callback?.setFragment(f, true)
         }
 
         return view

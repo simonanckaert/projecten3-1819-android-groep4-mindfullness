@@ -1,5 +1,6 @@
 package com.groep4.mindfulness.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.os.DropBoxManager
 import android.renderscript.Sampler
@@ -17,11 +18,14 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.activities.ActivityPage
+import com.groep4.mindfulness.activities.CallbackInterface
 import com.groep4.mindfulness.activities.MainActivity
 import com.groep4.mindfulness.model.Gebruiker
 import java.security.KeyStore
 
 class FragmentProfielInfo: Fragment() {
+
+    private var callback: CallbackInterface? = null
 
     /*lateinit var mAuth: FirebaseAuth
     var ref: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")*/
@@ -33,6 +37,13 @@ class FragmentProfielInfo: Fragment() {
 
     private var btnGegevensWijzigen : Button? = null
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = context as? CallbackInterface
+        if (callback == null) {
+            throw ClassCastException("$context must implement OnArticleSelectedListener")
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profiel_info, container, false)
@@ -54,11 +65,8 @@ class FragmentProfielInfo: Fragment() {
         //Toon de gegevenswijzigenfragment indien op gegevenswijzigen geklikt is
         btnGegevensWijzigen = view.findViewById(R.id.btnGegevensWijzigen)
         btnGegevensWijzigen!!.setOnClickListener {
-            activity?.supportFragmentManager!!
-                    .beginTransaction()
-                    .replace(R.id.fragment_holder_main, FragmentProfielGegevensWijzigen(), "pageContent")
-                    .addToBackStack("root_fragment")
-                    .commit()
+            // Launch fragment met callback naar activity
+            callback?.setFragment(FragmentProfielGegevensWijzigen(), true)
         }
 
         return view
