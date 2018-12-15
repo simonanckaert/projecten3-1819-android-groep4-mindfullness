@@ -174,7 +174,7 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
                     gebruiker.name = if (jsonobject.has("name")) jsonobject.getString("name") else ""
                     gebruiker.telnr = if (jsonobject.has("telnr")) jsonobject.getString("telnr") else ""
                     gebruiker.groepsnr = if (jsonobject.has("groepnr")) jsonobject.getInt("groepnr") else 0
-
+                    gebruiker.sessieId = if (jsonobject.has("sessieid")) jsonobject.getInt("sessieid") else 1
             }
         })
         return gebruiker
@@ -323,5 +323,15 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
 
     fun sessieUnlocked() {
         gebruiker!!.sessieId += 1
+        val fromBodyBuilder = FormBody.Builder()
+        fromBodyBuilder.add("name", gebruiker!!.name)
+        fromBodyBuilder.add("regio", gebruiker!!.regio)
+        fromBodyBuilder.add("telnr", gebruiker!!.telnr)
+        fromBodyBuilder.add("uid", gebruiker!!.uid)
+        fromBodyBuilder.add("email", gebruiker!!.email)
+        fromBodyBuilder.add("groepnr", gebruiker!!.groepsnr.toString())
+        fromBodyBuilder.add("sessieid", gebruiker!!.sessieId.toString())
+        var url = "http://141.134.155.219:3000/users/" + gebruiker!!.uid
+        gegevensGebruikerOpslaan(fromBodyBuilder.build(), url)
     }
 }
