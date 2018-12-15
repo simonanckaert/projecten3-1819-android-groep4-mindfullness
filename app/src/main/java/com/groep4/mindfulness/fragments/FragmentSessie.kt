@@ -190,6 +190,7 @@ class FragmentSessie : Fragment() {
                             bundle.putParcelable("key_sessie", sessie)
                             bundle.putInt("key_page", page)
                             sessiePageFragment.arguments = bundle
+                            (activity as ActivityPage)!!.sessieUnlocked()
 
                             //Launch de fragment
                             activity?.supportFragmentManager!!

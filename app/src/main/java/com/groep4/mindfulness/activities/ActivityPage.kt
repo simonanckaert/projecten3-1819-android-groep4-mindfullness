@@ -122,4 +122,25 @@ class ActivityPage : AppCompatActivity() {
         return response2.orEmpty()
 
     }
+
+    fun sessieUnlocked() {
+        gebruiker!!.sessieId += 1
+    }
+
+    fun gegevensGebruikerOpslaan(body : FormBody, url : String) : String {
+        var response2 : String? = null
+        val thread = Thread(Runnable {
+            val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8")
+            val client: OkHttpClient = OkHttpClient()
+            //val body: RequestBody = RequestBody.create(mediaType, json)
+            val request: Request = Request.Builder().url(url).put(body).build()
+            val response = client.newCall(request).execute()
+            response2 = response.body().toString()
+        })
+        thread.start()
+        //supportFragmentManager.popBackStack()
+
+
+        return response2.orEmpty()
+    }
 }
