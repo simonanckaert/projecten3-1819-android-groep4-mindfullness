@@ -113,19 +113,9 @@ class FragmentOefening : Fragment() {
             videoView!!.setMediaController(controller)
             videoView!!.visibility = View.VISIBLE
             videoView!!.setVideoPath("http://141.134.155.219:3000/oefeningen/files/" + oefening.fileUrl)
-            videoView.start()
-//            videoView!!.setOnClickListener {
-//                isPlaying = if (!isPlaying){
-//                    ibAudio!!.setImageResource(R.drawable.ic_pause_white_24dp)
-//                    mp.prepare()
-//                    mp.start()
-//                    true
-//                }else{
-//                    ibAudio!!.setImageResource(R.drawable.ic_play_arrow_white_24dp)
-//                    mp.stop()
-//                    false
-//                }
-//            }
+            videoView!!.setOnPreparedListener {
+                controller.setAnchorView(videoView)
+            }
         }
 
         //Toon de feedbackfragment indien of de feedbackknop geklikt is
