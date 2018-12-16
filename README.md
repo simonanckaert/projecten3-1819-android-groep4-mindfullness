@@ -21,3 +21,11 @@ You will need to have Android Studio installed and an android device or android 
 
 - Android SDK 21
 - Android Support Repository
+
+## Features
+
+* Participate at Mindfulness sessions & pass it's exercises
+* Give feedback to the exercises
+* Set up a daily reminder notification
+* Add tasks to your personal calendar
+* Chat with the psychologists
