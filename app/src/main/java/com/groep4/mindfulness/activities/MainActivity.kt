@@ -2,6 +2,7 @@ package com.groep4.mindfulness.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
     private val client = OkHttpClient()
     lateinit var mAuth: FirebaseAuth
     // private var isFragmentProfielLoaded = false
-    var gebruiker : Gebruiker = Gebruiker()
+    var gebruiker : Gebruiker? = null
     var sessies: ArrayList<Sessie> = ArrayList()
 
 
@@ -49,14 +50,19 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
         //setSupportActionBar(toolbar)
 
         // Set gebruiker
-        this.gebruiker = getAangemeldeGebruiker()
+        if(this.gebruiker == null) {
+            this.gebruiker = getAangemeldeGebruiker()
+        }
 
         // Sessies
         sessies = getSessiesFromDB()
         val extras = ExtendedDataHolder.getInstance()
         extras.putExtra("sessielist", sessies)
 
-        setFragment(FragmentMain(), true)
+        //Set no new fragment if there already is one
+        if (savedInstanceState == null) {
+            setFragment(FragmentMain(), true)
+        }
 
         // Set fragment on btnclick
         /*ll_sessies.setOnClickListener {
