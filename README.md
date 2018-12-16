@@ -24,7 +24,7 @@ You will need to have Android Studio installed and an android device or android 
 
 ## Features
 
-* Participate at Mindfulness sessions & pass it's exercises
+* Participate at Mindfulness sessions & pass its exercises
 * Give feedback to the exercises
 * Set up a daily reminder notification
 * Add tasks to your personal calendar
