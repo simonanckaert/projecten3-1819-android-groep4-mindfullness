@@ -63,18 +63,21 @@
 
         <TextView
             android:id="@+id/tv_quote"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="25dp"
             android:gravity="center"
             android:shadowColor="@color/text_shadow"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
-            android:text="Shine bright today !"
+            android:padding="5dp"
+            android:text=""
             android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:textSize="30sp" />
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:autoSizeTextType="uniform"
+            android:background="@color/colorFacebook" />
 
         <TableLayout
             android:layout_width="match_parent"
