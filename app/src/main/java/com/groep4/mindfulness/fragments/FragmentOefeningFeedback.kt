@@ -18,7 +18,6 @@ import okhttp3.*
 class FragmentOefeningFeedback : Fragment() {
     private var txtOefeningNaam : TextView? = null
     private var buttonOpslaan : Button? = null
-    private var sessie : Sessie? = null
     private var ratingBar : RatingBar? = null
     private var ratingFeedback : Int = 5
     private var txtFeedback : TextInputEditText? = null
@@ -41,51 +40,8 @@ class FragmentOefeningFeedback : Fragment() {
         val mainActivity = activity as MainActivity
 
         buttonOpslaan!!.setOnClickListener {
-            /*val sessiePageFragment = FragmentSessiePage()
-            val page = arguments!!.getInt("page", 0)
-            val sessie = FragmentSessieLijst().sessies.find { sessie1 : Sessie -> sessie1.sessieId.equals(oefening.sessieId) }
-
-            Log.d(tag, sessie.toString())
-            val bundle = Bundle()
-            bundle.putParcelable("key_sessie", sessie)
-            bundle.putInt("key_page", page)
-            sessiePageFragment.arguments = bundle
-            (activity as ActivityPage).setFragment(sessiePageFragment, false)*/
             val serverURL: String = "http://141.134.155.219:3000/oefeningen/oef/" + oefening.oefenigenId + "/feedback"
             val url = URL(serverURL)
-            /*val connection = url.openConnection() as HttpURLConnection
-            connection.requestMethod = "POST"
-            connection.connectTimeout = 300000
-            connection.doOutput = true
-
-
-            connection.setRequestProperty("charset", "utf-8")
-            connection.setRequestProperty("Content-Type", "application/json")
-
-            //try {
-            val thread = Thread(Runnable {
-                try {
-                    val outputStream = DataOutputStream(connection.outputStream)
-                    outputStream.write(oefening.oefenigenId)
-                    outputStream.writeChars(txtFeedback!!.text.toString())
-                    outputStream.write(ratingFeedback)
-                    outputStream.flush()
-                    outputStream.close()
-                    (activity as ActivityPage).onBackPressed()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            })
-
-            thread.start()
-
-            /*} catch (exception: Exception) {
-
-
-            }*/*/
-
-            //val thread = Thread(Runnable {
-                //try {
 
                 val builder = Request.Builder().url(url)
 
@@ -101,32 +57,17 @@ class FragmentOefeningFeedback : Fragment() {
                 fromBodyBuilder.add("beschrijving", txtFeedback!!.text.toString())
                 fromBodyBuilder.add("score", ratingFeedback.toString())
 
-                /*for (entry in postDataParams) {
-                    Log.d("param--->", entry.key + ":" + entry.value)
-                    fromBodyBuilder.add(entry.key,entry.value)
-                }*/
-
-
-                // val response = builder.post(RequestBody.create(sb.toString(),sb.toString()))
                 var response = (activity as MainActivity)
                         .postFeedback("http://141.134.155.219:3000/oefeningen/oef/" + oefening.oefenigenId + "/feedback", fromBodyBuilder.build())
 
 
                 txtOefeningNaam!!.text = response
             (activity as MainActivity).onBackPressed()
-                /*} catch (e: Exception) {
-                    e.printStackTrace()
-                }*/
-            /*})
-
-                thread.start()*/
-
             }
 
 
             ratingBar!!.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
                 ratingFeedback = (rating * 2).toInt()
-                //txtOefeningNaam!!.text = ratingFeedback.toString()
             }
         txtOefeningNaam!!.text = oefening.naam
     }

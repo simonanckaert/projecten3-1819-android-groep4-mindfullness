@@ -17,9 +17,6 @@ import com.groep4.mindfulness.model.Gebruiker
 class FragmentProfielInfo: Fragment() {
 
     private var callback: CallbackInterface? = null
-
-    /*lateinit var mAuth: FirebaseAuth
-    var ref: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")*/
     private var txtEmail: TextView? = null
     private var txtNaam: TextView? = null
     private var gebruiker : Gebruiker? = null
@@ -54,6 +51,7 @@ class FragmentProfielInfo: Fragment() {
         return view
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?)
     {
         super.onActivityCreated(savedInstanceState)
@@ -79,5 +77,4 @@ class FragmentProfielInfo: Fragment() {
 
         outState!!.putParcelable("gebruiker", this.gebruiker)
     }
-
 }

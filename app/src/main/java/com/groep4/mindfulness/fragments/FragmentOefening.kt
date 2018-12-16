@@ -67,13 +67,14 @@ class FragmentOefening : Fragment() {
         txtOefeningBeschrijving!!.text = oefening.beschrijving
         txtOefeningBeschrijving!!.movementMethod = ScrollingMovementMethod()
 
-
+        // Toont pdf als oefening pdfbestand is
         if (oefening.fileMimeType == "application/pdf"){
             wvPDF!!.visibility = View.VISIBLE
             wvPDF!!.settings.javaScriptEnabled = true
             wvPDF!!.loadUrl("https://docs.google.com/gview?embedded=true&url=http://141.134.155.219:3000/oefeningen/files/" + oefening.fileUrl)
         }
 
+        // Toont afbeelding als oefening jpgbestand is
         if (oefening.fileMimeType == "image/jpeg"){
             ivOefening!!.visibility = View.VISIBLE
 
@@ -88,6 +89,7 @@ class FragmentOefening : Fragment() {
             }
         }
 
+        // Toont afspeelknop als oefening audiobestand is
         if (oefening.fileMimeType.startsWith("audio")){
             mp.setDataSource("http://141.134.155.219:3000/oefeningen/files/" + oefening.fileUrl)
 
@@ -107,6 +109,7 @@ class FragmentOefening : Fragment() {
             }
         }
 
+        // Toont video als oefening videobestand is
         if (oefening.fileMimeType.startsWith("video")){
 
             var controller = MediaController(context)

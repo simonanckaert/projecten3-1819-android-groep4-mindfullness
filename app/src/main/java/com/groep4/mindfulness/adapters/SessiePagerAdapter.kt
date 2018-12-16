@@ -21,6 +21,9 @@ class SessiePagerAdapter(fm: FragmentManager, sessie: Sessie, page: Int) : Fragm
         bundle.putInt("key_page", currentPage)
     }
 
+    /**
+     * Geeft fragment terug adhv positie van de adapter
+     */
     override fun getItem(position: Int): Fragment {
         return when (position) {
             0 -> {
@@ -41,10 +44,16 @@ class SessiePagerAdapter(fm: FragmentManager, sessie: Sessie, page: Int) : Fragm
         }
     }
 
+    /**
+     * Geeft aantal fragments terug
+     */
     override fun getCount(): Int {
         return 2
     }
 
+    /**
+     * Geeft paginatitel terug
+     */
     override fun getPageTitle(position: Int): CharSequence {
         return when (position) {
             0 -> "Info"

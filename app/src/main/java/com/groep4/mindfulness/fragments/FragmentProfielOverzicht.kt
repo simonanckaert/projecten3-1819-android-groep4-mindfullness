@@ -55,9 +55,6 @@ class FragmentProfielOverzicht: Fragment() {
         busSeat8 = view.findViewById(R.id.iv_bus_seat8)
         buszetels.add(busSeat8!!)
 
-
-
-
         return view
     }
 

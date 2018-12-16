@@ -44,26 +44,31 @@ class FragmentMain : Fragment() {
         val toolbar = view.findViewById<View>(R.id.toolbar) as Toolbar
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
+        // FragmentSessieLijst openen
         view.ll_sessies.setOnClickListener {
             view.ll_sessies.isEnabled = false
             callback!!.setFragment(FragmentSessieLijst(), true)
         }
 
+        // FragmentReminder openen
         view.ll_reminder.setOnClickListener {
             view.ll_reminder.isEnabled = false
             callback!!.setFragment(FragmentReminder(), true)
         }
 
+        // FragmentChat openen
         view.ll_contact.setOnClickListener{
             view.ll_contact.isEnabled = false
             callback!!.setFragment(FragmentChat(), true)
         }
 
+        // FragmentKalender openen
         view.ll_kalender.setOnClickListener{
             view.ll_kalender.isEnabled = false
             callback!!.setFragment(FragmentKalender(), true)
         }
 
+        // Quote van de dag tonen
         quoteTekst = view.findViewById(R.id.tv_quote)
         val day = cal.get(Calendar.DAY_OF_MONTH)
         quoteTekst!!.text = randomQuote(day)
@@ -80,6 +85,9 @@ class FragmentMain : Fragment() {
         view!!.ll_kalender.isEnabled = true
     }
 
+    /**
+     * Geeft voor iedere dag een mindfulnessquote terug
+     */
     fun randomQuote(i: Int): String{
         var quote = ""
 
@@ -101,10 +109,10 @@ class FragmentMain : Fragment() {
             15 -> quote = "Je bent perfect, inclusief al je imperfecties!"
             16 -> quote = "Het leven is er om vandaag van te genieten."
             17 -> quote = "Verander je toekomst ingrijpend door jezelf te worden."
-            18 -> quote = "Volg je hart, want dat klopt."
+            18 -> quote = "Ik wil niet weten wat ik later word, ik wil weten wat ik nu ben."
             19 -> quote = "Herinner je gisteren, droom van morgen, maar leef vandaag!"
             20 -> quote = "Waar je ook heen gaat, daar ben je."
-            21 -> quote = "Ik wil niet weten wat ik later word, ik wil weten wat ik nu ben."
+            21 -> quote = "Volg je hart, want dat klopt"
             22 -> quote = "Piekeren is de verkeerde kant op fantaseren."
             23 -> quote = "Niks moet & niks mag."
             24 -> quote = "Morgen is er weer een dag."
