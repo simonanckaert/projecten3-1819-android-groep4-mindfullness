@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
 
         //Set no new fragment if there already is one
         if (savedInstanceState == null) {
-            setFragment(FragmentMain(), true)
+            setFragment(FragmentMain(), false)
         }
 
         // Set fragment on btnclick
