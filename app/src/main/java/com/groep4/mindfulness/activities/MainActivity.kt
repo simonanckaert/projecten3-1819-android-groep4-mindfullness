@@ -207,8 +207,10 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
                     val fileMimeType = jsonobject.getString("fileMimetype")
                     val groepen = jsonobject.getString("groepen")
 
-                    val oefening: Oefening = Oefening(oefeningenId, naam, beschrijving, sessieid, fileUrl, fileMimeType, groepen)
-                    oefeningen.add(oefening)
+                    if(groepen.contains(gebruiker!!.groepsnr.toString())) {
+                        val oefening: Oefening = Oefening(oefeningenId, naam, beschrijving, sessieid, fileUrl, fileMimeType, groepen)
+                        oefeningen.add(oefening)
+                    }
                 }
             }
         })

@@ -183,7 +183,7 @@ class FragmentSessie : Fragment() {
                         var code = editTextCode.text.toString()
 
                         if (sessie!!.sessieCode == code) {
-                          
+
                             //creeer nieuwe fragment
                             val sessiePageFragment = FragmentSessiePage()
                             val bundle = Bundle()
