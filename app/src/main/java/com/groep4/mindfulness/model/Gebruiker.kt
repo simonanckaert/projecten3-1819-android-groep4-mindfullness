@@ -37,7 +37,6 @@ class Gebruiker : Parcelable {
 
       //  this.laatstUnlockteSessie = parcel.readInt()
         this.sessieId = parcel.readInt()
- master
     }
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {

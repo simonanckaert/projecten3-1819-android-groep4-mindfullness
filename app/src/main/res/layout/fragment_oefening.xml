@@ -123,7 +123,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_conversion_absoluteHeight="50dp"
-        tools:layout_conversion_absoluteWidth="310dp" />
+        tools:layout_conversion_absoluteWidth="310dp"
+        android:background="@drawable/buttonstyle"
+        android:padding="10dp"/>
 
 
 </android.support.constraint.ConstraintLayout>

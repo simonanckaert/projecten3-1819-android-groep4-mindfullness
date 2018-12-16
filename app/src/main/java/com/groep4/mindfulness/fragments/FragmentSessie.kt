@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.media.MediaPlayer
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.CardView
@@ -344,12 +345,10 @@ class FragmentSessie : Fragment() {
 
          handler.postDelayed({
              mp2.start()
-             Log.d("tag","ARNO ARNO ARNO ARNO")
          },500)
 
          handler.postDelayed({
              mp3.start()
-             Log.d("tag","ARNO ARNO ARNO ARNO")
          },1000)
     }
 
