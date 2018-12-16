@@ -216,6 +216,9 @@ class FragmentSessie : Fragment() {
         }
     }
 
+    /*
+    Hierin wordt de bus zichtbaar gemaakt
+     */
     fun setBusVisible(isVisible: Boolean){
         val root = view!!.findViewById(R.id.rl_sessie) as RelativeLayout
         if(isVisible){
@@ -229,6 +232,10 @@ class FragmentSessie : Fragment() {
         }
     }
 
+    /*
+    In deze methode wordt er met de bus gereden tot in het midden van de frame,
+    de rijrichting hangt af vvan in welke richting geswiped
+     */
     fun drive(forward: Boolean){
         val root = view!!.findViewById(R.id.rl_sessie) as RelativeLayout
 
@@ -275,6 +282,9 @@ class FragmentSessie : Fragment() {
         imgFinish!!.visibility = INVISIBLE
     }
 
+    /*
+    Hierin wordt de achtergrond van de finish gemaakt
+     */
     private fun achtergrondFinish(){
         imgFinish!!.visibility = VISIBLE
 
@@ -296,6 +306,9 @@ class FragmentSessie : Fragment() {
         fireworkAnimationSmall()
     }
 
+    /*
+    Hierin wordt de animatie ingesteld
+     */
     fun fireworkAnimationSmall(){
         for (v in imgViewsFw!!){
             v.scaleX = 0f
@@ -333,6 +346,9 @@ class FragmentSessie : Fragment() {
         objectAnimator!!.start()
     }
 
+    /*
+    Hierin wordt een geluid van vuurwerk gemaakt en afgespeeld
+     */
      fun playSound(){
         val mp1: MediaPlayer = MediaPlayer.create(context, R.raw.vuurwerk)
         mp1.isLooping = false

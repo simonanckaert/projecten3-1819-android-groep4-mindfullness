@@ -67,11 +67,6 @@ class FragmentSessiePageOefeningen : Fragment() {
             txtGeenOefeningen!!.visibility = View.VISIBLE
         }
 
-
-        /*val pager = view.findViewById<ViewPager>(R.id.pager_oefeningen)
-        val pagerAdapter = OefeningenPagerAdapter(childFragmentManager, oefeningen)
-        pager.adapter = pagerAdapter*/
-
         pager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
             override fun onPageScrollStateChanged(state: Int) {
             }
@@ -99,6 +94,9 @@ class FragmentSessiePageOefeningen : Fragment() {
         return view
     }
 
+    /*
+    Hierin worden alle oefeningen toegevoegd
+     */
     private fun addOefeningen() {
         oefeningen.clear()
 
