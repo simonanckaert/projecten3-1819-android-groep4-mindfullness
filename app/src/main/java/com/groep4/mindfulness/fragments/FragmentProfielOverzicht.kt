@@ -30,7 +30,6 @@ class FragmentProfielOverzicht: Fragment() {
         val view = inflater.inflate(R.layout.fragment_profiel_overzicht, container, false)
 
         txtHuidigeSessie = view.findViewById(R.id.txtHuidigeSessie)
-        gebruiker = (activity as MainActivity).gebruiker
 
         busSeat1 = view.findViewById(R.id.iv_bus_seat1)
         buszetels.add(busSeat1!!)
@@ -64,10 +63,13 @@ class FragmentProfielOverzicht: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        gebruiker = (activity as MainActivity).gebruiker
         txtHuidigeSessie!!.text = "Sessie " + gebruiker!!.sessieId.toString()
 
         for(i in 0..gebruiker!!.sessieId-1) {
             buszetels.get(i).visibility = ImageView.VISIBLE
         }
+
     }
 }
