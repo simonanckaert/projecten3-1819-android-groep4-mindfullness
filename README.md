@@ -18,3 +18,6 @@ buildScan { termsOfServiceUrl = 'https://gradle.com/terms-of-service' termsOfSer
 ### Prerequisites
 
 You will need to have Android Studio installed and an android device or android emulator.
+
+- Android SDK 21
+- Android Support Repository
