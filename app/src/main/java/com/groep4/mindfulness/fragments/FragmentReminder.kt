@@ -51,7 +51,6 @@ class FragmentReminder : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_reminder, container, false)
 
         view.tr_page.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorPink))
-        //activity!!.iv_page.setImageResource(R.mipmap.reminders)
         view.tv_page.setText(R.string.reminder)
 
 
@@ -110,14 +109,12 @@ class FragmentReminder : Fragment() {
 
     private fun setSwitchChecked(isChecked: Boolean) {
         if (isChecked) {
-            //Toast.makeText(context, "CHECKED", Toast.LENGTH_SHORT).show()
             Toasty.success(context!!, "Dagelijkse notificatie aangezet!", Toast.LENGTH_SHORT, true).show()
             val editor = prefs!!.edit()
             editor.putBoolean(REMINDER_SET, true)
             editor.apply()
             setReminderNotification(prefs!!.getLong(REMINDER_TIME, System.currentTimeMillis()))
         } else {
-            //Toast.makeText(context, "UNCHECKED", Toast.LENGTH_SHORT).show()
             Toasty.success(context!!, "Dagelijkse notificatie uitgezet.", Toast.LENGTH_SHORT, true).show()
             val editor = prefs!!.edit()
             editor.putBoolean(REMINDER_SET, false)

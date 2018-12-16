@@ -93,6 +93,9 @@ class FragmentKalender : Fragment()
         populateData()
     }
 
+    /**
+     * Data ophalen
+     */
     fun populateData() {
         mydb = DBHelper(activity!!)
         scrollView!!.visibility = View.GONE
@@ -103,8 +106,6 @@ class FragmentKalender : Fragment()
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity).supportActionBar!!.hide()
-
-        //populateData()
     }
 
     override fun onStop() {

@@ -76,7 +76,7 @@ class FragmentProfielGegevensWijzigen : Fragment() {
                 txtTelnrFout!!.visibility = View.VISIBLE
             }
 
-
+            // Als er geen fouten zijn, feedback verzenden
             if(!fout!!) {
                 (activity as MainActivity)!!
                         .veranderGegevensGebruiker(txtGebruikersnaam!!.text.toString(),
@@ -93,7 +93,6 @@ class FragmentProfielGegevensWijzigen : Fragment() {
                 var url = "http://141.134.155.219:3000/users/" + gebruiker!!.uid
                 (activity as MainActivity)!!.gegevensGebruikerOpslaan(fromBodyBuilder.build(), url)
                 activity!!.onBackPressed()
-                //onDestroy()
             }
         }
     }

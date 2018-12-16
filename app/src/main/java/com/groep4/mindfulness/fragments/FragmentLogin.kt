@@ -176,7 +176,7 @@ import kotlinx.android.synthetic.main.fragment_login.view.*
         }
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
@@ -195,9 +195,8 @@ import kotlinx.android.synthetic.main.fragment_login.view.*
         }
     }
 
-    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
 
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         mAuth = FirebaseAuth.getInstance()
         mAuth.signInWithCredential(credential)
@@ -211,18 +210,15 @@ import kotlinx.android.synthetic.main.fragment_login.view.*
                         activity!!.finish()
                     } else {
                         // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithCredential:failure", task.exception)
                         Toast.makeText((activity!!).applicationContext, "Authentication Failed.", Toast.LENGTH_SHORT).show()
-                        //updateUI(null)
                     }
-
-                    // ...
                 }
     }
 
+     /**
+      * Inloggen met google
+      */
     fun attemptGoogleLogin(){
-
-        //ToDo: Google login
         val googleSignInClient = GoogleSignIn.getClient(activity!!, gso!!)
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)

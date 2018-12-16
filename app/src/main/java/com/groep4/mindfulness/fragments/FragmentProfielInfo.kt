@@ -16,9 +16,6 @@ import com.groep4.mindfulness.model.Gebruiker
 class FragmentProfielInfo: Fragment() {
 
     private var callback: CallbackInterface? = null
-
-    /*lateinit var mAuth: FirebaseAuth
-    var ref: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")*/
     private var txtEmail: TextView? = null
     private var txtNaam: TextView? = null
     private var gebruiker : Gebruiker? = null
@@ -61,36 +58,4 @@ class FragmentProfielInfo: Fragment() {
 
         return view
     }
-
-    /*
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        mAuth = FirebaseAuth.getInstance()
-        val user = FirebaseAuth.getInstance().currentUser
-
-        val name = user!!.displayName
-        txtEmail!!.text = user!!.email
-        txtNaam!!.text = user!!.displayName
-
-    }
-
-    fun getUserData() {
-
-        val userListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val children = dataSnapshot.children
-                Log.i("firebase", children.count().toString())
-
-                children.forEach {
-
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("firebase", error!!.message)
-            }
-        }
-    }
-*/
-
 }

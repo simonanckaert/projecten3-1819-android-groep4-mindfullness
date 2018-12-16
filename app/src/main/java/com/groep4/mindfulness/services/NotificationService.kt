@@ -23,7 +23,6 @@ class NotificationService : IntentService("NotificationService") {
 
     override fun onCreate() {
         super.onCreate()
-        //startForeground(1, Notification())
 
         val channelId =
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

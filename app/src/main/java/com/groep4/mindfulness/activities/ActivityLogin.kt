@@ -41,19 +41,28 @@ class ActivityLogin : AppCompatActivity(){
 
     }
 
+    /**
+     * Fragment initialiseren
+     */
     private fun initFragment() {
         mLoginFragment= FragmentLogin()
         mRegisterFragment= FragmentRegister()
     }
 
+    /**
+     * Loginfragment tonen
+     */
     private fun showLoginFragment() {
 
         supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.left_in,R.anim.left_out)
                 .replace(R.id.login_layout,mLoginFragment,FragmentLogin::class.java.name)
                 .commit()
-
     }
+
+    /**
+     * Registerfragment tonen
+     */
     private fun showRegisterFragment(){
 
         supportFragmentManager.beginTransaction()
@@ -64,6 +73,9 @@ class ActivityLogin : AppCompatActivity(){
 
     }
 
+    /**
+     * Checken of user is ingelogd bij begin van de app. Als deze is ingelogd, start mainActivity
+     */
     public override fun onStart() {
         super.onStart()
         // Check if user is signed in (non-null) and update UI accordingly.
@@ -77,6 +89,9 @@ class ActivityLogin : AppCompatActivity(){
 
     }
 
+    /**
+     * Terugkeren
+     */
     override fun onBackPressed() {
         val count = fragmentManager.backStackEntryCount
 

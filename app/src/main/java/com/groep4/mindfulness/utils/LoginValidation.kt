@@ -11,12 +11,6 @@ class LoginValidation {
 
             // Validatie messages
             private val WACHTWOORD_BELEID = "Voer een geldig wachtwoord in"
-
-            // Moet min 8 letters bevatten,
-            // |Moet 1 hoofdletter bevatten,
-            // |Moet 1 kleine letter bevatten,
-            //|Moet 1 nummer bevatten
-
             private val EMAIL_VALIDATIE_MSG = "Voer een geldig email adres in"
 
             /**

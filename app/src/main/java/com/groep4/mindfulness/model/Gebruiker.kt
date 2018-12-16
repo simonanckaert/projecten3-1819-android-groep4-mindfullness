@@ -10,7 +10,6 @@ class Gebruiker : Parcelable {
     var telnr : String? = ""
     var groepsnr : Int? = 0
     var name : String? = ""
-    var laatstUnlockteSessie: Int? = 0
     var sessieId : Int = 1
 
 
@@ -21,7 +20,6 @@ class Gebruiker : Parcelable {
         this.telnr = telnr
         this.groepsnr = groepsnr
         this.name = name
-       // this.laatstUnlockteSessie = 0
         this.sessieId = sessieId
     }
 
@@ -34,8 +32,6 @@ class Gebruiker : Parcelable {
         this.telnr = parcel.readString()
         this.groepsnr = parcel.readInt()
         this.name = parcel.readString()
-
-      //  this.laatstUnlockteSessie = parcel.readInt()
         this.sessieId = parcel.readInt()
     }
 
@@ -46,9 +42,7 @@ class Gebruiker : Parcelable {
         dest?.writeString(telnr)
         dest?.writeInt(groepsnr!!)
         dest?.writeString(name)
-       // dest?.writeInt(laatstUnlockteSessie!!)
         dest?.writeInt(sessieId)
-
     }
 
     override fun describeContents(): Int {

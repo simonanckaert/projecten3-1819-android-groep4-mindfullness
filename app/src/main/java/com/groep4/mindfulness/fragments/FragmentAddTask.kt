@@ -117,7 +117,9 @@ class FragmentAddTask : Fragment(), com.wdullaer.materialdatetimepicker.date.Dat
 
     }
 
-
+    /**
+     * Geeft datum van vandaag terug
+     */
     fun todayDateString(): String {
         val dateFormat = SimpleDateFormat(
                 "dd/MM/yyyy", Locale.getDefault())
@@ -125,7 +127,6 @@ class FragmentAddTask : Fragment(), com.wdullaer.materialdatetimepicker.date.Dat
         return dateFormat.toString()
 
     }
-
 
     fun doneAddTask(v: View)
     {
