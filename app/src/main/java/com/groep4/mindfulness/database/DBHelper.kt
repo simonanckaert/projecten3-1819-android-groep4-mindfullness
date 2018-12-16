@@ -8,14 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper
 import com.groep4.mindfulness.database.DBHelper.Companion.TASK_TABLE_NAME
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import java.nio.file.Files.delete
+import java.time.LocalDateTime
+import java.util.*
 
 
-
-
-class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
+class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 3) {
 
 
     val data: Cursor
@@ -56,7 +54,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
         db.execSQL(
                 "CREATE TABLE " + TASK_TABLE_NAME +
-                        "(id INTEGER PRIMARY KEY, task TEXT, dateStr INTEGER)"
+                        "(id TEXT PRIMARY KEY, task TEXT, dateStr INTEGER)"
         )
     }
 
@@ -82,11 +80,25 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
 
     fun insertTask(task: String, dateStr: String): Boolean {
+        val date = Calendar.getInstance().toString()
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+
+        contentValues.put("task", task)
+        contentValues.put("dateStr", getDate(dateStr))
+        contentValues.put("id",date)
+        db.insert(TASK_TABLE_NAME, null, contentValues)
+        return true
+    }
+
+
+    fun insertTaskwithid(id: String, task: String, dateStr: String): Boolean {
         val date: Date
         val db = this.writableDatabase
         val contentValues = ContentValues()
+        contentValues.put("id",id)
         contentValues.put("task", task)
-        contentValues.put("dateStr", getDate(dateStr))
+        contentValues.put("dateStr", dateStr)
         db.insert(TASK_TABLE_NAME, null, contentValues)
         return true
     }
