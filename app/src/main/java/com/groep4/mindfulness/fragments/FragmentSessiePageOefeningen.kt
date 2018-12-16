@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.badoualy.stepperindicator.StepperIndicator
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.adapters.OefeningenPagerAdapter
@@ -19,6 +20,7 @@ class FragmentSessiePageOefeningen : Fragment() {
 
     lateinit var sessie: Sessie
     private lateinit var oefeningen: ArrayList<Oefening>
+    private var txtGeenOefeningen : TextView? = null
     lateinit var mp: MediaPlayer
 
     companion object {
@@ -31,6 +33,8 @@ class FragmentSessiePageOefeningen : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_sessie_page_oefeningen, container, false)
         //expandingList = view.findViewById(R.id.expanding_list_main)
 
+        txtGeenOefeningen = view.findViewById(R.id.txtGeenOefeningen)
+
         oefeningen = arrayListOf()
 
         val bundle = this.arguments
@@ -41,18 +45,23 @@ class FragmentSessiePageOefeningen : Fragment() {
         // Oefening toevoegen
         addOefeningen()
 
-        val pager = view.findViewById<ViewPager>(R.id.pager_oefeningen)!!
-        // offscreenpagelimit nodig zodat de pages niet telkens herladen worden bij het scrollen
-        pager.offscreenPageLimit = oefeningen.size
-        val pagerAdapter = OefeningenPagerAdapter(childFragmentManager, oefeningen)
-        pager.adapter = pagerAdapter
+        if(!oefeningen.isEmpty()) {
+            val pager = view.findViewById<ViewPager>(R.id.pager_oefeningen)!!
+            // offscreenpagelimit nodig zodat de pages niet telkens herladen worden bij het scrollen
+            pager.offscreenPageLimit = oefeningen.size
+            val pagerAdapter = OefeningenPagerAdapter(childFragmentManager, oefeningen)
+            pager.adapter = pagerAdapter
 
-        val stepper = view.findViewById<StepperIndicator>(R.id.si_oefeningen)
-        stepper.setViewPager(pager, (pager.adapter as OefeningenPagerAdapter).count)
+            val stepper = view.findViewById<StepperIndicator>(R.id.si_oefeningen)
+            stepper.setViewPager(pager, (pager.adapter as OefeningenPagerAdapter).count)
 
-        // Audioplayer
-        mp = MediaPlayer.create(context, R.raw.ademmeditatie)
-        mp.isLooping = false
+            // Audioplayer
+            mp = MediaPlayer.create(context, R.raw.ademmeditatie)
+            mp.isLooping = false
+            txtGeenOefeningen!!.visibility = View.GONE
+        } else {
+            txtGeenOefeningen!!.visibility = View.VISIBLE
+        }
 
 
         // Inflate
