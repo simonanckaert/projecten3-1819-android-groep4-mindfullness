@@ -10,7 +10,7 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.amulyakhare.textdrawable.util.ColorGenerator
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.activities.ActivityKalender
+import com.groep4.mindfulness.fragments.FragmentKalender
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -56,8 +56,8 @@ class ListTaskAdapter(private val activity: Activity, private val data: ArrayLis
         mapValue = data[position]
 
         try {
-            holder.task_name!!.text = mapValue[ActivityKalender.KEY_TASK]
-            holder.task_date!!.text = mapValue[ActivityKalender.KEY_DATE]
+            holder.task_name!!.text = mapValue[FragmentKalender.KEY_TASK]
+            holder.task_date!!.text = mapValue[FragmentKalender.KEY_DATE]
 
             /**
              *  Kleur pijl genereren voor iedere task

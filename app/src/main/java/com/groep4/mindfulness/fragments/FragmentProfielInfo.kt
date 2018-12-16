@@ -1,26 +1,21 @@
 package com.groep4.mindfulness.fragments
 
+import android.content.Context
 import android.os.Bundle
-import android.os.DropBoxManager
-import android.renderscript.Sampler
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.activities.ActivityPage
+import com.groep4.mindfulness.interfaces.CallbackInterface
 import com.groep4.mindfulness.activities.MainActivity
 import com.groep4.mindfulness.model.Gebruiker
-import java.security.KeyStore
 
 class FragmentProfielInfo: Fragment() {
+
+    private var callback: CallbackInterface? = null
 
     /*lateinit var mAuth: FirebaseAuth
     var ref: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")*/
@@ -32,10 +27,16 @@ class FragmentProfielInfo: Fragment() {
 
     private var btnGegevensWijzigen : Button? = null
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = context as? CallbackInterface
+        if (callback == null) {
+            throw ClassCastException("$context must implement OnArticleSelectedListener")
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profiel_info, container, false)
-
 
         gebruiker = (activity as MainActivity).gebruiker
 
@@ -51,9 +52,11 @@ class FragmentProfielInfo: Fragment() {
         txtRegio = view.findViewById(R.id.txtRegio)
         txtRegio!!.text = gebruiker!!.regio
 
+        //Toon de gegevenswijzigenfragment indien op gegevenswijzigen geklikt is
         btnGegevensWijzigen = view.findViewById(R.id.btnGegevensWijzigen)
         btnGegevensWijzigen!!.setOnClickListener {
-            (activity as MainActivity).setFragment(FragmentProfielGegevensWijzigen(), false)
+            // Launch fragment met callback naar activity
+            callback?.setFragment(FragmentProfielGegevensWijzigen(), true)
         }
 
         return view

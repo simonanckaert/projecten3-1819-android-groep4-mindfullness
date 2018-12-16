@@ -2,29 +2,16 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_sessies"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/trianglify_01"
+    android:background="@android:color/white"
     tools:context=".activities.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            style="@style/AppTheme"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimaryDark"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-    </android.support.design.widget.AppBarLayout>
-
     <LinearLayout
+        android:id="@+id/ll_page"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:orientation="vertical">
 
         <LinearLayout
@@ -117,137 +104,26 @@
                         android:scaleType="fitCenter"
                         android:src="@mipmap/sessies"
                         android:tint="@android:color/white" />
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            android:visibility="gone">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="@string/sessies"
-                        android:textColor="@android:color/white"
-                        android:textSize="25sp" />
-                </LinearLayout>
 
-                <!-- Button Kalender -->
-                <LinearLayout
-                    android:id="@+id/ll_kalender"
-                    android:layout_width="135dp"
-                    android:layout_height="135dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/selector_btn_kalender"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/ib_kalender"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:layout_marginTop="20dp"
-                        android:background="@android:color/transparent"
-                        android:clickable="false"
-                        android:contentDescription="@string/kalender"
-                        android:longClickable="false"
-                        android:padding="10dp"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/kalender"
-                        android:tint="@android:color/white" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="@string/kalender"
-                        android:textColor="@android:color/white"
-                        android:textSize="25sp" />
-                </LinearLayout>
-            </TableRow>
-
-            <TableRow
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/AppTheme"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal">
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimaryDark"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+        </android.support.design.widget.AppBarLayout>
 
-                <!-- Button Reminders -->
-                <LinearLayout
-                    android:id="@+id/ll_reminder"
-                    android:layout_width="135dp"
-                    android:layout_height="135dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/selector_btn_reminders"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
+        <FrameLayout
+            android:id="@+id/frag_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-                    <ImageButton
-                        android:id="@+id/ib_reminders"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:layout_marginTop="20dp"
-                        android:background="@android:color/transparent"
-                        android:clickable="false"
-                        android:contentDescription="@string/reminder"
-                        android:longClickable="false"
-                        android:padding="10dp"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/reminders"
-                        android:tint="@android:color/white" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="@string/reminder"
-                        android:textColor="@android:color/white"
-                        android:textSize="25sp" />
-                </LinearLayout>
-
-                <!-- Button Contact -->
-                <LinearLayout
-                    android:id="@+id/ll_contact"
-                    android:layout_width="135dp"
-                    android:layout_height="135dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/selector_btn_contact"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageButton
-                        android:id="@+id/ib_contact"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:layout_marginTop="20dp"
-                        android:background="@android:color/transparent"
-                        android:clickable="false"
-                        android:contentDescription="@string/contact"
-                        android:longClickable="false"
-                        android:padding="10dp"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/contact"
-                        android:tint="@android:color/white" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="@string/contact"
-                        android:textColor="@android:color/white"
-                        android:textSize="25sp" />
-                </LinearLayout>
-            </TableRow>
-
-
-        </TableLayout>
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/fragment_holder_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
-
 </android.support.constraint.ConstraintLayout>

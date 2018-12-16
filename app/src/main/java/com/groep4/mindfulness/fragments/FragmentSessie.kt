@@ -2,23 +2,23 @@ package com.groep4.mindfulness.fragments
 
 import android.animation.ObjectAnimator
 import android.media.MediaPlayer
+import android.content.Context
 import android.os.Bundle
-import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.CardView
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.*
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.activities.ActivityPage
+import com.groep4.mindfulness.interfaces.CallbackInterface
+import com.groep4.mindfulness.activities.MainActivity
+import com.groep4.mindfulness.model.Gebruiker
 import com.groep4.mindfulness.model.Sessie
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_sessie.*
@@ -28,6 +28,8 @@ import kotlin.collections.ArrayList
 
 
 class FragmentSessie : Fragment() {
+
+    private var callback: CallbackInterface? = null
 
     private var imgSessie: ImageView? = null
     private var cvSessie: CardView? = null
@@ -40,13 +42,20 @@ class FragmentSessie : Fragment() {
     private var imgViewsFw: ArrayList<ImageView>? = null
     private var imgFinish: ImageView? = null
     private val handler = Handler()
-
+    private var fade_in: Animation? = null
+    private var fade_out: Animation? = null
+    private var gebruiker : Gebruiker? = Gebruiker()
     private var objectAnimator: ObjectAnimator? = null
-
     private var random: Random? = null
-
     private var screenWidth: Int? = null
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = context as? CallbackInterface
+        if (callback == null) {
+            throw ClassCastException("$context must implement OnArticleSelectedListener")
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         random = Random()
@@ -116,6 +125,7 @@ class FragmentSessie : Fragment() {
         val imgRes = context!!.resources.getIdentifier("mnstr$page","mipmap", context!!.packageName)
         imgSessie!!.setImageResource(imgRes)
 
+        gebruiker = (activity as MainActivity)!!.gebruiker
 
         // Naargelang hoe ver je zit in de sessies de bus opvullen met monsters.
         for (i in 0 until page){
@@ -127,16 +137,34 @@ class FragmentSessie : Fragment() {
 
         txtSessieTitel!!.text = sessie.naam
 
+        //Open een sessie indien erop geklikt is
         cv_sessie.setOnClickListener{
             if (sessie!!.naam != "Geen sessie gevonden."){
                 if (sessie!!.sessieId == 1){
+
+                    //Creeer nieuwe fragment
                     val sessiePageFragment = FragmentSessiePage()
                     val bundle = Bundle()
                     bundle.putParcelable("key_sessie", sessie)
                     bundle.putInt("key_page", page)
                     sessiePageFragment.arguments = bundle
-                    (activity as ActivityPage).setFragment(sessiePageFragment, true)
-                } else {
+
+                    // Launch fragment met callback naar activity
+                    callback?.setFragment(sessiePageFragment, true)
+                }
+                else if(gebruiker!!.sessieId+1 > sessie!!.sessieId) {
+                    //creeer nieuwe fragment
+                    val sessiePageFragment = FragmentSessiePage()
+                    val bundle = Bundle()
+                    bundle.putParcelable("key_sessie", sessie)
+                    bundle.putInt("key_page", page)
+                    sessiePageFragment.arguments = bundle
+
+                    // Launch fragment met callback naar activity
+                    callback?.setFragment(sessiePageFragment, true)
+                } else if(gebruiker!!.sessieId+1 < sessie!!.sessieId)
+                    Toast.makeText(context, "De sessie is nog niet toegankelijk", Toast.LENGTH_SHORT).show()
+                else {
 
                     val builder = AlertDialog.Builder(context!!)
                     var editTextCode: EditText
@@ -146,18 +174,24 @@ class FragmentSessie : Fragment() {
                     builder.setCancelable(true)
 
                     editTextCode = EditText(context)
-                    editTextCode.hint = "sessiecode"
+                    editTextCode.hint = "Sessiecode"
                     editTextCode.inputType = InputType.TYPE_CLASS_TEXT
 
                     builder.setPositiveButton("Stuur") { dialog, which ->
                         var code = editTextCode.text.toString()
-                        if ("goed" == code) {
+
+                        if (sessie!!.sessieCode == code) {
+
+                            //creeer nieuwe fragment
                             val sessiePageFragment = FragmentSessiePage()
                             val bundle = Bundle()
                             bundle.putParcelable("key_sessie", sessie)
                             bundle.putInt("key_page", page)
                             sessiePageFragment.arguments = bundle
-                            (activity as ActivityPage).setFragment(sessiePageFragment, true)
+                            (activity as MainActivity)!!.sessieUnlocked()
+
+                            // Launch fragment met callback naar activity
+                            callback?.setFragment(sessiePageFragment, true)
                         } else {
                             Toast.makeText(context, "Helaas, het antwoord is fout", Toast.LENGTH_SHORT).show()
 

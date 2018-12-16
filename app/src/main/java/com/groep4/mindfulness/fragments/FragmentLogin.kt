@@ -25,7 +25,6 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.activities.ActivityPage
 import com.groep4.mindfulness.activities.MainActivity
 import com.groep4.mindfulness.utils.LoginValidation
 
@@ -127,6 +126,7 @@ import kotlinx.android.synthetic.main.fragment_login.view.*
                         //mainactivity tonen
                         val intent = Intent(activity, MainActivity::class.java)
                         this.startActivity(intent)
+                        activity!!.finish()
 
                     } else {
 
@@ -208,6 +208,7 @@ import kotlinx.android.synthetic.main.fragment_login.view.*
                         val user = mAuth.currentUser
                         val intent = Intent(activity, MainActivity::class.java)
                         this.startActivity(intent)
+                        activity!!.finish()
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithCredential:failure", task.exception)

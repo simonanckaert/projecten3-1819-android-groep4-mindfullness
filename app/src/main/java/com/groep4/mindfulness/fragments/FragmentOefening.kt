@@ -1,6 +1,7 @@
 package com.groep4.mindfulness.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
@@ -13,7 +14,7 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import android.widget.*
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.activities.ActivityPage
+import com.groep4.mindfulness.interfaces.CallbackInterface
 import com.groep4.mindfulness.model.Oefening
 import com.koushikdutta.ion.Ion
 import es.dmoral.toasty.Toasty
@@ -21,6 +22,8 @@ import kotlinx.android.synthetic.main.fragment_oefening.*
 
 
 class FragmentOefening : Fragment() {
+
+    private var callback: CallbackInterface? = null
 
     private var txtOefeningNaam: TextView? = null
     private var txtOefeningBeschrijving: TextView? = null
@@ -32,6 +35,13 @@ class FragmentOefening : Fragment() {
     private var isPlaying: Boolean = false
     private val mp = MediaPlayer()
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = context as? CallbackInterface
+        if (callback == null) {
+            throw ClassCastException("$context must implement OnArticleSelectedListener")
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_oefening, container, false)
@@ -103,29 +113,24 @@ class FragmentOefening : Fragment() {
             videoView!!.setMediaController(controller)
             videoView!!.visibility = View.VISIBLE
             videoView!!.setVideoPath("http://141.134.155.219:3000/oefeningen/files/" + oefening.fileUrl)
-            videoView.start()
-//            videoView!!.setOnClickListener {
-//                isPlaying = if (!isPlaying){
-//                    ibAudio!!.setImageResource(R.drawable.ic_pause_white_24dp)
-//                    mp.prepare()
-//                    mp.start()
-//                    true
-//                }else{
-//                    ibAudio!!.setImageResource(R.drawable.ic_play_arrow_white_24dp)
-//                    mp.stop()
-//                    false
-//                }
-//            }
+            videoView!!.setOnPreparedListener {
+                controller.setAnchorView(videoView)
+            }
         }
 
+        //Toon de feedbackfragment indien of de feedbackknop geklikt is
         buttonFeedback!!.setOnClickListener{
             if (oefening!!.naam != "Geen oefening gevonden."){
+
+                //Creeer nieuwe fragment
                 val oefeningFeedbackFragment = FragmentOefeningFeedback()
                 val bundle = Bundle()
                 bundle.putParcelable("oefening", oefening)
                 bundle.putInt("key_page", page)
                 oefeningFeedbackFragment.arguments = bundle
-                (activity as ActivityPage).setFragment(oefeningFeedbackFragment, false)
+
+                // Launch fragment met callback naar activity
+                callback?.setFragment(oefeningFeedbackFragment, false)
             }else{
                 Toasty.info(view!!.context, "Geen oefening gevonden, controleer uw internetverbinding.").show()
             }

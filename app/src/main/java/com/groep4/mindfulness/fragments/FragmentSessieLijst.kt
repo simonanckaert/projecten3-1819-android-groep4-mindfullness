@@ -1,28 +1,21 @@
 package com.groep4.mindfulness.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
-import android.support.v7.app.AlertDialog
-import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.INVISIBLE
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
 import com.badoualy.stepperindicator.StepperIndicator
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.activities.ActivityPage
+import com.groep4.mindfulness.interfaces.CallbackInterface
+import com.groep4.mindfulness.activities.MainActivity
 import com.groep4.mindfulness.adapters.SessiesPagerAdapter
 import com.groep4.mindfulness.model.Sessie
-import kotlinx.android.synthetic.main.activity_page.*
-import kotlinx.android.synthetic.main.fragment_sessie_lijst.view.*
+import kotlinx.android.synthetic.main.fragment_kalender.view.*
 
 
 class FragmentSessieLijst : Fragment() {
@@ -35,14 +28,14 @@ class FragmentSessieLijst : Fragment() {
     var imgMisc: ArrayList<Int>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         val view: View = inflater.inflate(R.layout.fragment_sessie_lijst, container, false)
+
         // (Statische) sessies toevoegen, in afwachting van DB
         addSessies()
 
         // Top bar info instellen
-        activity!!.tr_page.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
-        activity!!.tv_page.setText(R.string.sessies)
+        view.tr_page.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorPrimary))
+        view.tv_page.setText(R.string.sessies)
 
         val pager = view.findViewById<ViewPager>(R.id.pager_sessies)!!
         // offscreenpagelimit nodig zodat de pages niet telkens herladen worden bij het scrollen
@@ -115,8 +108,8 @@ class FragmentSessieLijst : Fragment() {
 
     // Sessies toevoegen (static placeholders voor te testen)
     private fun addSessies() {
-        val pageActivity = activity as ActivityPage
-        sessies = pageActivity.sessies
+        val mainActivity = activity as MainActivity
+        sessies = mainActivity.sessies
 
         // Indien DB niet bereikbaar is of DB telt minder dan 8 sessies, de lijst opvullen met lege sessies.
         while (sessies.size < 9){

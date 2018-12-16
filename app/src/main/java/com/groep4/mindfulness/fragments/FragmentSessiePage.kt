@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.adapters.SessiePagerAdapter
 import com.groep4.mindfulness.model.Sessie
-import kotlinx.android.synthetic.main.activity_page.*
 import kotlinx.android.synthetic.main.fragment_sessie_page.view.*
 
 class FragmentSessiePage : Fragment() {
@@ -31,9 +30,8 @@ class FragmentSessiePage : Fragment() {
             sessie = bundle.getParcelable("key_sessie")
             page = bundle.getInt("key_page")
 
-            activity!!.tv_page.text = sessie.naam
-            activity!!.tv_page.text = "Sessie $page"
-
+            view.tv_page.text = sessie.naam
+            view.tv_page.text = "Sessie $page"
         }
 
         val fragmentAdapter = SessiePagerAdapter(activity!!.supportFragmentManager, sessie, page)

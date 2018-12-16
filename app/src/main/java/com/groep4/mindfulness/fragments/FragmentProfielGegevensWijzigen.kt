@@ -56,7 +56,7 @@ class FragmentProfielGegevensWijzigen : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         btnAnnuleren!!.setOnClickListener{
-            (activity as MainActivity)!!.setFragment(FragmentProfiel(), false)
+            activity!!.onBackPressed()
         }
 
         btnBevestigen!!.setOnClickListener {
@@ -89,9 +89,10 @@ class FragmentProfielGegevensWijzigen : Fragment() {
                 fromBodyBuilder.add("uid", gebruiker!!.uid)
                 fromBodyBuilder.add("email", gebruiker!!.email)
                 fromBodyBuilder.add("groepnr", gebruiker!!.groepsnr.toString())
+                fromBodyBuilder.add("sessieid", gebruiker!!.sessieId.toString())
                 var url = "http://141.134.155.219:3000/users/" + gebruiker!!.uid
                 (activity as MainActivity)!!.gegevensGebruikerOpslaan(fromBodyBuilder.build(), url)
-                (activity as MainActivity)!!.setFragment(FragmentProfiel(), false)
+                activity!!.onBackPressed()
                 //onDestroy()
             }
         }

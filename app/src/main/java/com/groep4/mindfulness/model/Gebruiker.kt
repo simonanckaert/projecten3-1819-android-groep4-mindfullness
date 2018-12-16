@@ -11,15 +11,18 @@ class Gebruiker : Parcelable {
     var groepsnr : Int? = 0
     var name : String? = ""
     var laatstUnlockteSessie: Int? = 0
+    var sessieId : Int = 1
 
-    constructor(uid : String, email : String, regio : String, telnr : String, groepsnr : Int, name : String) {
+
+    constructor(uid : String, email : String, regio : String, telnr : String, groepsnr : Int, name : String, sessieId : Int) {
         this.email = email
         this.uid = uid
         this.regio = regio
         this.telnr = telnr
         this.groepsnr = groepsnr
         this.name = name
-        this.laatstUnlockteSessie = 0
+       // this.laatstUnlockteSessie = 0
+        this.sessieId = sessieId
     }
 
     constructor()
@@ -31,7 +34,10 @@ class Gebruiker : Parcelable {
         this.telnr = parcel.readString()
         this.groepsnr = parcel.readInt()
         this.name = parcel.readString()
-        this.laatstUnlockteSessie = parcel.readInt()
+
+      //  this.laatstUnlockteSessie = parcel.readInt()
+        this.sessieId = parcel.readInt()
+ master
     }
 
     override fun writeToParcel(dest: Parcel?, flags: Int) {
@@ -41,7 +47,9 @@ class Gebruiker : Parcelable {
         dest?.writeString(telnr)
         dest?.writeInt(groepsnr!!)
         dest?.writeString(name)
-        dest?.writeInt(laatstUnlockteSessie!!)
+       // dest?.writeInt(laatstUnlockteSessie!!)
+        dest?.writeInt(sessieId)
+
     }
 
     override fun describeContents(): Int {
