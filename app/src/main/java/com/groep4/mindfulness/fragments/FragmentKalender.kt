@@ -21,6 +21,8 @@ import com.groep4.mindfulness.utils.KalenderFunction
 import kotlinx.android.synthetic.main.fragment_kalender.view.*
 import java.util.ArrayList
 import java.util.HashMap
+import android.content.DialogInterface
+import android.support.v7.app.AlertDialog
 
 
 class FragmentKalender : Fragment()
@@ -101,6 +103,7 @@ class FragmentKalender : Fragment()
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity).supportActionBar!!.hide()
+
         //populateData()
     }
 
@@ -200,17 +203,33 @@ class FragmentKalender : Fragment()
 
         listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
 
-            var f = FragmentAddTask()
-            val bundle = Bundle()
-            bundle.putBoolean("isUpdate", true)
-            bundle.putString("id", dataList[+position][KEY_ID])
-            f.arguments = bundle
-            /*activity?.supportFragmentManager!!
-                    .beginTransaction()
-                    .replace(R.id.fragment_holder_main, f, "pageContent")
-                    .addToBackStack("root_fragment")
-                    .commit()*/
-            callback?.setFragment(f, true)
+            val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE -> {
+                        var f = FragmentAddTask()
+                        val bundle = Bundle()
+                        bundle.putBoolean("isUpdate", true)
+                        bundle.putString("id", dataList[+position][KEY_ID])
+                        f.arguments = bundle
+                        callback?.setFragment(f, true)
+                    }
+
+                    DialogInterface.BUTTON_NEGATIVE -> {
+
+                        mydb.deleteTask(dataList[+position][KEY_ID])
+                        dataList.clear()
+                        populateData()
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+
+            }
+
+            val builder = AlertDialog.Builder(view.context)
+            builder.setMessage("Wat wil je doen ?").setPositiveButton("Aanpassen", dialogClickListener)
+                    .setNegativeButton("Verwijderen", dialogClickListener).show()
+
+
         }
     }
 

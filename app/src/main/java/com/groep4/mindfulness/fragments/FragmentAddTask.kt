@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.database.DBHelper
 import com.groep4.mindfulness.utils.KalenderFunction
+import org.jetbrains.anko.doAsync
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -97,6 +98,7 @@ class FragmentAddTask : Fragment(), com.wdullaer.materialdatetimepicker.date.Dat
 
         //title veranderen toolbar
         toolbar_task_add_title.setText("Update")
+        doAsync {
         val task = mydb.getDataSpecific(id)
 
         if (task != null) {
@@ -110,6 +112,7 @@ class FragmentAddTask : Fragment(), com.wdullaer.materialdatetimepicker.date.Dat
             startDay = cal.get(Calendar.DAY_OF_MONTH)
 
             task_date.setText(KalenderFunction().Epoch2DateString(task!!.getString(2).toString(), "dd/MM/yyyy"))
+        }
         }
 
     }
@@ -169,12 +172,17 @@ class FragmentAddTask : Fragment(), com.wdullaer.materialdatetimepicker.date.Dat
         {
             if (isUpdate!!)
             {
+                doAsync {
                 mydb.updateTask(id, nameFinal, dateFinal)
+                }
                 Toast.makeText(activity?.applicationContext, "Taak bijgewerkt.", Toast.LENGTH_SHORT).show()
             } else
             {
-                mydb.insertTask(nameFinal, dateFinal)
+                doAsync {
+                    mydb.insertTask(nameFinal, dateFinal)
+                }
                 Toast.makeText(activity?.applicationContext, "Taak toegevoegd.", Toast.LENGTH_SHORT).show()
+
             }
             activity!!.onBackPressed()
         } else
