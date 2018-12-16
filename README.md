@@ -5,7 +5,7 @@ This Android application can be used by clients of https://www.pieterjandeschryv
 * Bram Huys
 * Jolan Taelman
 * Simon Anckaert
-* Stijn Der Raeve-Zenner
+* Stijn De Raeve-Zenner
 
 ## Getting Started & Deployment
 * Git clone this project into folder of your choosing
