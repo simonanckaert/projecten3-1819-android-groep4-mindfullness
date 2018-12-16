@@ -10,6 +10,9 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.nio.file.Files.delete
+
+
 
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
@@ -96,6 +99,15 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         contentValues.put("dateStr", getDate(dateStr))
 
         db.update(TASK_TABLE_NAME, contentValues, "id = ? ", arrayOf(id))
+        return true
+    }
+
+    fun deleteTask(id:String?): Boolean{
+
+        val db = this.writableDatabase
+        val whereClause = "id=?"
+        val whereArgs = arrayOf(id)
+        db.delete(TASK_TABLE_NAME, whereClause, whereArgs)
         return true
     }
 
