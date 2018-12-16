@@ -55,13 +55,12 @@
         android:id="@+id/tv_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/login_layout"
+        android:layout_marginTop="20dp"
         android:clickable="true"
         android:focusable="true"
-        android:text="@string/registreer"
-        android:layout_below="@id/login_layout"
         android:gravity="center"
-        android:layout_marginTop="20dp"
-        />
+        android:text="Nog geen account? Klik hier om te registreren" />
 
     <ProgressBar
         android:id="@+id/login_progress"
