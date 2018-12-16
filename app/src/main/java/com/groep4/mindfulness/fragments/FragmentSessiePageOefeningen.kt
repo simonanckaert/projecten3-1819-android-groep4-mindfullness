@@ -64,7 +64,34 @@ class FragmentSessiePageOefeningen : Fragment() {
         }
 
 
-        // Inflate
+        val pager = view.findViewById<ViewPager>(R.id.pager_oefeningen)
+        val pagerAdapter = OefeningenPagerAdapter(childFragmentManager, oefeningen)
+        pager.adapter = pagerAdapter
+
+        pager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                var pos: Int = 0
+
+                if (position != 0){
+                    pos = position - 1
+                }
+
+                val oefFragment : FragmentOefening = pagerAdapter.getRegisteredFragment(pos) as FragmentOefening
+                if (oefFragment.mp.isPlaying) {
+                    oefFragment.mp.pause()
+                }
+            }
+
+            override fun onPageSelected(position: Int) {
+
+            }
+        })
+
+
+
         return view
     }
 

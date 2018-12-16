@@ -43,8 +43,6 @@ class FragmentSessie : Fragment() {
     private var imgViewsFw: ArrayList<ImageView>? = null
     private var imgFinish: ImageView? = null
     private val handler = Handler()
-    private var fade_in: Animation? = null
-    private var fade_out: Animation? = null
     private var gebruiker : Gebruiker? = Gebruiker()
     private var objectAnimator: ObjectAnimator? = null
     private var random: Random? = null
@@ -61,6 +59,7 @@ class FragmentSessie : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         random = Random()
         val view = inflater.inflate(R.layout.fragment_sessie, container, false)
+        val main: MainActivity = (activity as MainActivity)
         cvSessie = view.findViewById(R.id.cv_sessie)
         imgSessie = view.findViewById(R.id.iv_sessie)
         txtSessieTitel = view.findViewById(R.id.tv_sessie)
@@ -108,9 +107,12 @@ class FragmentSessie : Fragment() {
         imgFinish = view.findViewById(R.id.iv_sessie_finish)
 
         // Dynamisch background images verdelen per sessie
+        if (main.gebruiker.sessieId == 8){
         if (arguments!!.containsKey("isLast")){
             achtergrondFinish()
         } else {
+            achtergrondRandomizen()
+        }} else {
             achtergrondRandomizen()
         }
         screenWidth = resources.displayMetrics.widthPixels
