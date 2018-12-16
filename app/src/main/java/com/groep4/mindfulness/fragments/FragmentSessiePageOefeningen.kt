@@ -68,9 +68,9 @@ class FragmentSessiePageOefeningen : Fragment() {
         }
 
 
-        val pager = view.findViewById<ViewPager>(R.id.pager_oefeningen)
+        /*val pager = view.findViewById<ViewPager>(R.id.pager_oefeningen)
         val pagerAdapter = OefeningenPagerAdapter(childFragmentManager, oefeningen)
-        pager.adapter = pagerAdapter
+        pager.adapter = pagerAdapter*/
 
         pager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
             override fun onPageScrollStateChanged(state: Int) {

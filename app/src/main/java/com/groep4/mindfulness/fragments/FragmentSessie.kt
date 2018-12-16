@@ -107,7 +107,7 @@ class FragmentSessie : Fragment() {
         imgFinish = view.findViewById(R.id.iv_sessie_finish)
 
         // Dynamisch background images verdelen per sessie
-        if (main.gebruiker.sessieId == 8){
+        if (main.gebruiker!!.sessieId == 8){
         if (arguments!!.containsKey("isLast")){
             achtergrondFinish()
         } else {
