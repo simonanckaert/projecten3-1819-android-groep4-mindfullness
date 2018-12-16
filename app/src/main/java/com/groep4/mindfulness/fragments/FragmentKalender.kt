@@ -205,11 +205,12 @@ class FragmentKalender : Fragment()
             bundle.putBoolean("isUpdate", true)
             bundle.putString("id", dataList[+position][KEY_ID])
             f.arguments = bundle
-            activity?.supportFragmentManager!!
+            /*activity?.supportFragmentManager!!
                     .beginTransaction()
                     .replace(R.id.fragment_holder_main, f, "pageContent")
                     .addToBackStack("root_fragment")
-                    .commit()
+                    .commit()*/
+            callback?.setFragment(f, true)
         }
     }
 
