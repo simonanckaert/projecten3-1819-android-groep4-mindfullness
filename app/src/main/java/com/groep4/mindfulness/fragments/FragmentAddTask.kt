@@ -176,10 +176,11 @@ class FragmentAddTask : Fragment(), com.wdullaer.materialdatetimepicker.date.Dat
                 mydb.insertTask(nameFinal, dateFinal)
                 Toast.makeText(activity?.applicationContext, "Taak toegevoegd.", Toast.LENGTH_SHORT).show()
             }
+            activity!!.onBackPressed()
         } else
         {
 
-            activity!!.onBackPressed()
+
         }
 
     }
