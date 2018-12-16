@@ -49,7 +49,7 @@ class FragmentChat : Fragment(){
         view.tr_page.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorGreen))
         view.tv_page.setText(R.string.contact)
 
-        view.contactUser.text = currentUserId!!.email
+        view.contactUser.text = "Psycholoog"
 
         btnSend = view.findViewById(R.id.btn_chat_send)
 
