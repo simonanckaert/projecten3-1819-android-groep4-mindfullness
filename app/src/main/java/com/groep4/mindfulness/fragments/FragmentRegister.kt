@@ -82,7 +82,7 @@ class FragmentRegister : Fragment() {
                         activity!!.tv_register.visibility = View.INVISIBLE
                         if (task.isSuccessful()) {
 
-                            val user = User(nameStr , emailStr)
+                            val user = User(nameStr , emailStr, "0")
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().currentUser!!.uid)
                                     .setValue(user).addOnCompleteListener(activity!!){
