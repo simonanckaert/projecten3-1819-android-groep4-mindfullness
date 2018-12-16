@@ -151,6 +151,9 @@ class FragmentSessieLijst : Fragment() {
         imgMisc!!.add(R.mipmap.tree02)
     }
 
+    /*
+    Hierin wordt nagegaan of alle sessies unlocked zijn
+     */
     private fun alleSessiesUnlocked(): Boolean {
         val main = activity as MainActivity
 
