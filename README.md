@@ -8,8 +8,6 @@ This Android application can be used by clients of https://www.pieterjandeschryv
 * Stijn Der Raeve-Zenner
 
 ## Getting Started & Deployment
-* Install .apk to your android device  
-  OR  
 * Git clone this project into folder of your choosing
 * Open project in Android Studio
 * Comment out next line in build.gradle:  
