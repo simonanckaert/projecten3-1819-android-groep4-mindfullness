@@ -37,6 +37,10 @@ class FragmentChat : Fragment(){
     private var dbInstance : DatabaseReference? = FirebaseDatabase.getInstance().reference.child("Chat")
     private var currentUserId: FirebaseUser? = FirebaseAuth.getInstance().currentUser!!
 
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
