@@ -103,11 +103,12 @@ class FragmentSessieLijst : Fragment() {
 
         val indicator = view.findViewById(R.id.stepper_indicator) as StepperIndicator
         // We keep last page for a "finishing" page
-        if (alleSessiesUnlocked()){
+        /*if (alleSessiesUnlocked()){
             indicator.setViewPager(pager, true)
         } else {
             indicator.setViewPager(pager, false)
-        }
+        }*/
+        indicator.setViewPager(pager, false)
         indicator.addOnStepClickListener { step ->
             pager.setCurrentItem(step, true)
         }
