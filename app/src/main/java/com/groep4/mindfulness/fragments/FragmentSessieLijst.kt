@@ -69,19 +69,30 @@ class FragmentSessieLijst : Fragment() {
                     val sessieFragmentPrevious: FragmentSessie = pagerAdapter.getRegisteredFragment(previousPage) as FragmentSessie
                     if (previousPage <= position) {
                         sessieFragmentCurrent.drive(true)
+                       // sessieFragmentCurrent.fireworkAnimationSmall()
+                        sessieFragmentCurrent.fireworkAnimationBig()
                     }
                     else {
                         sessieFragmentCurrent.drive(false)
+                        sessieFragmentPrevious.fireworkAnimationSmall()
                     }
                     sessieFragmentPrevious.setBusVisible(false)
                     previousPage = position
+                }, 0)
+
+                if (sessies.size == position + 1){
+                    val sessieFragmentCurrent: FragmentSessie = pagerAdapter.getRegisteredFragment(position) as FragmentSessie
+                    sessieFragmentCurrent.playSound()
+                }
 
 
 
-
-
-                }, 15)
             }
+
+
+
+
+
         })
 
         val indicator = view.findViewById(R.id.stepper_indicator) as StepperIndicator

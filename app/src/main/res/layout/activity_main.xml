@@ -14,11 +14,102 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="top|center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:contentDescription="@string/logo"
+                android:scaleType="fitCenter"
+                app:srcCompat="@mipmap/logo" />
+
+            <com.groep4.mindfulness.views.LogoTextView
+                android:id="@+id/tv_mindfulness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:shadowColor="@color/text_shadow"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="2"
+                android:text="@string/app_name"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                android:textSize="45sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_quote"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:shadowColor="@color/text_shadow"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2"
+            android:padding="5dp"
+            android:text=""
+            android:textAllCaps="false"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp"
+            android:autoSizeTextType="uniform"
+            android:background="@color/colorFacebook" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0"
+            android:gravity="center_horizontal">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal">
+
+                <!-- (android:background) Custom Selector gebruikt om verschillende states van de imagebuttons waar te kunnen nemen (kleurschakelingen)-->
+                <!-- Button Sessies -->
+                <LinearLayout
+                    android:id="@+id/ll_sessies"
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/selector_btn_sessies"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/ib_sessies"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@android:color/transparent"
+                        android:clickable="false"
+                        android:contentDescription="@string/sessies"
+                        android:longClickable="false"
+                        android:padding="10dp"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/sessies"
+                        android:tint="@android:color/white" />
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/AppTheme.AppBarOverlay"
             android:visibility="gone">
+
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
