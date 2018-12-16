@@ -33,7 +33,7 @@ class FragmentOefening : Fragment() {
     private var buttonFeedback : Button? = null
 
     private var isPlaying: Boolean = false
-    private val mp = MediaPlayer()
+    val mp = MediaPlayer()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -61,6 +61,7 @@ class FragmentOefening : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val page = arguments!!.getInt("page", 0)
         val oefening = arguments!!.getParcelable<Oefening>("oefening")
+
 
         txtOefeningNaam!!.text = oefening!!.naam
         txtOefeningBeschrijving!!.text = oefening.beschrijving
@@ -142,6 +143,8 @@ class FragmentOefening : Fragment() {
         mp.release()
         super.onStop()
     }
+
+
 
     companion object {
         fun newInstance(page: Int, isLast: Boolean, oefening: Oefening): FragmentOefening {

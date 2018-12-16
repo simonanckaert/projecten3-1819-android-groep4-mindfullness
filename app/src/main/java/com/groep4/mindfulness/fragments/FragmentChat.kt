@@ -37,6 +37,10 @@ class FragmentChat : Fragment(){
     private var dbInstance : DatabaseReference? = FirebaseDatabase.getInstance().reference.child("Chat")
     private var currentUserId: FirebaseUser? = FirebaseAuth.getInstance().currentUser!!
 
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
@@ -45,7 +49,7 @@ class FragmentChat : Fragment(){
         view.tr_page.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorGreen))
         view.tv_page.setText(R.string.contact)
 
-        view.contactUser.text = currentUserId!!.email
+        view.contactUser.text = "Psycholoog"
 
         btnSend = view.findViewById(R.id.btn_chat_send)
 

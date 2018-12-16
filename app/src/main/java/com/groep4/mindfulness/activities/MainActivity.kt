@@ -2,6 +2,7 @@ package com.groep4.mindfulness.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -34,8 +35,7 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
     private val client = OkHttpClient()
     lateinit var mAuth: FirebaseAuth
     // private var isFragmentProfielLoaded = false
-    var gebruiker : Gebruiker = Gebruiker()
-
+    var gebruiker : Gebruiker? = null
     var sessies: ArrayList<Sessie> = ArrayList()
 
 
@@ -44,38 +44,39 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
         setContentView(R.layout.activity_main)
         mAuth = FirebaseAuth.getInstance()
         Logger.addLogAdapter(AndroidLogAdapter())
-        Log.d("tag", "TIJD TIJD TIJD TIJD  " +  Calendar.DAY_OF_MONTH)
 
         // Toolbar
         //val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         //setSupportActionBar(toolbar)
 
         // Set gebruiker
-        this.gebruiker = getAangemeldeGebruiker()
+        if(this.gebruiker == null) {
+            this.gebruiker = getAangemeldeGebruiker()
+        }
 
         // Sessies
         sessies = getSessiesFromDB()
         val extras = ExtendedDataHolder.getInstance()
         extras.putExtra("sessielist", sessies)
 
-        setFragment(FragmentMain(), true)
+        //Set no new fragment if there already is one
+        if (savedInstanceState == null) {
+            setFragment(FragmentMain(), false)
+        }
 
         // Set fragment on btnclick
         /*ll_sessies.setOnClickListener {
             ll_sessies.isEnabled = false
             setFragment(FragmentSessieLijst(), false)
         }
-
         ll_reminder.setOnClickListener {
             ll_reminder.isEnabled = false
             setFragment(FragmentReminder(), false)
         }
-
         ll_contact.setOnClickListener{
             ll_contact.isEnabled = false
             setFragment(FragmentChat(), false)
         }
-
         ll_kalender.setOnClickListener{
             ll_kalender.isEnabled = false
             setFragment(FragmentKalender(), false)
@@ -87,13 +88,13 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
         if (addToBackstack)
             supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.frag_content, fragment, "pageContent")
+                    .replace(R.id.fragment_holder_main, fragment, "pageContent")
                     .addToBackStack(BACK_STACK_ROOT_TAG)
                     .commit()
         else
             supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.frag_content, fragment, "pageContent")
+                    .replace(R.id.fragment_holder_main, fragment, "pageContent")
                     .commit()
     }
 
@@ -168,13 +169,13 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
                 //val jsonarray = JSONArray(response.body()!!.string())
                 val jsonobject = JSONObject(response.body()!!.string())
 
-                    gebruiker.uid = mAuth.currentUser!!.uid
-                    gebruiker.regio = if (jsonobject.has("regio")) jsonobject.getString("regio") else ""
-                    gebruiker.email = if (jsonobject.has("email")) jsonobject.getString("email") else ""
-                    gebruiker.name = if (jsonobject.has("name")) jsonobject.getString("name") else ""
-                    gebruiker.telnr = if (jsonobject.has("telnr")) jsonobject.getString("telnr") else ""
-                    gebruiker.groepsnr = if (jsonobject.has("groepnr")) jsonobject.getInt("groepnr") else 0
-                    gebruiker.sessieId = if (jsonobject.has("sessieid")) jsonobject.getInt("sessieid") else 1
+                gebruiker.uid = mAuth.currentUser!!.uid
+                gebruiker.regio = if (jsonobject.has("regio")) jsonobject.getString("regio") else ""
+                gebruiker.email = if (jsonobject.has("email")) jsonobject.getString("email") else ""
+                gebruiker.name = if (jsonobject.has("name")) jsonobject.getString("name") else ""
+                gebruiker.telnr = if (jsonobject.has("telnr")) jsonobject.getString("telnr") else ""
+                gebruiker.groepsnr = if (jsonobject.has("groepnr")) jsonobject.getInt("groepnr") else 0
+                gebruiker.sessieId = if (jsonobject.has("sessieid")) jsonobject.getInt("sessieid") else 1
             }
         })
         return gebruiker
@@ -258,7 +259,6 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
         })
         thread.start()
         //supportFragmentManager.popBackStack()
-
         return response2.orEmpty()
     }*/
 

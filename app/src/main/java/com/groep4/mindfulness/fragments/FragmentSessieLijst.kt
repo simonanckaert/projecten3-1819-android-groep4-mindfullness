@@ -1,6 +1,7 @@
 package com.groep4.mindfulness.fragments
 
-import android.content.Context
+import android.app.Activity
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -11,11 +12,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.badoualy.stepperindicator.StepperIndicator
 import com.groep4.mindfulness.R
-import com.groep4.mindfulness.interfaces.CallbackInterface
 import com.groep4.mindfulness.activities.MainActivity
 import com.groep4.mindfulness.adapters.SessiesPagerAdapter
 import com.groep4.mindfulness.model.Sessie
 import kotlinx.android.synthetic.main.fragment_kalender.view.*
+import kotlinx.android.synthetic.main.fragment_sessie.*
 
 
 class FragmentSessieLijst : Fragment() {
@@ -23,12 +24,13 @@ class FragmentSessieLijst : Fragment() {
     var sessies: ArrayList<Sessie> = ArrayList()
     var previousPage: Int = 0
     private val handler = Handler()
-
     var imgBuildings: ArrayList<Int>? = null
     var imgMisc: ArrayList<Int>? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_sessie_lijst, container, false)
+        val main: MainActivity = (activity as MainActivity)
+
 
         // (Statische) sessies toevoegen, in afwachting van DB
         addSessies()
@@ -68,25 +70,45 @@ class FragmentSessieLijst : Fragment() {
                     val sessieFragmentCurrent: FragmentSessie = pagerAdapter.getRegisteredFragment(position) as FragmentSessie
                     val sessieFragmentPrevious: FragmentSessie = pagerAdapter.getRegisteredFragment(previousPage) as FragmentSessie
                     if (previousPage <= position) {
+                        if (main.gebruiker!!.sessieId >= sessies[position].sessieId){
                         sessieFragmentCurrent.drive(true)
+                        sessieFragmentCurrent.fireworkAnimationSmall()
+                        sessieFragmentCurrent.fireworkAnimationBig()}
                     }
                     else {
-                        sessieFragmentCurrent.drive(false)
+                        if (main.gebruiker!!.sessieId >= sessies[position].sessieId) {
+                            sessieFragmentCurrent.drive(false)
+                            sessieFragmentPrevious.fireworkAnimationSmall()
+                        }
                     }
                     sessieFragmentPrevious.setBusVisible(false)
                     previousPage = position
+                }, 0)
 
+                // als men bij de positie na de sessies komt, de finishview, vuurwerkgeluid afspelen
+                if ( alleSessiesUnlocked()) {
+                    if (sessies.size == position + 1) {
+                        val sessieFragmentCurrent: FragmentSessie = pagerAdapter.getRegisteredFragment(position) as FragmentSessie
+                        sessieFragmentCurrent.playSound()
+                    }
+                }
 
-
-
-
-                }, 15)
+                // Als sessie locked is, cardview grijs maken
+                if ( main.gebruiker!!.sessieId < sessies[position].sessieId){
+                    var sessieFragmentCurrent: FragmentSessie = pagerAdapter.getRegisteredFragment(position) as FragmentSessie
+                    sessieFragmentCurrent.cv_sessie.setCardBackgroundColor(Color.parseColor("#818181"))
+                }
             }
         })
 
         val indicator = view.findViewById(R.id.stepper_indicator) as StepperIndicator
         // We keep last page for a "finishing" page
-        indicator.setViewPager(pager, true)
+        /*if (alleSessiesUnlocked()){
+            indicator.setViewPager(pager, true)
+        } else {
+            indicator.setViewPager(pager, false)
+        }*/
+        indicator.setViewPager(pager, false)
         indicator.addOnStepClickListener { step ->
             pager.setCurrentItem(step, true)
         }
@@ -101,9 +123,14 @@ class FragmentSessieLijst : Fragment() {
         sessies = mainActivity.sessies
 
         // Indien DB niet bereikbaar is of DB telt minder dan 8 sessies, de lijst opvullen met lege sessies.
-        while (sessies.size < 9){
-            sessies.add(Sessie(0, "Geen sessie gevonden.", "", null,""))
-        }
+        if (!alleSessiesUnlocked()){
+            while (sessies.size < 8) {
+                sessies.add(Sessie(0, "Geen sessie gevonden.", "", null, ""))
+            }
+        } else {
+        while (sessies.size < 9) {
+            sessies.add(Sessie(0, "Geen sessie gevonden.", "", null, ""))
+        }}
     }
 
     private fun addBackgroundImages(){
@@ -122,6 +149,15 @@ class FragmentSessieLijst : Fragment() {
         imgMisc!!.add(R.mipmap.tree00)
         imgMisc!!.add(R.mipmap.tree01)
         imgMisc!!.add(R.mipmap.tree02)
+    }
+
+    private fun alleSessiesUnlocked(): Boolean {
+        val main = activity as MainActivity
+
+        if (main.gebruiker!!.sessieId == sessies.size){
+            return true
+        }
+            return false
     }
 }
 
