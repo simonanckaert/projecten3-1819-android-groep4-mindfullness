@@ -1,67 +1,22 @@
-# Projecten3-1819-android-groep4-mindfullness
-Project mindfullness
+# Projecten III - Mindfulness - Android application
+This Android application can be used by clients of https://www.pieterjandeschryver.be/mindfulness/ and is developed by the following people:
+* Arno Coorevits
+* Angelo Carly
+* Bram Huys
+* Jolan Taelman
+* Simon Anckaert
+* Stijn Der Raeve-Zenner
 
-## Getting Started
-
-Git clone into folder
-Open project in Android Studio
-Gradle sync
+## Getting Started & Deployment
+* Install .apk to your android device  
+  OR  
+* Git clone this project into folder of your choosing
+* Open project in Android Studio
+* Comment out next line in build.gradle:  
+buildScan { termsOfServiceUrl = 'https://gradle.com/terms-of-service' termsOfServiceAgree = 'yes' }  
+(This file is used by DevOps but needs to be commented out to be able to build in Android Studio)
+* Gradle sync & build
 
 ### Prerequisites
 
 You will need to have Android Studio installed and an android device or android emulator.
-
-## Running the tests
-
-//TODO
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
