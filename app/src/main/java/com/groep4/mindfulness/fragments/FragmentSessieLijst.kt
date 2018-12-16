@@ -70,13 +70,13 @@ class FragmentSessieLijst : Fragment() {
                     val sessieFragmentCurrent: FragmentSessie = pagerAdapter.getRegisteredFragment(position) as FragmentSessie
                     val sessieFragmentPrevious: FragmentSessie = pagerAdapter.getRegisteredFragment(previousPage) as FragmentSessie
                     if (previousPage <= position) {
-                        if (main.gebruiker.sessieId >= sessies[position].sessieId){
+                        if (main.gebruiker!!.sessieId >= sessies[position].sessieId){
                         sessieFragmentCurrent.drive(true)
                         sessieFragmentCurrent.fireworkAnimationSmall()
                         sessieFragmentCurrent.fireworkAnimationBig()}
                     }
                     else {
-                        if (main.gebruiker.sessieId >= sessies[position].sessieId) {
+                        if (main.gebruiker!!.sessieId >= sessies[position].sessieId) {
                             sessieFragmentCurrent.drive(false)
                             sessieFragmentPrevious.fireworkAnimationSmall()
                         }
@@ -94,7 +94,7 @@ class FragmentSessieLijst : Fragment() {
                 }
 
                 // Als sessie locked is, cardview grijs maken
-                if ( main.gebruiker.sessieId < sessies[position].sessieId){
+                if ( main.gebruiker!!.sessieId < sessies[position].sessieId){
                     var sessieFragmentCurrent: FragmentSessie = pagerAdapter.getRegisteredFragment(position) as FragmentSessie
                     sessieFragmentCurrent.cv_sessie.setCardBackgroundColor(Color.parseColor("#818181"))
                 }
@@ -103,8 +103,7 @@ class FragmentSessieLijst : Fragment() {
 
         val indicator = view.findViewById(R.id.stepper_indicator) as StepperIndicator
         // We keep last page for a "finishing" page
-            indicator.setViewPager(pager, false)
-
+        indicator.setViewPager(pager, false)
         indicator.addOnStepClickListener { step ->
             pager.setCurrentItem(step, true)
         }
@@ -147,10 +146,13 @@ class FragmentSessieLijst : Fragment() {
         imgMisc!!.add(R.mipmap.tree02)
     }
 
+    /*
+    Hierin wordt nagegaan of alle sessies unlocked zijn
+     */
     private fun alleSessiesUnlocked(): Boolean {
         val main = activity as MainActivity
 
-        if (main.gebruiker.sessieId == sessies.size){
+        if (main.gebruiker!!.sessieId == sessies.size){
             return true
         }
             return false

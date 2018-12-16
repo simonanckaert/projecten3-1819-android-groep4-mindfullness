@@ -45,14 +45,16 @@ class FragmentSessiePageOefeningen : Fragment() {
         // Oefening toevoegen
         addOefeningen()
 
+        val pager = view.findViewById<ViewPager>(R.id.pager_oefeningen)!!
+        val stepper = view.findViewById<StepperIndicator>(R.id.si_oefeningen)
+        val pagerAdapter = OefeningenPagerAdapter(childFragmentManager, oefeningen)
+        pager.adapter = pagerAdapter
+
         if(!oefeningen.isEmpty()) {
-            val pager = view.findViewById<ViewPager>(R.id.pager_oefeningen)!!
             // offscreenpagelimit nodig zodat de pages niet telkens herladen worden bij het scrollen
             pager.offscreenPageLimit = oefeningen.size
-            val pagerAdapter = OefeningenPagerAdapter(childFragmentManager, oefeningen)
-            pager.adapter = pagerAdapter
 
-            val stepper = view.findViewById<StepperIndicator>(R.id.si_oefeningen)
+
             stepper.setViewPager(pager, (pager.adapter as OefeningenPagerAdapter).count)
 
             // Audioplayer
@@ -60,13 +62,10 @@ class FragmentSessiePageOefeningen : Fragment() {
             mp.isLooping = false
             txtGeenOefeningen!!.visibility = View.GONE
         } else {
+            pager.offscreenPageLimit = 1
+            stepper.setViewPager(pager, 1)
             txtGeenOefeningen!!.visibility = View.VISIBLE
         }
-
-
-        val pager = view.findViewById<ViewPager>(R.id.pager_oefeningen)
-        val pagerAdapter = OefeningenPagerAdapter(childFragmentManager, oefeningen)
-        pager.adapter = pagerAdapter
 
         pager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
             override fun onPageScrollStateChanged(state: Int) {
@@ -95,6 +94,9 @@ class FragmentSessiePageOefeningen : Fragment() {
         return view
     }
 
+    /*
+    Hierin worden alle oefeningen toegevoegd
+     */
     private fun addOefeningen() {
         oefeningen.clear()
 

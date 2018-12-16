@@ -1,5 +1,9 @@
 package com.groep4.mindfulness.fragments
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.annotation.TargetApi
+import android.app.job.JobScheduler
 import android.content.Context
 import android.database.Cursor
 import android.os.AsyncTask
@@ -22,7 +26,14 @@ import kotlinx.android.synthetic.main.fragment_kalender.view.*
 import java.util.ArrayList
 import java.util.HashMap
 import android.content.DialogInterface
+import android.os.Build
 import android.support.v7.app.AlertDialog
+import com.google.firebase.database.*
+import com.groep4.mindfulness.activities.MainActivity
+import com.groep4.mindfulness.model.Gebruiker
+import com.groep4.mindfulness.model.Task
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.fragment_kalender.*
 
 
 class FragmentKalender : Fragment()
@@ -33,10 +44,11 @@ class FragmentKalender : Fragment()
     lateinit var taskNoScrollListToday: NoScrollListView ; lateinit var taskNoScrollListTomorrow: NoScrollListView  ; lateinit var taskNoScrollListUpcoming: NoScrollListView
     lateinit var scrollView: NestedScrollView
     lateinit var todayText: TextView ; lateinit var tomorrowText: TextView ; lateinit var upcomingText: TextView
-
+    lateinit var ref:DatabaseReference
     var todayList = ArrayList<HashMap<String, String>>()
     var tomorrowList = ArrayList<HashMap<String, String>>()
     var upcomingList = ArrayList<HashMap<String, String>>()
+    private var gebruiker : Gebruiker? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -48,7 +60,9 @@ class FragmentKalender : Fragment()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
+
         val view = inflater.inflate(R.layout.fragment_kalender, container, false)
+        gebruiker = (activity as MainActivity).gebruiker
 
         // Top bar info instellen
         view.tr_page.setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorPurple))
@@ -77,6 +91,7 @@ class FragmentKalender : Fragment()
             f.arguments = bundle
             f.arguments = bundle
 
+
             // Launch fragment met callback naar activity
             callback?.setFragment(f, true)
         }
@@ -91,6 +106,7 @@ class FragmentKalender : Fragment()
         //database opstellen
         mydb = DBHelper(activity!!)
         populateData()
+
     }
 
     /**
@@ -101,6 +117,7 @@ class FragmentKalender : Fragment()
         scrollView!!.visibility = View.GONE
         val loadTask = LoadTask()
         loadTask.execute()
+
     }
 
     override fun onResume() {
@@ -124,34 +141,38 @@ class FragmentKalender : Fragment()
             todayList.clear()
             tomorrowList.clear()
             upcomingList.clear()
+
+
         }
 
         override fun doInBackground(vararg args: String): String {
             val xml = ""
 
+            loadFirebaseDataList()
 
+            Thread.sleep(1800)
             val today = mydb.dataToday
-            loadDataList(today, todayList)
-
+            loadSQLDataList(today, todayList)
             val tomorrow = mydb.dataTomorrow
-            loadDataList(tomorrow, tomorrowList)
-
+            loadSQLDataList(tomorrow, tomorrowList)
             val upcoming = mydb.dataUpcoming
-            loadDataList(upcoming, upcomingList)
+            loadSQLDataList(upcoming, upcomingList)
 
             return xml
         }
 
         override fun onPostExecute(xml: String) {
 
+            /**
+             *  ID , TASK , DATE ->> ophalen uit datebase
+             *  Date naar leesbare string omzetten
+             */
+
+
             loadListView(taskNoScrollListToday, todayList)
             loadListView(taskNoScrollListTomorrow, tomorrowList)
             loadListView(taskNoScrollListUpcoming, upcomingList)
 
-
-            /**
-             * List tonen als het items bevat voor vandaag,morgen en opkomend
-             */
             if (todayList.size > 0) {
                 todayText.visibility = View.VISIBLE
             } else {
@@ -172,13 +193,23 @@ class FragmentKalender : Fragment()
 
             scrollView.visibility = View.VISIBLE
         }
-    }
+
+        }
+
+
+
+
+
 
     /**
      *  ID , TASK , DATE ->> ophalen uit datebase
      *  Date naar leesbare string omzetten
      */
-    fun loadDataList(cursor: Cursor?, dataList: ArrayList<HashMap<String, String>>) {
+
+
+    fun loadSQLDataList(cursor: Cursor?, dataList: ArrayList<HashMap<String, String>>) {
+
+
         if (cursor != null) {
             cursor.moveToFirst()
             while (cursor.isAfterLast == false) {
@@ -186,14 +217,45 @@ class FragmentKalender : Fragment()
                 val mapToday = HashMap<String, String>()
                 mapToday[KEY_ID] = cursor.getString(0).toString()
                 mapToday[KEY_TASK] = cursor.getString(1).toString()
-
                 mapToday[KEY_DATE] = KalenderFunction().Epoch2DateString(cursor.getString(2).toString(), "dd-MM-yyyy")
                 dataList.add(mapToday)
                 cursor.moveToNext()
-            }
-        }
-    }
 
+            }
+            cursor.close()
+        }
+
+    }
+    fun loadFirebaseDataList(){
+        ref = FirebaseDatabase.getInstance().getReference("Announcement")
+
+        ref.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if(dataSnapshot!!.exists()){
+                    for (data in dataSnapshot.children){
+                        val _task = data.getValue(Task::class.java)
+                        try{
+                            val cursordb:Cursor = mydb.getDataSpecific(_task!!._key)
+
+                            if(cursordb.count <=0) {
+                                if(_task._group == gebruiker!!.groepsnr.toString()){
+                                mydb.insertTaskwithid(_task!!._key,_task!!._text,_task._date.toString())
+                                }
+                            }
+                        }catch (e:Exception){
+                            System.out.println(e.printStackTrace())
+                        }
+                    }
+
+                }
+
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+        })
+    }
     /**
      * Task update als er word op geklikt
      */
@@ -230,9 +292,13 @@ class FragmentKalender : Fragment()
             builder.setMessage("Wat wil je doen ?").setPositiveButton("Aanpassen", dialogClickListener)
                     .setNegativeButton("Verwijderen", dialogClickListener).show()
 
+            adapter.notifyDataSetChanged()
 
         }
     }
+
+
+
 
     companion object {
 

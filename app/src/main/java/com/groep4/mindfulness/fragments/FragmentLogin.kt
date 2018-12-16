@@ -67,7 +67,7 @@ import kotlinx.android.synthetic.main.fragment_login.view.*
         view.email_sign_in_button.setOnClickListener { attemptLogin() }
         view.email_sign_in_google_button.setOnClickListener{attemptGoogleLogin()}
         activity!!.tv_register.visibility = View.VISIBLE
-        activity!!.tv_register.text = resources.getString(R.string.registreer)
+        activity!!.tv_register.text = "Nog geen account? Klik hier om te registreren."
         activity!!.tv_register.isClickable
         return view
     }

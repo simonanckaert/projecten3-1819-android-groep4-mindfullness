@@ -2,6 +2,7 @@ package com.groep4.mindfulness.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -42,14 +43,20 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
         Logger.addLogAdapter(AndroidLogAdapter())
 
         // Set gebruiker
-        this.gebruiker = getAangemeldeGebruiker()
+        if(this.gebruiker == null) {
+            this.gebruiker = getAangemeldeGebruiker()
+        }
 
         // Sessies
         sessies = getSessiesFromDB()
         val extras = ExtendedDataHolder.getInstance()
         extras.putExtra("sessielist", sessies)
 
-        setFragment(FragmentMain(), true)
+
+        //Set no new fragment if there already is one
+        if (savedInstanceState == null) {
+            setFragment(FragmentMain(), false)
+        }
     }
 
     /**

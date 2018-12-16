@@ -3,6 +3,7 @@ package com.groep4.mindfulness.fragments
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,19 +36,10 @@ class FragmentProfielInfo: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profiel_info, container, false)
 
-        gebruiker = (activity as MainActivity).gebruiker
-
         txtEmail = view.findViewById(R.id.txtEmail)
-        txtEmail!!.text = gebruiker!!.email
-
         txtNaam = view.findViewById(R.id.txtNaam)
-        txtNaam!!.text = gebruiker!!.name
-
         txtTelnr = view.findViewById(R.id.txtTelnr)
-        txtTelnr!!.text = gebruiker!!.telnr
-
         txtRegio = view.findViewById(R.id.txtRegio)
-        txtRegio!!.text = gebruiker!!.regio
 
         //Toon de gegevenswijzigenfragment indien op gegevenswijzigen geklikt is
         btnGegevensWijzigen = view.findViewById(R.id.btnGegevensWijzigen)
@@ -57,5 +49,32 @@ class FragmentProfielInfo: Fragment() {
         }
 
         return view
+    }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?)
+    {
+        super.onActivityCreated(savedInstanceState)
+
+
+        if (savedInstanceState != null) {
+            gebruiker = savedInstanceState!!.getParcelable("gebruiker") as Gebruiker
+        }
+        else
+        {
+            gebruiker = (activity as MainActivity).gebruiker
+        }
+
+        txtEmail!!.text = gebruiker!!.email
+        txtNaam!!.text = gebruiker!!.name
+        txtTelnr!!.text = gebruiker!!.telnr
+        txtRegio!!.text = gebruiker!!.regio
+    }
+
+    override fun onSaveInstanceState(outState: Bundle)
+    {
+        super.onSaveInstanceState(outState)
+
+        outState!!.putParcelable("gebruiker", this.gebruiker)
     }
 }
