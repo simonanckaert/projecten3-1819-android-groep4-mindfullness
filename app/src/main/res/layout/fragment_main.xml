@@ -67,7 +67,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:autoSizeTextType="uniform"
-            android:background="@color/colorFacebook"
             android:gravity="center"
             android:padding="5dp"
             android:shadowColor="@color/text_shadow"
@@ -76,7 +75,7 @@
             android:shadowRadius="2"
             android:text=""
             android:textAllCaps="false"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorFacebook"
             android:textSize="20sp" />
 
         <TableLayout
