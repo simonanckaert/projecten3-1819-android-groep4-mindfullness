@@ -30,6 +30,7 @@
             android:id="@+id/tv_sessie_naam"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:textStyle="bold|italic" />
 
         <TextView

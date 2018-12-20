@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/textViewNaam"
         android:layout_width="385dp"
-        android:layout_height="33dp"
+        android:layout_height="55dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -25,8 +25,8 @@
     <TextView
         android:id="@+id/textViewTekstFeedback"
         android:layout_width="wrap_content"
-        android:layout_height="24dp"
-        android:layout_marginTop="88dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="108dp"
         android:text="Wat vond u van deze oefening?"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -54,7 +54,7 @@
         android:layout_height="73dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="192dp"
+        android:layout_marginBottom="152dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonBevestigen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
