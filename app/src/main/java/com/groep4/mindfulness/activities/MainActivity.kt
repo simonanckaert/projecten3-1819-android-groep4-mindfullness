@@ -43,9 +43,9 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
         Logger.addLogAdapter(AndroidLogAdapter())
 
         // Set gebruiker
-        if(this.gebruiker == null) {
+        //if(this.gebruiker == null) {
             this.gebruiker = getAangemeldeGebruiker()
-        }
+        //}
 
         // Sessies
         sessies = getSessiesFromDB()
