@@ -22,7 +22,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:clickable="false"
-            android:gravity="center_vertical|left"
+            android:gravity="center_vertical|center"
             android:text="Naam"
             android:textSize="18sp"
             android:textStyle="bold"
