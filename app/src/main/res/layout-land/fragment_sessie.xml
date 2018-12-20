@@ -225,8 +225,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp">
 
             <LinearLayout
@@ -240,7 +240,7 @@
                 <ImageView
                     android:id="@+id/iv_sessie"
                     android:layout_width="150dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="160dp"
                     android:layout_weight="0"
                     android:padding="15dp"
                     android:scaleType="fitCenter"
