@@ -2,18 +2,19 @@ package com.groep4.mindfulness.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.fragments.*
 import com.groep4.mindfulness.interfaces.CallbackInterface
+import com.groep4.mindfulness.model.Feedback
 import com.groep4.mindfulness.model.Gebruiker
 import com.groep4.mindfulness.model.Oefening
 import com.groep4.mindfulness.model.Sessie
@@ -21,17 +22,18 @@ import com.groep4.mindfulness.utils.ExtendedDataHolder
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import okhttp3.*
-import org.json.JSONArray
-import org.json.JSONObject
-import java.io.IOException
-import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class MainActivity : AppCompatActivity(), CallbackInterface {
 
     private val BACK_STACK_ROOT_TAG = "root_fragment"
     private val client = OkHttpClient()
+
     lateinit var mAuth: FirebaseAuth
+    lateinit var db: FirebaseFirestore
+
     var gebruiker : Gebruiker = Gebruiker()
     var sessies: ArrayList<Sessie> = ArrayList()
 
@@ -39,18 +41,13 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         mAuth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
         Logger.addLogAdapter(AndroidLogAdapter())
 
-        // Set gebruiker
-        if(this.gebruiker == null) {
-            this.gebruiker = getAangemeldeGebruiker()
-        }
-
-        // Sessies
-        sessies = getSessiesFromDB()
-        val extras = ExtendedDataHolder.getInstance()
-        extras.putExtra("sessielist", sessies)
+        getAangemeldeGebruiker()
 
 
         //Set no new fragment if there already is one
@@ -89,107 +86,63 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
      * Sessies ophalen
      */
     fun getSessiesFromDB(): ArrayList<Sessie> {
-        val tempSessies: ArrayList<Sessie> = ArrayList()
+        val tempSessies: ArrayList<Sessie> = ArrayList();
 
-        // HTTP Request sessies
-        val request = Request.Builder()
-                .url("http://141.134.155.219:3000/sessies")
-                .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.e("ERROR", "HTTP request failed: $e")
+        db.collection("sessies").get().addOnCompleteListener { task ->
+            for(document in task.result!!) {
+                var sessie = Sessie()
+                sessie.id = (document["id"] as Long).toInt()
+                sessie.naam = document["naam"] as String
+                sessie.oefeningen = getOefeningen(document["oefeningen"] as ArrayList<HashMap<String,Any>>)
+                sessie.beschrijving = document["beschrijving"] as String
+                sessie.sessieCode = document["sessieCode"] as String
+                tempSessies.add(sessie)
             }
+        }
 
-            override fun onResponse(call: Call, response: Response) {
-                tempSessies.clear()
-                val jsonarray = JSONArray(response.body()!!.string())
-                for (i in 0 until jsonarray.length()) {
-                    val jsonobject = jsonarray.getJSONObject(i)
-                    val sessieId = jsonobject.getInt("sessieId")
-                    val naam = jsonobject.getString("naam")
-                    val beschrijving = jsonobject.getString("beschrijving")
-                    val oefeningen = getOefeningen(sessieId)
-                    val sessieCode = jsonobject.getString("sessieCode")
-                    val sessie = Sessie(sessieId, naam, beschrijving, oefeningen, sessieCode)
-                    tempSessies.add(sessie)
-                }
-            }
-        })
-        return tempSessies
+        return tempSessies;
     }
 
     /**
      * Aangemelde gebruiker ophalen
      */
-    fun getAangemeldeGebruiker() : Gebruiker{
-        val gebruiker : Gebruiker = Gebruiker()
+    fun getAangemeldeGebruiker() : Gebruiker {
         val id = mAuth.currentUser!!.uid
-        val string1 = ("http://141.134.155.219:3000/users/" + id)
-        val string = "http://141.134.155.219:3000/users/yXQmL8IGSCbN15fzWw60t5udU2o2"
 
-        // HTTP Request sessies
-        val request = Request.Builder()
-                .url(string1)
-                .build()
+        db.collection("Users").document(id).get().addOnCompleteListener { task ->
+            this.gebruiker = task.result!!.toObject(Gebruiker::class.java)!!
 
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.e("ERROR", "HTTP request failed: $e")
-            }
+            // Sessies
+            sessies = getSessiesFromDB()
+            val extras = ExtendedDataHolder.getInstance()
+            extras.putExtra("sessielist", sessies)
+        }
 
-            override fun onResponse(call: Call, response: Response) {
-                val jsonobject = JSONObject(response.body()!!.string())
-
-                gebruiker.uid = mAuth.currentUser!!.uid
-                gebruiker.regio = if (jsonobject.has("regio")) jsonobject.getString("regio") else ""
-                gebruiker.email = if (jsonobject.has("email")) jsonobject.getString("email") else ""
-                gebruiker.name = if (jsonobject.has("name")) jsonobject.getString("name") else ""
-                gebruiker.telnr = if (jsonobject.has("telnr")) jsonobject.getString("telnr") else ""
-                gebruiker.groepsnr = if (jsonobject.has("groepnr")) jsonobject.getInt("groepnr") else 0
-                gebruiker.sessieId = if (jsonobject.has("sessieid")) jsonobject.getInt("sessieid") else 1
-            }
-        })
-        return gebruiker
+        return this.gebruiker;
     }
 
     /**
      * Oefeningen van sessie ophalen
      */
-    fun getOefeningen(sessieId: Int): ArrayList<Oefening>{
-        val oefeningen: ArrayList<Oefening> = ArrayList()
-
-        // HTTP Request oefeningen
-        val request = Request.Builder()
-                /*.header("Authorization", "token abcd")*/
-                .url("http://141.134.155.219:3000/oefeningen/$sessieId")
-                .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.e("ERROR", "HTTP request failed: $e")
+    fun getOefeningen(oefeningen : ArrayList<HashMap<String,Any>>): ArrayList<Oefening>{
+        val tempOefeningen: ArrayList<Oefening> = ArrayList();
+        for(oef in oefeningen) {
+            if(oef["groepen"].toString().contains(gebruiker.groepnr!!.toString())) {
+                var oefening = Oefening();
+                oefening.oefenigenId = (oef["oefeningId"] as Long?)!!.toInt()
+                oefening.naam = oef["naam"].toString()
+                oefening.beschrijving = oef["beschrijving"].toString()
+                oefening.sessieId = (oef["sessieId"] as Long?)!!.toInt()
+                oefening.url = oef["url"].toString()
+                oefening.fileMimeType = oef["fileMimetype"].toString()
+                oefening.groepen = oef["groepen"].toString()
+                oefening.fileOriginalName = oef["fileOriginalName"].toString()
+                oefening.fileSize = oef["fileSize"].toString()
+                oefening.fileName = oef["fileName"].toString()
+                tempOefeningen.add(oefening)
             }
-
-            override fun onResponse(call: Call, response: Response) {
-                val jsonarray = JSONArray(response.body()!!.string())
-                for (i in 0 until jsonarray.length()) {
-                    val jsonobject = jsonarray.getJSONObject(i)
-                    val oefeningenId = jsonobject.getInt("oefeningId")
-                    val naam = jsonobject.getString("naam")
-                    val beschrijving = jsonobject.getString("beschrijving")
-                    val sessieid = jsonobject.getInt("sessieId")
-                    val fileUrl = jsonobject.getString("fileName")
-                    val fileMimeType = jsonobject.getString("fileMimetype")
-                    val groepen = jsonobject.getString("groepen")
-
-                    if(groepen.contains(gebruiker!!.groepsnr.toString())) {
-                        val oefening: Oefening = Oefening(oefeningenId, naam, beschrijving, sessieid, fileUrl, fileMimeType, groepen)
-                        oefeningen.add(oefening)
-                    }
-                }
-            }
-        })
-        return oefeningen
+        }
+        return tempOefeningen
     }
 
     /**
@@ -202,27 +155,18 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
     /**
      * gegevens van de gebruiker bewerken
      */
-    fun veranderGegevensGebruiker(gebruikersnaam : String, regio : String, telnr : String) {
+    fun veranderGegevensGebruiker(gebruikersnaam : String, regio : String, telnr : String) : Gebruiker {
         gebruiker!!.name = gebruikersnaam
         gebruiker!!.regio = regio
         gebruiker!!.telnr = telnr
+        return gebruiker!!
     }
 
     /**
      * gegevens van de gebruiker opslaan
      */
-    fun gegevensGebruikerOpslaan(body : FormBody, url : String) : String {
-        var response2 : String? = null
-        val thread = Thread(Runnable {
-            val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8")
-            val client: OkHttpClient = OkHttpClient()
-            val request: Request = Request.Builder().url(url).put(body).build()
-            val response = client.newCall(request).execute()
-            response2 = response.body().toString()
-        })
-        thread.start()
-        getAangemeldeGebruiker()
-        return response2.orEmpty()
+    fun gegevensGebruikerOpslaan(gebruiker : Gebruiker)  {
+        db.collection("Users").document(gebruiker.uid!!).set(gebruiker)
     }
 
     /**
@@ -269,18 +213,10 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
     /**
      * Slaat de feedback op
      */
-    fun postFeedback(url: String, body:FormBody): String {
-        var response2 : String? = null
-        val thread = Thread(Runnable {
-            val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8")
-            val client: OkHttpClient = OkHttpClient()
-            //val body: RequestBody = RequestBody.create(mediaType, json)
-            val request: Request = Request.Builder().url(url).post(body).build()
-            val response = client.newCall(request).execute()
-            response2 = response.body().toString()
-        })
-        thread.start()
-        return response2.orEmpty()
+    fun postFeedback(feedback : Feedback) {
+        db.collection("feedback").document(feedback.sessieId!!)
+                .collection("oefeningen").document(feedback.oefeningId!!)
+                .collection("feedback").document(gebruiker.uid!!).set(feedback)
     }
 
 
@@ -289,15 +225,6 @@ class MainActivity : AppCompatActivity(), CallbackInterface {
      */
     fun sessieUnlocked() {
         gebruiker!!.sessieId += 1
-        val fromBodyBuilder = FormBody.Builder()
-        fromBodyBuilder.add("name", gebruiker!!.name)
-        fromBodyBuilder.add("regio", gebruiker!!.regio)
-        fromBodyBuilder.add("telnr", gebruiker!!.telnr)
-        fromBodyBuilder.add("uid", gebruiker!!.uid)
-        fromBodyBuilder.add("email", gebruiker!!.email)
-        fromBodyBuilder.add("groepnr", gebruiker!!.groepsnr.toString())
-        fromBodyBuilder.add("sessieid", gebruiker!!.sessieId.toString())
-        var url = "http://141.134.155.219:3000/users/" + gebruiker!!.uid
-        gegevensGebruikerOpslaan(fromBodyBuilder.build(), url)
+        gegevensGebruikerOpslaan(gebruiker)
     }
 }

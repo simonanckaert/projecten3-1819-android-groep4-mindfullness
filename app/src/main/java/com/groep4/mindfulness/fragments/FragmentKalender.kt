@@ -1,9 +1,5 @@
 package com.groep4.mindfulness.fragments
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.annotation.TargetApi
-import android.app.job.JobScheduler
 import android.content.Context
 import android.database.Cursor
 import android.os.AsyncTask
@@ -26,15 +22,10 @@ import kotlinx.android.synthetic.main.fragment_kalender.view.*
 import java.util.ArrayList
 import java.util.HashMap
 import android.content.DialogInterface
-import android.os.Build
 import android.support.v7.app.AlertDialog
-import com.google.firebase.database.*
+import com.google.firebase.firestore.FirebaseFirestore
 import com.groep4.mindfulness.activities.MainActivity
 import com.groep4.mindfulness.model.Gebruiker
-import com.groep4.mindfulness.model.Task
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.fragment_kalender.*
-
 
 class FragmentKalender : Fragment()
 {
@@ -44,7 +35,7 @@ class FragmentKalender : Fragment()
     lateinit var taskNoScrollListToday: NoScrollListView ; lateinit var taskNoScrollListTomorrow: NoScrollListView  ; lateinit var taskNoScrollListUpcoming: NoScrollListView
     lateinit var scrollView: NestedScrollView
     lateinit var todayText: TextView ; lateinit var tomorrowText: TextView ; lateinit var upcomingText: TextView
-    lateinit var ref:DatabaseReference
+    lateinit var db: FirebaseFirestore
     var todayList = ArrayList<HashMap<String, String>>()
     var tomorrowList = ArrayList<HashMap<String, String>>()
     var upcomingList = ArrayList<HashMap<String, String>>()
@@ -91,7 +82,6 @@ class FragmentKalender : Fragment()
             f.arguments = bundle
             f.arguments = bundle
 
-
             // Launch fragment met callback naar activity
             callback?.setFragment(f, true)
         }
@@ -102,11 +92,9 @@ class FragmentKalender : Fragment()
     override fun onActivityCreated(savedInstanceState: Bundle?)
     {
         super.onActivityCreated(savedInstanceState)
-
         //database opstellen
         mydb = DBHelper(activity!!)
         populateData()
-
     }
 
     /**
@@ -117,7 +105,6 @@ class FragmentKalender : Fragment()
         scrollView!!.visibility = View.GONE
         val loadTask = LoadTask()
         loadTask.execute()
-
     }
 
     override fun onResume() {
@@ -137,12 +124,9 @@ class FragmentKalender : Fragment()
 
         override fun onPreExecute() {
             super.onPreExecute()
-
             todayList.clear()
             tomorrowList.clear()
             upcomingList.clear()
-
-
         }
 
         override fun doInBackground(vararg args: String): String {
@@ -162,13 +146,10 @@ class FragmentKalender : Fragment()
         }
 
         override fun onPostExecute(xml: String) {
-
             /**
              *  ID , TASK , DATE ->> ophalen uit datebase
              *  Date naar leesbare string omzetten
              */
-
-
             loadListView(taskNoScrollListToday, todayList)
             loadListView(taskNoScrollListTomorrow, tomorrowList)
             loadListView(taskNoScrollListUpcoming, upcomingList)
@@ -193,20 +174,12 @@ class FragmentKalender : Fragment()
 
             scrollView.visibility = View.VISIBLE
         }
-
-        }
-
-
-
-
-
+    }
 
     /**
      *  ID , TASK , DATE ->> ophalen uit datebase
      *  Date naar leesbare string omzetten
      */
-
-
     fun loadSQLDataList(cursor: Cursor?, dataList: ArrayList<HashMap<String, String>>) {
 
 
@@ -227,35 +200,25 @@ class FragmentKalender : Fragment()
 
     }
     fun loadFirebaseDataList(){
-        ref = FirebaseDatabase.getInstance().getReference("Announcement")
+        db = FirebaseFirestore.getInstance()
 
-        ref.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if(dataSnapshot!!.exists()){
-                    for (data in dataSnapshot.children){
-                        val _task = data.getValue(Task::class.java)
-                        try{
-                            val cursordb:Cursor = mydb.getDataSpecific(_task!!._key)
+        db.collection("aankondigingen").get().addOnCompleteListener { task ->
+            for(document in task.result!!) {
+                try{
+                    val cursordb:Cursor = mydb.getDataSpecific(document["id"]!!.toString())
 
-                            if(cursordb.count <=0) {
-                                if(_task._group == gebruiker!!.groepsnr.toString()){
-                                mydb.insertTaskwithid(_task!!._key,_task!!._text,_task._date.toString())
-                                }
-                            }
-                        }catch (e:Exception){
-                            System.out.println(e.printStackTrace())
+                    if(cursordb.count <=0) {
+                        if(document["groep"].toString() == gebruiker!!.groepnr.toString()){
+                            mydb.insertTaskwithid(document["id"]!!.toString(),document["title"]!!.toString(),document["start"]!!.toString())
                         }
                     }
-
+                }catch (e:Exception){
+                    System.out.println(e.printStackTrace())
                 }
-
             }
-
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
-        })
+        }
     }
+
     /**
      * Task update als er word op geklikt
      */
@@ -265,7 +228,6 @@ class FragmentKalender : Fragment()
         listView.adapter = adapter
 
         listView.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-
             val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
                 when (which) {
                     DialogInterface.BUTTON_POSITIVE -> {
@@ -278,30 +240,22 @@ class FragmentKalender : Fragment()
                     }
 
                     DialogInterface.BUTTON_NEGATIVE -> {
-
                         mydb.deleteTask(dataList[+position][KEY_ID])
                         dataList.clear()
                         populateData()
                         adapter.notifyDataSetChanged()
                     }
                 }
-
             }
 
             val builder = AlertDialog.Builder(view.context)
             builder.setMessage("Wat wil je doen ?").setPositiveButton("Aanpassen", dialogClickListener)
                     .setNegativeButton("Verwijderen", dialogClickListener).show()
-
             adapter.notifyDataSetChanged()
-
         }
     }
 
-
-
-
     companion object {
-
         var KEY_ID = "id"
         var KEY_TASK = "task"
         var KEY_DATE = "date"

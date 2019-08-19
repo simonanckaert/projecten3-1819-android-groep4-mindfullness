@@ -1,68 +1,37 @@
 {
   "project_info": {
-    "project_number": "1084064931254",
-    "firebase_url": "https://projecten3-1819-android-groep4.firebaseio.com",
-    "project_id": "projecten3-1819-android-groep4",
-    "storage_bucket": "projecten3-1819-android-groep4.appspot.com"
+    "project_number": "402442978658",
+    "firebase_url": "https://herexamenproject3.firebaseio.com",
+    "project_id": "herexamenproject3",
+    "storage_bucket": "herexamenproject3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1084064931254:android:570564dbb37262c4",
+        "mobilesdk_app_id": "1:402442978658:android:48b5399c5cca54e0",
         "android_client_info": {
-          "package_name": "com.groep4.mindfulness"
+          "package_name": "com.hogent.mindfullnesherexamen"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1084064931254-ih2vrccs3vsa3tlakg2vfa3e8aojpom1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.groep4.mindfulness",
-            "certificate_hash": "79A632932B7AAE730D3682BB9A69E676E2A75C38"
-          }
-        },
-        {
-          "client_id": "1084064931254-kl31ptt8vfqnau44fg7pbvsdjm06qh5h.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.groep4.mindfulness",
-            "certificate_hash": "b362d30dae25c7457cc3e823f20444cb69265f6c"
-          }
-        },
-        {
-          "client_id": "1084064931254-tds28uvp660c0itvkv4a7rns65009p7h.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.groep4.mindfulness",
-            "certificate_hash": "1d862057dce5cf790a490f08464d460952d40e7f"
-          }
-        },
-        {
-          "client_id": "1084064931254-a8fbrvocakf3ghanqmkjksnruh8g6eb3.apps.googleusercontent.com",
+          "client_id": "402442978658-k2p9j561u20i2hattps8oc25ghblv0co.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyByg0d_rUFreRFFPPy7wlVOMUvVU1rt8SI"
+          "current_key": "AIzaSyCpU6ekyCsbvQGcAh5B38tnz9f5vJgKe7s"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1084064931254-a8fbrvocakf3ghanqmkjksnruh8g6eb3.apps.googleusercontent.com",
+              "client_id": "402442978658-k2p9j561u20i2hattps8oc25ghblv0co.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

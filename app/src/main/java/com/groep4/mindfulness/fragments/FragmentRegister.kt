@@ -12,8 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.groep4.mindfulness.R
 import com.groep4.mindfulness.model.User
 import com.groep4.mindfulness.utils.LoginValidation
@@ -26,7 +25,6 @@ class FragmentRegister : Fragment() {
 
     lateinit var mAuth: FirebaseAuth
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view:View=inflater!!.inflate(R.layout.fragment_register,container,false)
@@ -35,13 +33,10 @@ class FragmentRegister : Fragment() {
         activity!!.tv_register.text = resources.getString(R.string.wachtwoord_beleid)
         activity!!.tv_register.isClickable.not()
         return view
-
     }
 
     fun attemptRegister() {
-
         // Reset errors.
-
         register_email.error = null
         register_password.error = null
 
@@ -82,10 +77,12 @@ class FragmentRegister : Fragment() {
                         activity!!.tv_register.visibility = View.INVISIBLE
                         if (task.isSuccessful()) {
 
-                            val user = User(nameStr , emailStr, "0")
-                            FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().currentUser!!.uid)
-                                    .setValue(user).addOnCompleteListener(activity!!){
+                            val user = User(nameStr , emailStr, 0, FirebaseAuth.getInstance().currentUser!!.uid, "", "")
+                            val firebaseDatabase = FirebaseFirestore.getInstance().collection("Users")
+                                    .document(FirebaseAuth.getInstance().currentUser!!.uid).set(user)
+                                    //.getInstance().getReference("Users").child(FirebaseAuth.getInstance().currentUser!!.uid)
+
+                            firebaseDatabase.addOnCompleteListener(activity!!){
                                 task ->
                                         if (task.isSuccessful()) {
                                             Toast.makeText(context,"Account aangemaakt", Toast.LENGTH_SHORT).show()
@@ -94,10 +91,10 @@ class FragmentRegister : Fragment() {
                                             activity!!.tv_register.text = resources.getString(R.string.registreer)
                                             activity!!.tv_register.isClickable
                                             fm!!.popBackStack()
+                                        } else {
+                                            Toast.makeText(context, task.exception!!.message.toString(), Toast.LENGTH_SHORT).show()
                                         }
                                     }
-
-
                         } else {
 
                             Toast.makeText(context,"Account is al in gebruik", Toast.LENGTH_SHORT).show()
@@ -135,7 +132,6 @@ class FragmentRegister : Fragment() {
                         }
                     })
         } else {
-
             activity!!.login_progress.visibility = if (show) View.VISIBLE else View.GONE
             activity!!.login_layout.visibility = if (show) View.GONE else View.VISIBLE
         }

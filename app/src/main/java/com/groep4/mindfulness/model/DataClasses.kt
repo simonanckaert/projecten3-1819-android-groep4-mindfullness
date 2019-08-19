@@ -10,4 +10,4 @@ data class Task(
     constructor() : this(-1,"","","")
 }
 
-data class User(val name: String, val email: String, val groepnr: String)
+data class User(val name: String, val email: String, val groepnr: Number, val uid: String, val telnr: String, val regio: String)
