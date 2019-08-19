@@ -7,6 +7,8 @@ This Android application can be used by clients of https://www.pieterjandeschryv
 * Simon Anckaert
 * Stijn De Raeve-Zenner
 
+And this project is finished by Simon Anckaert during August. I worked on the project in https://github.com/simonanckaert/Project3Android and committed the last version here in this fork.
+
 ## Getting Started & Deployment
 * Git clone this project into folder of your choosing
 * Open project in Android Studio
@@ -22,6 +24,20 @@ You will need to have Android Studio installed and an android device or android 
 - Android SDK 21
 - Android Support Repository
 
+User: example@hotmail.com
+Password: Example123
+
+#### Sessiecodes
+
+Session 2: AAAAA
+Session 3: 21547
+Session 4: 49749
+Session 5: 27013
+Session 6: 29954
+Session 7: 79115
+Session 8: 89848
+
+
 ## Features
 
 * Participate at Mindfulness sessions & pass its exercises
@@ -29,3 +45,5 @@ You will need to have Android Studio installed and an android device or android 
 * Set up a daily reminder notification
 * Add tasks to your personal calendar
 * Chat with the psychologists
+
+
